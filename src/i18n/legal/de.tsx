@@ -16,7 +16,7 @@ export const LEGAL_DE: LegalDoc[] = [
     title: 'Impressum',
     description:
       'Herausgeber, Verantwortlicher für die Veröffentlichung und Hoster der Website konforme.kayzen-lyon.com.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         {LANGUAGE_CLAUSE}
@@ -53,7 +53,7 @@ export const LEGAL_DE: LegalDoc[] = [
     slug: 'cgu',
     title: 'Allgemeine Nutzungsbedingungen',
     description: 'Regeln für die Nutzung der Plattform Konforme.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         {LANGUAGE_CLAUSE}
@@ -104,7 +104,7 @@ export const LEGAL_DE: LegalDoc[] = [
     slug: 'cgv',
     title: 'Allgemeine Geschäftsbedingungen',
     description: 'Bedingungen für die kostenpflichtigen Angebote von Konforme.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         {LANGUAGE_CLAUSE}
@@ -141,7 +141,7 @@ export const LEGAL_DE: LegalDoc[] = [
     title: 'Datenschutzerklärung',
     description:
       'Welche Daten Konforme erhebt, zu welchem Zweck und welche Rechte Ihnen nach der DSGVO zustehen.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         {LANGUAGE_CLAUSE}
@@ -190,7 +190,7 @@ export const LEGAL_DE: LegalDoc[] = [
     title: 'DSGVO-Konformität',
     description:
       'Die DSGVO-Verpflichtungen von Konforme: Datenminimierung, Hosting in der EU, Auftragsverarbeiter.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         {LANGUAGE_CLAUSE}
@@ -232,7 +232,7 @@ export const LEGAL_DE: LegalDoc[] = [
     title: 'Cookie-Richtlinie',
     description:
       'Konforme verwendet ausschließlich technisch notwendige Cookies, ohne Werbe-Tracker.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         {LANGUAGE_CLAUSE}

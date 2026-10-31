@@ -17,7 +17,7 @@ export const LEGAL_ES: LegalDoc[] = [
     title: 'Aviso legal',
     description:
       'Editor, director de publicación y proveedor de alojamiento del sitio konforme.kayzen-lyon.com.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         <LanguageClause />
@@ -54,7 +54,7 @@ export const LEGAL_ES: LegalDoc[] = [
     slug: 'cgu',
     title: 'Condiciones generales de uso',
     description: 'Normas de utilización de la plataforma Konforme.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         <LanguageClause />
@@ -103,7 +103,7 @@ export const LEGAL_ES: LegalDoc[] = [
     slug: 'cgv',
     title: 'Condiciones generales de venta',
     description: 'Condiciones aplicables a las ofertas de pago de Konforme.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         <LanguageClause />
@@ -139,7 +139,7 @@ export const LEGAL_ES: LegalDoc[] = [
     slug: 'confidentialite',
     title: 'Política de privacidad',
     description: 'Qué datos recopila Konforme, con qué finalidad y cuáles son sus derechos RGPD.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         <LanguageClause />
@@ -188,7 +188,7 @@ export const LEGAL_ES: LegalDoc[] = [
     title: 'Conformidad con el RGPD',
     description:
       'Los compromisos de Konforme en materia de RGPD: minimización, alojamiento en la UE, encargados del tratamiento.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         <LanguageClause />
@@ -230,7 +230,7 @@ export const LEGAL_ES: LegalDoc[] = [
     title: 'Política de cookies',
     description:
       'Konforme utiliza únicamente cookies técnicas, sin ningún rastreador publicitario.',
-    updated: '2026-07-12',
+    updated: '2026-10-31',
     body: (
       <>
         <LanguageClause />
