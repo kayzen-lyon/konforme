@@ -156,7 +156,7 @@ export function Contact() {
       <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-5">{t.h1}</h1>
       <p className="text-lg text-text-muted mb-10">{t.intro}</p>
 
-      <div className="grid gap-6 md:grid-cols-[1.2fr_1fr]">
+      <div className="grid gap-6 md:grid-cols-[1.2fr_1fr] [&>*]:min-w-0">
         <Card>
           <h2 className="text-lg font-bold mb-4">{t.formTitle}</h2>
           <form onSubmit={onSubmit} className="space-y-4">
@@ -212,9 +212,9 @@ export function Contact() {
               <br />69009 Lyon, France
             </p>
             <p>
-              <a href="tel:+33487776861" className="text-link hover:underline">+33 (0)4 87 77 68 61</a>
+              <a href="tel:+33487776861" className="text-link underline underline-offset-2 hover:decoration-2">+33 (0)4 87 77 68 61</a>
               <br />
-              <a href="mailto:contact@kayzen-lyon.fr" className="text-link hover:underline">contact@kayzen-lyon.fr</a>
+              <a href="mailto:contact@kayzen-lyon.fr" className="text-link underline underline-offset-2 hover:decoration-2">contact@kayzen-lyon.fr</a>
             </p>
             <p className="text-xs text-text-dim">{t.hours}</p>
           </address>

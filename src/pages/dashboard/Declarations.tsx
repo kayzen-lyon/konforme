@@ -209,7 +209,7 @@ export function Declarations() {
         {scannedSites.length === 0 ? (
           <p className="text-sm text-text-muted">
             {t.noScannedSites}{' '}
-            <Link to="/dashboard/sites" className="text-link hover:underline">
+            <Link to="/dashboard/sites" className="text-link underline underline-offset-2 hover:decoration-2">
               {t.runAuditFirst}
             </Link>
             .

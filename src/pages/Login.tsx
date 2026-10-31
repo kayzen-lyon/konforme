@@ -18,7 +18,7 @@ const L = defineMessages({
   fr: {
     seoTitle: 'Connexion',
     seoDesc: 'Connectez-vous à votre tableau de bord Konforme.',
-    homeAria: 'Konforme accueil',
+    homeAria: '(accueil)',
     titleSignin: 'Bienvenue',
     titleSignup: 'Créer un compte',
     subtitleSignin: "Connectez-vous pour accéder à votre tableau de bord d'accessibilité",
@@ -63,7 +63,7 @@ const L = defineMessages({
   en: {
     seoTitle: 'Sign in',
     seoDesc: 'Sign in to your Konforme dashboard.',
-    homeAria: 'Konforme home',
+    homeAria: '(home)',
     titleSignin: 'Welcome',
     titleSignup: 'Create an account',
     subtitleSignin: 'Sign in to access your accessibility dashboard',
@@ -108,7 +108,7 @@ const L = defineMessages({
   de: {
     seoTitle: 'Anmelden',
     seoDesc: 'Melden Sie sich in Ihrem Konforme-Dashboard an.',
-    homeAria: 'Konforme Startseite',
+    homeAria: '(Startseite)',
     titleSignin: 'Willkommen',
     titleSignup: 'Konto erstellen',
     subtitleSignin: 'Melden Sie sich an, um auf Ihr Dashboard für Barrierefreiheit zuzugreifen',
@@ -153,7 +153,7 @@ const L = defineMessages({
   es: {
     seoTitle: 'Iniciar sesión',
     seoDesc: 'Inicie sesión en su panel de control Konforme.',
-    homeAria: 'Konforme inicio',
+    homeAria: '(inicio)',
     titleSignin: 'Bienvenido',
     titleSignup: 'Crear una cuenta',
     subtitleSignin: 'Inicie sesión para acceder a su panel de accesibilidad',
@@ -199,7 +199,7 @@ const L = defineMessages({
   it: {
     seoTitle: 'Accesso',
     seoDesc: 'Acceda alla sua dashboard Konforme.',
-    homeAria: 'Konforme home',
+    homeAria: '(home)',
     titleSignin: 'Benvenuto',
     titleSignup: 'Creare un account',
     subtitleSignin: 'Acceda per entrare nella sua dashboard di accessibilità',
@@ -310,12 +310,13 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen grid place-items-center bg-surface-2 px-4 sm:px-6 py-10">
+    <main id="main" className="min-h-screen grid place-items-center bg-surface-2 px-4 sm:px-6 py-10">
       <Seo title={t.seoTitle} description={t.seoDesc} path="/login" noindex />
       <div className="w-full max-w-md">
         <div className="mb-6 flex justify-center">
-          <Link to={localizePath(lang, '/')} aria-label={t.homeAria}>
+          <Link to={localizePath(lang, '/')}>
             <Logo />
+            <span className="sr-only"> {t.homeAria}</span>
           </Link>
         </div>
 
@@ -409,7 +410,7 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => { setMode('signup'); setError(null) }}
-                  className="text-link font-semibold hover:underline"
+                  className="text-link font-semibold underline underline-offset-2 hover:decoration-2"
                 >
                   {t.toSignup}
                 </button>
@@ -420,7 +421,7 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => { setMode('signin'); setError(null) }}
-                  className="text-link font-semibold hover:underline"
+                  className="text-link font-semibold underline underline-offset-2 hover:decoration-2"
                 >
                   {t.toSignin}
                 </button>
@@ -460,11 +461,11 @@ export function Login() {
 
           <p className="mt-6 text-center text-xs text-text-dim leading-relaxed">
             {t.termsPrefix}{' '}
-            <Link to={localizePath(lang, '/legal/cgu')} className="text-link hover:underline">
+            <Link to={localizePath(lang, '/legal/cgu')} className="text-link underline underline-offset-2 hover:decoration-2">
               {t.terms}
             </Link>{' '}
             {t.termsMiddle}{' '}
-            <Link to={localizePath(lang, '/legal/confidentialite')} className="text-link hover:underline">
+            <Link to={localizePath(lang, '/legal/confidentialite')} className="text-link underline underline-offset-2 hover:decoration-2">
               {t.privacy}
             </Link>
             .
@@ -477,7 +478,7 @@ export function Login() {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

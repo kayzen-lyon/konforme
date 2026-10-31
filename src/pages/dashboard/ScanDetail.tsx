@@ -1250,7 +1250,7 @@ function IssueRow({ issue }: { issue: ScanIssue }) {
           {issue.html_snippet && (
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">{t.issueSnippet}</h3>
-              <pre className="rounded-[8px] bg-surface-2 border border-border px-3 py-2 text-xs text-text-soft overflow-x-auto">
+              <pre tabIndex={0} className="rounded-[8px] bg-surface-2 border border-border px-3 py-2 text-xs text-text-soft overflow-x-auto">
                 <code>{issue.html_snippet}</code>
               </pre>
             </div>
@@ -1289,7 +1289,7 @@ function IssueRow({ issue }: { issue: ScanIssue }) {
                   <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">
                     {t.aiResultTitle}
                   </h3>
-                  <pre className="rounded-[8px] border border-info/30 bg-surface-2 px-3.5 py-3 text-xs text-info-soft whitespace-pre-wrap font-sans leading-relaxed overflow-x-auto">
+                  <pre tabIndex={0} className="rounded-[8px] border border-info/30 bg-surface-2 px-3.5 py-3 text-xs text-info-soft whitespace-pre-wrap font-sans leading-relaxed overflow-x-auto">
                     {aiText}
                   </pre>
                 </div>

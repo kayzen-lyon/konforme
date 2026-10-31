@@ -3,6 +3,7 @@ import { Seo } from '@/components/Seo'
 import { defineMessages, useLang, useMessages } from '@/i18n'
 import { RGAA_GLOSSARY_URL, RGAA_VERSION } from '@/lib/rgaa'
 import glossaireJson from '@/content/rgaa/glossaire.json'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 type GlossaryEntry = { title: string; body: string }
 
@@ -171,6 +172,7 @@ export function Glossaire() {
         {t.introB}
         <a href={RGAA_GLOSSARY_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
           accessibilite.numerique.gouv.fr
+          <NewWindowHint />
         </a>
         {t.introC}
       </p>

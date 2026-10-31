@@ -16,6 +16,7 @@ import { rgaaCriterionUrl } from '@/lib/rgaa'
 import { defineMessages, useLang, useMessages, type Lang } from '@/i18n'
 import { localizeCriterion, localizeTopic } from '@/i18n/rgaa-i18n'
 import { localizeIssueTitle } from '@/i18n/rules-i18n'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 export type ReviewInput = {
   criterionId: string
@@ -467,6 +468,7 @@ function CriterionRow({
             className="inline-block text-xs text-link underline hover:text-text"
           >
             {t.officialText(criterion.id)}
+            <NewWindowHint />
           </a>
         </div>
       )}

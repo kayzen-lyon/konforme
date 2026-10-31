@@ -480,7 +480,7 @@ function SiteCard({ site, plan, activeScanId }: { site: Site; plan: PlanId; acti
             href={site.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-link hover:underline break-all"
+            className="text-sm text-link underline underline-offset-2 hover:decoration-2 break-all"
           >
             {site.url}
             <span className="sr-only">{t.newWindow}</span>

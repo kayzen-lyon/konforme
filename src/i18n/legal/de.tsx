@@ -219,7 +219,7 @@ export const LEGAL_DE: LegalDoc[] = [
         </P>
         <P>
           Siehe auch unsere{' '}
-          <Link to="/legal/confidentialite" className="text-link hover:underline">
+          <Link to="/legal/confidentialite" className="text-link underline underline-offset-2 hover:decoration-2">
             Datenschutzerklärung
           </Link>
           .

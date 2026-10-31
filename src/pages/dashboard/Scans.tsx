@@ -273,7 +273,7 @@ export function Scans() {
                       {scan.status === 'done' ? (
                         <Link
                           to={`/dashboard/scans/${scan.id}`}
-                          className="text-link font-semibold hover:underline"
+                          className="text-link font-semibold underline underline-offset-2 hover:decoration-2"
                         >
                           {t.report}<span className="sr-only">{t.reportSr(scan.sites?.name ?? '', formatDate(scan.created_at, false, lang))}</span>
                         </Link>

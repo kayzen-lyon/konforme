@@ -122,7 +122,9 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html { color-scheme: light; scroll-behavior: smooth; }
+  /* scroll-padding : un élément atteint par ancre ou au clavier n'est jamais
+     masqué par l'en-tête collant (WCAG 2.4.11, RGAA 5) */
+  html { color-scheme: light; scroll-behavior: smooth; scroll-padding-top: 6.5rem; }
   html[data-theme="dark"] { color-scheme: dark; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -149,6 +151,8 @@
   h1 { letter-spacing: -0.028em; line-height: 1.06; }
   h2 { letter-spacing: -0.025em; line-height: 1.12; }
   ::selection { background: var(--color-primary); color: var(--color-on-primary); }
+  /* Reflow à 320 px (WCAG 1.4.10) : jetons de code et adresses longues se coupent */
+  code, a[href^="mailto:"], a[href^="http"] { overflow-wrap: anywhere; }
   :focus-visible {
     outline: 3px solid var(--color-focus);
     outline-offset: 3px;
@@ -179,6 +183,11 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-micro);
+}
+
+ /* Bandes bleu nuit : le rouille du focus n'y atteint pas 3:1, l'or oui. */
+@utility on-navy {
+  --color-focus: var(--color-gold);
 }
 
 /* Sur-titre « —— AGENCE WEB & IA » : trait + capitales espacées rouille. */

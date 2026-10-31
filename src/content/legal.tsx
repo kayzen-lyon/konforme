@@ -203,7 +203,7 @@ export const LEGAL_DOCS: LegalDoc[] = [
           CNIL sous 72 h et les personnes concernées dans les meilleurs délais.
         </P>
         <P>
-          Voir aussi notre <Link to="/legal/confidentialite" className="text-link hover:underline">politique de confidentialité</Link>.
+          Voir aussi notre <Link to="/legal/confidentialite" className="text-link underline underline-offset-2 hover:decoration-2">politique de confidentialité</Link>.
         </P>
       </>
     ),

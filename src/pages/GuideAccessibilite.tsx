@@ -10,6 +10,7 @@ import {
   RGAA_TOPICS,
   rgaaCriterionUrl,
 } from '@/lib/rgaa'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 const L = defineMessages({
   fr: {
@@ -1434,6 +1435,7 @@ export function GuideAccessibilite() {
           {t.methodP1A}
           <a href={RGAA_METHOD_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
             {t.methodLink}
+            <NewWindowHint />
           </a>
           {t.methodP1B}
         </p>
@@ -1459,6 +1461,7 @@ export function GuideAccessibilite() {
           {t.testEnvA}
           <a href={RGAA_TEST_ENV_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
             {t.testEnvLink}
+            <NewWindowHint />
           </a>
           {t.testEnvB}
         </p>
@@ -1527,6 +1530,7 @@ export function GuideAccessibilite() {
                             className="underline text-link hover:text-text"
                           >
                             {t.officialLink}
+                            <NewWindowHint />
                           </a>
                         </p>
                       </li>

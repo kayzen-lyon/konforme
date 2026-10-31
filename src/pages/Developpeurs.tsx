@@ -226,7 +226,7 @@ export function Developpeurs() {
 
       <section className="mb-10" aria-labelledby="endpoint-title">
         <h2 id="endpoint-title" className="text-2xl font-bold tracking-tight mb-3">{t.callTitle}</h2>
-        <pre className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
+        <pre tabIndex={0} className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
           <code>{CURL_EXAMPLE}</code>
         </pre>
         <p className="text-sm text-text-dim mt-2">
@@ -236,7 +236,7 @@ export function Developpeurs() {
 
       <section className="mb-10" aria-labelledby="response-title">
         <h2 id="response-title" className="text-2xl font-bold tracking-tight mb-3">{t.responseTitle}</h2>
-        <pre className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
+        <pre tabIndex={0} className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
           <code>{RESPONSE_EXAMPLE}</code>
         </pre>
       </section>
@@ -248,7 +248,7 @@ export function Developpeurs() {
         <p className="text-text-soft leading-relaxed mb-3">
           {t.actionNoteA}<code className="text-primary-soft">.github/workflows/accessibilite.yml</code>{t.actionNoteB}
         </p>
-        <pre className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
+        <pre tabIndex={0} className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
           <code>{ACTION_EXAMPLE}</code>
         </pre>
       </section>

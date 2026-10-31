@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '@/components/ui/logo'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 const L = defineMessages({
   fr: {
@@ -16,7 +17,7 @@ const L = defineMessages({
     developers: 'API & CI (développeurs)',
     about: 'À propos',
     contact: 'Contact',
-    statement: "Déclaration d'accessibilité",
+    statement: 'Accessibilité : partiellement conforme',
     legalNotice: 'Mentions légales',
     terms: 'CGU',
     sales: 'CGV',
@@ -42,7 +43,7 @@ const L = defineMessages({
     developers: 'API & CI (developers)',
     about: 'About',
     contact: 'Contact',
-    statement: 'Accessibility statement',
+    statement: 'Accessibility: partially compliant',
     legalNotice: 'Legal notice',
     terms: 'Terms of use',
     sales: 'Terms of sale',
@@ -68,7 +69,7 @@ const L = defineMessages({
     developers: 'API & CI (für Entwickler)',
     about: 'Über uns',
     contact: 'Kontakt',
-    statement: 'Erklärung zur Barrierefreiheit',
+    statement: 'Barrierefreiheit: teilweise konform',
     legalNotice: 'Impressum',
     terms: 'Nutzungsbedingungen',
     sales: 'Verkaufsbedingungen',
@@ -94,7 +95,7 @@ const L = defineMessages({
     developers: 'API y CI (desarrolladores)',
     about: 'Quiénes somos',
     contact: 'Contacto',
-    statement: 'Declaración de accesibilidad',
+    statement: 'Accesibilidad: parcialmente conforme',
     legalNotice: 'Aviso legal',
     terms: 'Condiciones de uso',
     sales: 'Condiciones de venta',
@@ -120,7 +121,7 @@ const L = defineMessages({
     developers: 'API e CI (sviluppatori)',
     about: 'Chi siamo',
     contact: 'Contatti',
-    statement: 'Dichiarazione di accessibilità',
+    statement: 'Accessibilità: parzialmente conforme',
     legalNotice: 'Note legali',
     terms: 'Condizioni d’uso',
     sales: 'Condizioni di vendita',
@@ -174,7 +175,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="mt-24 bg-navy text-on-navy" role="contentinfo">
+    <footer className="on-navy mt-24 bg-navy text-on-navy" role="contentinfo">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-14">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
@@ -190,9 +191,9 @@ export function Footer() {
           </div>
           {SECTIONS.map((s) => (
             <div key={s.title}>
-              <h3 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-gold mb-4">
+              <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-gold mb-4">
                 {s.title}
-              </h3>
+              </h2>
               <ul className="space-y-2.5">
                 {s.links.map((l) => (
                   <li key={l.to}>
@@ -215,6 +216,7 @@ export function Footer() {
             {t.madeBy}{' '}
             <a href="https://www.kayzen-lyon.com" rel="noopener" target="_blank" className="font-semibold text-gold hover:underline">
               Kayzen Web
+              <NewWindowHint />
             </a>
             .
           </p>

@@ -359,7 +359,7 @@ export function Settings() {
         {plan.id === 'free' && (
           <p className="mt-4 text-sm text-text-muted">
             {t.upgradeQuestion}{' '}
-            <Link to="/tarifs" className="text-link font-semibold hover:underline">
+            <Link to="/tarifs" className="text-link font-semibold underline underline-offset-2 hover:decoration-2">
               {t.discoverPro}
             </Link>
           </p>

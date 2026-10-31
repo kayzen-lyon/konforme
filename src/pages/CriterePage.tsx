@@ -4,6 +4,7 @@ import { Seo } from '@/components/Seo'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 import { localizeCriterion, localizeTopic } from '@/i18n/rgaa-i18n'
 import { RGAA_BY_ID, RGAA_CRITERIA, RGAA_TOPICS, rgaaCriterionUrl } from '@/lib/rgaa'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 /** Remplace les jetons {clé} d'un libellé par leur valeur. */
 function fmt(tpl: string, vars: Record<string, string>): string {
@@ -377,6 +378,7 @@ export function CriterePage() {
           {t.howOfficialA}
           <a href={rgaaCriterionUrl(criterion.id)} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
             {fmt(t.howOfficialLinkTpl, { id: criterion.id })}
+            <NewWindowHint />
           </a>
           {t.howOfficialB}
         </p>
@@ -401,12 +403,12 @@ export function CriterePage() {
 
       <nav className="flex justify-between gap-4 border-t border-border pt-5" aria-label={t.navLabel}>
         {prev ? (
-          <Link to={localizePath(lang, `/rgaa/critere/${prev.id}`)} className="text-sm text-text-muted hover:text-text hover:underline">
+          <Link to={localizePath(lang, `/rgaa/critere/${prev.id}`)} className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-text hover:bg-raise hover:text-primary">
             {fmt(t.prevTpl, { id: prev.id })}
           </Link>
         ) : <span />}
         {next ? (
-          <Link to={localizePath(lang, `/rgaa/critere/${next.id}`)} className="text-sm text-text-muted hover:text-text hover:underline">
+          <Link to={localizePath(lang, `/rgaa/critere/${next.id}`)} className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-text hover:bg-raise hover:text-primary">
             {fmt(t.nextTpl, { id: next.id })}
           </Link>
         ) : <span />}

@@ -178,7 +178,7 @@ export function About() {
           {t.p3a}
           <strong className="text-text">KAYZEN</strong>
           {t.p3b}
-          <Link to={localizePath(lang, '/accessibilite')} className="text-link hover:underline">
+          <Link to={localizePath(lang, '/accessibilite')} className="text-link underline underline-offset-2 hover:decoration-2">
             {t.p3link}
           </Link>
           {t.p3c}

@@ -7,6 +7,7 @@ import { buttonVariants } from '@/components/ui/button-variants'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 const NAV_PATHS = ['/', '/tarifs', '/blog', '/rgaa', '/guide-accessibilite', '/a-propos'] as const
 
@@ -20,7 +21,7 @@ const L = defineMessages({
       guide: 'Guide EAA',
       about: 'À propos',
     },
-    homeAria: 'Konforme accueil',
+    homeAria: '(accueil)',
     mainNav: 'Navigation principale',
     mobileNav: 'Navigation mobile',
     contact: 'Contact',
@@ -46,7 +47,7 @@ const L = defineMessages({
       guide: 'EAA guide',
       about: 'About',
     },
-    homeAria: 'Konforme home',
+    homeAria: '(home)',
     mainNav: 'Main navigation',
     mobileNav: 'Mobile navigation',
     contact: 'Contact',
@@ -72,7 +73,7 @@ const L = defineMessages({
       guide: 'EAA-Leitfaden',
       about: 'Über uns',
     },
-    homeAria: 'Konforme Startseite',
+    homeAria: '(Startseite)',
     mainNav: 'Hauptnavigation',
     mobileNav: 'Mobile Navigation',
     contact: 'Kontakt',
@@ -98,7 +99,7 @@ const L = defineMessages({
       guide: 'Guía EAA',
       about: 'Quiénes somos',
     },
-    homeAria: 'Konforme inicio',
+    homeAria: '(inicio)',
     mainNav: 'Navegación principal',
     mobileNav: 'Navegación móvil',
     contact: 'Contacto',
@@ -124,7 +125,7 @@ const L = defineMessages({
       guide: 'Guida EAA',
       about: 'Chi siamo',
     },
-    homeAria: 'Konforme home',
+    homeAria: '(home)',
     mainNav: 'Navigazione principale',
     mobileNav: 'Navigazione mobile',
     contact: 'Contatti',
@@ -195,19 +196,38 @@ export function Header() {
     drawerFirstBtn.current?.focus()
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') setContactOpen(false)
+      // Fenêtre modale : la tabulation boucle dans le panneau (RGAA 7.1, ARIA APG)
+      if (e.key !== 'Tab') return
+      const panel = document.getElementById('kf-contact-drawer')
+      const items = panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+      if (!items?.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => {
       window.removeEventListener('keydown', onKey)
-      lastFocus.current?.focus?.()
+      // Safari ne donne pas le focus à un bouton cliqué : repli sur le déclencheur
+      const back = lastFocus.current && lastFocus.current !== document.body
+        ? lastFocus.current
+        : document.querySelector<HTMLElement>('[aria-controls="kf-contact-drawer"]')
+      back?.focus?.()
     }
   }, [contactOpen])
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-bg/90 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link to={localizePath(lang, '/')} className="flex items-center rounded-lg" aria-label={t.homeAria}>
+        <Link to={localizePath(lang, '/')} className="flex items-center rounded-lg">
           <Logo />
+          <span className="sr-only"> {t.homeAria}</span>
         </Link>
 
         <nav className="hidden xl:flex items-center gap-1" aria-label={t.mainNav}>
@@ -365,9 +385,9 @@ export function Header() {
             <div className="p-5 space-y-4">
               <p className="text-sm text-text-soft leading-relaxed">
                 6 rue Pierre Termier, 69009 Lyon —{' '}
-                <a className="text-link hover:underline" href="tel:+33487776861">+33 (0)4 87 77 68 61</a>
+                <a className="text-link underline underline-offset-2 hover:decoration-2" href="tel:+33487776861">+33 (0)4 87 77 68 61</a>
                 <br />
-                <a className="text-link hover:underline" href="mailto:contact@kayzen-lyon.fr">contact@kayzen-lyon.fr</a>
+                <a className="text-link underline underline-offset-2 hover:decoration-2" href="mailto:contact@kayzen-lyon.fr">contact@kayzen-lyon.fr</a>
               </p>
 
               <div className="grid grid-cols-2 gap-3">
@@ -392,9 +412,11 @@ export function Header() {
                 </a>
                 <a className="inline-flex h-12 items-center justify-center rounded-full border-2 border-text/15 px-6 font-display text-sm font-bold hover:bg-raise" href="https://www.google.com/maps/search/?api=1&query=KAYZEN+6+rue+Pierre+Termier+69009+Lyon" rel="noopener" target="_blank">
                   {t.mapsRoute}
+                  <NewWindowHint />
                 </a>
                 <a className="inline-flex h-12 items-center justify-center rounded-full border-2 border-text/15 px-6 font-display text-sm font-bold hover:bg-raise" href="https://www.google.com/search?q=KAYZEN+Lyon+avis" rel="noopener" target="_blank">
                   {t.seeReviews}
+                  <NewWindowHint />
                 </a>
               </div>
             </div>

@@ -81,9 +81,13 @@ function PublicShellLang() {
   const { lang } = useParams<{ lang: string }>()
   if (!isLang(lang)) {
     return (
-      <Suspense fallback={<PageLoader />}>
-        <NotFound />
-      </Suspense>
+      <LangProvider lang="fr">
+        <PublicLayout>
+          <Suspense fallback={<PageLoader />}>
+            <NotFound />
+          </Suspense>
+        </PublicLayout>
+      </LangProvider>
     )
   }
   return (

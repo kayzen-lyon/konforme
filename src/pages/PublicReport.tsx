@@ -14,6 +14,7 @@ import { formatDate, scoreColor, severityLabel, SEVERITY_META } from '@/lib/form
 import { fetchSharedReport } from '@/lib/queries'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 import { localizeIssueTitle } from '@/i18n/rules-i18n'
+import { NewWindowHint } from '@/components/ui/new-window'
 
 const SEVERITY_ORDER: Severity[] = ['critical', 'serious', 'moderate', 'minor']
 
@@ -269,6 +270,7 @@ export function PublicReport() {
           {data.site.url && (
             <a href={data.site.url} target="_blank" rel="noreferrer" className="underline hover:text-text">
               {data.site.url}
+              <NewWindowHint />
             </a>
           )}{' '}
           {t.auditLine(formatDate(data.scan.created_at, true, lang), data.scan.pages_count)}

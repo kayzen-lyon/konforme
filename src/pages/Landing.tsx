@@ -508,11 +508,19 @@ const L = defineMessages({
 function AnimatedWord() {
   const t = useMessages(L)
   const [i, setI] = useState(0)
+  const last = t.heroWords.length - 1
   useEffect(() => {
+    // Une seule passe de moins de 5 s puis arrêt : pas de mouvement continu
+    // à mettre en pause (WCAG 2.2.2, RGAA 13.8).
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = setInterval(() => setI((v) => (v + 1) % 4), 2400)
+    const id = setInterval(() => {
+      setI((v) => {
+        if (v + 1 >= last) clearInterval(id)
+        return Math.min(v + 1, last)
+      })
+    }, 1400)
     return () => clearInterval(id)
-  }, [])
+  }, [last])
   return (
     <>
       <span className="sr-only">{t.heroWordsSr}</span>
@@ -761,7 +769,7 @@ export function Landing() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="rounded-[24px] bg-navy px-6 py-16 md:px-16 text-center">
+        <div className="on-navy rounded-[24px] bg-navy px-6 py-16 md:px-16 text-center">
           <h2 className="text-3xl md:text-[2.75rem] font-extrabold text-balance text-white mb-5">
             {t.finalTitle}
           </h2>
