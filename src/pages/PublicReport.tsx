@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ScoreRing } from '@/components/ScoreRing'
@@ -241,9 +241,7 @@ export function PublicReport() {
         <p className="text-text-muted mb-6">
           {t.notFoundDesc}
         </p>
-        <Link to={localizePath(lang, '/')}>
-          <Button variant="primary">{t.notFoundCta}</Button>
-        </Link>
+        <Link to={localizePath(lang, '/')} className={buttonVariants()}>{t.notFoundCta}</Link>
       </div>
     )
   }
@@ -269,7 +267,7 @@ export function PublicReport() {
         </h1>
         <p className="text-text-muted mt-1">
           {data.site.url && (
-            <a href={data.site.url} target="_blank" rel="noreferrer" className="underline hover:text-white">
+            <a href={data.site.url} target="_blank" rel="noreferrer" className="underline hover:text-text">
               {data.site.url}
             </a>
           )}{' '}
@@ -306,7 +304,7 @@ export function PublicReport() {
           <h2 className="text-lg font-bold mb-4">{t.pageScoresTitle}</h2>
           <ul className="space-y-2">
             {data.scan.page_scores!.map((p) => (
-              <li key={p.url} className="flex items-center gap-3 rounded-[10px] border border-border px-4 py-2.5 text-sm">
+              <li key={p.url} className="flex items-center gap-3 rounded-[12px] border border-border px-4 py-2.5 text-sm">
                 <span className="shrink-0 font-bold tabular-nums w-12 text-right" style={{ color: scoreColor(p.score) }}>
                   {p.score !== null ? `${Math.round(p.score)}%` : '—'}
                 </span>
@@ -340,7 +338,7 @@ export function PublicReport() {
               open
                 .filter((i) => i.severity === sev)
                 .map((i) => (
-                  <li key={i.id} className="flex items-center gap-3 rounded-[10px] border border-border px-4 py-2.5 text-sm">
+                  <li key={i.id} className="flex items-center gap-3 rounded-[12px] border border-border px-4 py-2.5 text-sm">
                     <Badge className={`${SEVERITY_META[i.severity].className} shrink-0`}>
                       {severityLabel(lang, i.severity)}
                     </Badge>
@@ -362,9 +360,7 @@ export function PublicReport() {
         <p className="text-sm text-text-muted mb-4">
           {t.footerText}
         </p>
-        <Link to={localizePath(lang, '/')}>
-          <Button variant="primary">{t.footerCta}</Button>
-        </Link>
+        <Link to={localizePath(lang, '/')} className={buttonVariants()}>{t.footerCta}</Link>
       </Card>
     </div>
   )

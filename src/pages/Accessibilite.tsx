@@ -195,8 +195,8 @@ export function Accessibilite() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-14">
       <Seo title={t.seoTitle} description={t.seoDescription} path="/accessibilite" localized />
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.eyebrow}</p>
-      <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-6">{t.h1}</h1>
+      <p className="eyebrow mb-5">{t.eyebrow}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-6">{t.h1}</h1>
 
       <div className="space-y-4 text-text-soft leading-relaxed">
         <p>
@@ -210,14 +210,14 @@ export function Accessibilite() {
         </p>
       </div>
 
-      <h2 className="text-xl font-bold tracking-tight mt-10 mb-3">{t.statusTitle}</h2>
+      <h2 className="text-2xl font-bold mt-12 mb-4">{t.statusTitle}</h2>
       <p className="text-text-soft leading-relaxed mb-4">
         {t.statusA}
         <strong className="text-text">{t.statusStrong}</strong>
         {t.statusB}
       </p>
 
-      <h2 className="text-xl font-bold tracking-tight mt-10 mb-3">{t.testsTitle}</h2>
+      <h2 className="text-2xl font-bold mt-12 mb-4">{t.testsTitle}</h2>
       <p className="text-text-soft leading-relaxed mb-4">{t.testsIntro}</p>
       <ul className="space-y-2 text-text-soft leading-relaxed list-disc pl-5 mb-4">
         {t.testsItems.map((item) => (
@@ -225,10 +225,10 @@ export function Accessibilite() {
         ))}
       </ul>
 
-      <h2 className="text-xl font-bold tracking-tight mt-10 mb-3">{t.statementTitle}</h2>
+      <h2 className="text-2xl font-bold mt-12 mb-4">{t.statementTitle}</h2>
       <p className="text-text-soft leading-relaxed mb-4">{t.statementText}</p>
 
-      <h2 className="text-xl font-bold tracking-tight mt-10 mb-3">{t.feedbackTitle}</h2>
+      <h2 className="text-2xl font-bold mt-12 mb-4">{t.feedbackTitle}</h2>
       <p className="text-text-soft leading-relaxed mb-4">
         {t.feedbackA}
         <a href="mailto:contact@kayzen-lyon.fr" className="text-link hover:underline">
@@ -237,7 +237,7 @@ export function Accessibilite() {
         {t.feedbackB}
       </p>
 
-      <h2 className="text-xl font-bold tracking-tight mt-10 mb-3">{t.recourseTitle}</h2>
+      <h2 className="text-2xl font-bold mt-12 mb-4">{t.recourseTitle}</h2>
       <p className="text-text-soft leading-relaxed mb-4">{t.recourseIntro}</p>
       <ul className="space-y-2 text-text-soft leading-relaxed list-disc pl-5">
         <li>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { ORGANIZATION_JSONLD, Seo } from '@/components/Seo'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 
@@ -169,8 +169,8 @@ export function About() {
         localized
         jsonLd={[ORGANIZATION_JSONLD]}
       />
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.eyebrow}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-6">{t.h1}</h1>
+      <p className="eyebrow mb-5">{t.eyebrow}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-6">{t.h1}</h1>
       <div className="space-y-5 text-text-soft leading-relaxed text-lg">
         <p>{t.p1}</p>
         <p>{t.p2}</p>
@@ -196,12 +196,8 @@ export function About() {
       </ul>
 
       <div className="mt-12 flex flex-wrap gap-3">
-        <Link to="/login">
-          <Button variant="primary">{t.ctaTry}</Button>
-        </Link>
-        <Link to={localizePath(lang, '/contact')}>
-          <Button variant="ghost">{t.ctaContact}</Button>
-        </Link>
+        <Link to="/login" className={buttonVariants()}>{t.ctaTry}</Link>
+        <Link to={localizePath(lang, '/contact')} className={buttonVariants({ variant: 'ghost' })}>{t.ctaContact}</Link>
       </div>
     </div>
   )

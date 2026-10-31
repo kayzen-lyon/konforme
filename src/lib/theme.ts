@@ -13,7 +13,7 @@ export function getStoredTheme(): Theme | null {
 }
 
 export function getCurrentTheme(): Theme {
-  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark'
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
 }
 
 export function applyTheme(theme: Theme): void {

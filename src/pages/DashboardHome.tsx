@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { useAuth } from '@/contexts/AuthContext'
 import { countCriticalIssues, useAlerts, useMarkAlertRead, useMembership, useScans, useSites } from '@/lib/queries'
@@ -268,14 +269,12 @@ export function DashboardHome() {
       <Seo title={t.seoTitle} description={t.seoDesc} path="/dashboard" noindex />
       <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold">
             {t.hello} <span className="gradient-text">{name}</span>
           </h1>
           <p className="text-text-muted mt-1">{t.subtitle}</p>
         </div>
-        <Link to="/dashboard/sites">
-          <Button variant="primary">{t.addSite}</Button>
-        </Link>
+        <Link to="/dashboard/sites" className={buttonVariants()}>{t.addSite}</Link>
       </header>
 
       {unreadAlerts.length > 0 && (
@@ -289,9 +288,7 @@ export function DashboardHome() {
               <span aria-hidden="true" className="text-lg">⚠️</span>
               <span className="min-w-0 flex-1 text-sm text-text-soft">{a.message}</span>
               {a.scan_id && (
-                <Link to={`/dashboard/scans/${a.scan_id}`}>
-                  <Button size="sm" variant="outline">{t.viewReport}</Button>
-                </Link>
+                <Link to={`/dashboard/scans/${a.scan_id}`} className={buttonVariants({ variant: 'outline', size: 'sm' })}>{t.viewReport}</Link>
               )}
               <Button
                 size="sm"
@@ -339,7 +336,7 @@ export function DashboardHome() {
           <p className="text-sm text-text-muted mb-4">
             {t.chartDesc(chartData.length)}
           </p>
-          <Suspense fallback={<div className="h-[260px] rounded-[10px] bg-raise animate-pulse" aria-hidden="true" />}>
+          <Suspense fallback={<div className="h-[260px] rounded-[12px] bg-raise animate-pulse" aria-hidden="true" />}>
             <ScoreChart data={chartData} />
           </Suspense>
         </Card>
@@ -360,7 +357,7 @@ export function DashboardHome() {
             ].map((step, i) => (
               <li key={step.title} className="flex gap-4 items-start">
                 <span
-                  className="size-8 shrink-0 rounded-[10px] bg-gradient-to-br from-primary to-accent-deep flex items-center justify-center text-white text-sm font-bold"
+                  className="size-8 shrink-0 rounded-[12px] bg-primary flex items-center justify-center text-on-primary text-sm font-bold"
                   aria-hidden="true"
                 >
                   {i + 1}
@@ -373,9 +370,7 @@ export function DashboardHome() {
             ))}
           </ol>
           <div className="mt-6">
-            <Link to="/dashboard/sites">
-              <Button variant="primary">{t.startCta}</Button>
-            </Link>
+            <Link to="/dashboard/sites" className={buttonVariants()}>{t.startCta}</Link>
           </div>
         </Card>
       )}

@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card'
 
 const ScoreChart = lazy(() => import('@/components/ScoreChart'))
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useMembership, useScans, useSites } from '@/lib/queries'
@@ -186,7 +186,7 @@ export function Scans() {
       <Seo title={t.seoTitle} description={t.seoDesc} path="/dashboard/scans" noindex />
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+          <h1 className="text-3xl font-extrabold">{t.title}</h1>
           <p className="text-text-muted mt-1">{t.subtitle}</p>
         </div>
         <div>
@@ -198,7 +198,7 @@ export function Scans() {
               const v = e.target.value
               setParams(v ? { site: v } : {})
             }}
-            className="rounded-[10px] border border-border-strong bg-bg px-3 py-2 text-sm text-text"
+            className="rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
           >
             <option value="">{t.allSites}</option>
             {sites?.map((s) => (
@@ -223,9 +223,7 @@ export function Scans() {
           <p className="text-sm text-text-muted mb-6">
             {t.emptyDesc}
           </p>
-          <Link to="/dashboard/sites">
-            <Button variant="primary">{t.emptyCta}</Button>
-          </Link>
+          <Link to="/dashboard/sites" className={buttonVariants()}>{t.emptyCta}</Link>
         </Card>
       )}
 

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { ORGANIZATION_JSONLD, Seo, SOFTWARE_JSONLD } from '@/components/Seo'
 import { PublicChecker } from '@/components/PublicChecker'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
+import { cn } from '@/lib/utils'
 
 const L = defineMessages({
   fr: {
@@ -515,7 +516,7 @@ function AnimatedWord() {
   return (
     <>
       <span className="sr-only">{t.heroWordsSr}</span>
-      <span aria-hidden="true" className="text-link inline-block min-w-[7ch]">
+      <span aria-hidden="true" className="inline-block min-w-[7ch] underline decoration-primary decoration-[0.08em] underline-offset-[0.12em]">
         {t.heroWords[i % t.heroWords.length]}
       </span>
     </>
@@ -545,16 +546,16 @@ function ProductMockup() {
   }
   return (
     <div aria-hidden="true" className="relative select-none">
-      <div className="rounded-[16px] border border-border bg-bg-deep shadow-[0_30px_80px_rgba(0,0,0,0.5)] overflow-hidden">
-        <div className="flex items-center gap-1.5 border-b border-border bg-surface px-4 py-2.5">
-          <span className="size-2.5 rounded-full bg-danger/70" />
-          <span className="size-2.5 rounded-full bg-warning/70" />
-          <span className="size-2.5 rounded-full bg-success/70" />
-          <span className="ml-3 flex-1 truncate rounded-[6px] bg-bg px-3 py-1 text-[0.65rem] text-text-dim">
+      <div className="rounded-[24px] border border-border bg-surface shadow-card overflow-hidden">
+        <div className="flex items-center gap-1.5 border-b border-border bg-surface-2 px-5 py-3">
+          <span className="size-2.5 rounded-full bg-border-strong/50" />
+          <span className="size-2.5 rounded-full bg-border-strong/50" />
+          <span className="size-2.5 rounded-full bg-border-strong/50" />
+          <span className="ml-3 flex-1 truncate rounded-full bg-surface px-3 py-1 text-[0.65rem] text-text-dim">
             {t.mockUrl}
           </span>
         </div>
-        <div className="p-5">
+        <div className="p-6">
           <div className="flex items-center gap-4">
             {ring(87, 'var(--color-success)')}
             <div className="flex-1 space-y-2">
@@ -572,19 +573,19 @@ function ProductMockup() {
               { c: 'bg-warning-bg/70 text-warning-soft', label: t.mockSev.moderate, w: 'w-2/3' },
               { c: 'bg-info-bg/70 text-info-soft', label: t.mockSev.minor, w: 'w-1/2' },
             ].map((row) => (
-              <div key={row.label} className="flex items-center gap-2.5 rounded-[10px] border border-border px-3 py-2">
+              <div key={row.label} className="flex items-center gap-2.5 rounded-[12px] border border-border px-3 py-2">
                 <span className={`rounded-full px-2 py-0.5 text-[0.6rem] font-bold ${row.c}`}>{row.label}</span>
                 <span className={`h-2 rounded bg-border ${row.w}`} />
               </div>
             ))}
           </div>
-          <div className="mt-4 flex items-center justify-between rounded-[10px] border border-success/30 bg-success-bg/25 px-3 py-2">
+          <div className="mt-4 flex items-center justify-between rounded-[12px] border border-success/30 bg-success-bg/25 px-3 py-2">
             <span className="text-[0.65rem] font-semibold text-success-soft">{t.mockDeclaration}</span>
             <span className="text-[0.65rem] font-bold text-success">{t.mockReady}</span>
           </div>
         </div>
       </div>
-      <div className="absolute -bottom-4 -left-4 rounded-[12px] border border-border bg-surface px-3.5 py-2 shadow-xl">
+      <div className="absolute -bottom-5 -left-5 rounded-full border border-border bg-surface px-4 py-2.5 shadow-lift">
         <span className="text-[0.65rem] text-text-dim">{t.mockMonitoring}</span>
         <span className="ml-2 text-[0.65rem] font-bold text-success">{t.mockWeekly}</span>
       </div>
@@ -637,30 +638,31 @@ export function Landing() {
       />
 
       <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 pt-16 pb-16 md:pt-24 md:pb-24 grid items-center gap-12 lg:grid-cols-2">
-          <div className="text-center lg:text-left">
-            <p className="inline-block rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-link uppercase mb-6">
-              {t.badge}
-            </p>
-            <h1 className="gradient-text text-balance text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.08] mb-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-14 pb-16 md:pt-20 md:pb-24 grid items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
+          <div>
+            <p className="eyebrow mb-6">{t.badge}</p>
+            <h1 className="text-balance text-[2.5rem] sm:text-5xl md:text-6xl xl:text-[4.25rem] font-extrabold mb-7">
               {t.heroBefore}<AnimatedWord />
               <br />
-              {t.heroAfter}
+              <span className="text-primary">{t.heroAfter}</span>
             </h1>
-            <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed text-balance">
+            <p className="text-lg md:text-xl text-text-muted max-w-2xl mb-9 leading-relaxed">
               {t.heroLead}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-8">
-              <a href="#checker">
-                <Button size="lg" variant="primary">{t.ctaTest}</Button>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
+              <a href="#checker" className={buttonVariants({ size: 'lg' })}>
+                {t.ctaTest}
+                <IconArrow />
               </a>
-              <Link to="/login">
-                <Button size="lg" variant="ghost">{t.ctaSignup}</Button>
+              <Link to="/login" className={buttonVariants({ size: 'lg', variant: 'ghost' })}>
+                {t.ctaSignup}
               </Link>
             </div>
-            <ul className="flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-xs font-semibold text-text-muted">
+            <ul className="flex flex-wrap gap-2">
               {t.points.map((p) => (
-                <li key={p} className="inline-flex items-center gap-1.5"><CheckDot /> {p}</li>
+                <li key={p} className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm text-text">
+                  <CheckDot /> {p}
+                </li>
               ))}
             </ul>
           </div>
@@ -670,29 +672,33 @@ export function Landing() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-16" aria-labelledby="checker-title">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-16" aria-labelledby="checker-title">
         <h2 id="checker-title" className="sr-only">{t.checkerTitle}</h2>
         <PublicChecker />
       </section>
 
-      <section className="border-y border-border/60 bg-bg-deep/60 mb-16" aria-label={t.statsLabel}>
-        <dl className="mx-auto max-w-6xl px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      {/* Chiffres clés : bande bleu nuit, comme le bloc de preuves de kayzen-lyon.com */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 mb-24" aria-label={t.statsLabel}>
+        <dl className="grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-[24px] bg-white/10 text-center">
           {t.stats.map((s) => (
-            <div key={s.l}>
-              <dt className="order-2 text-xs text-text-dim mt-1">{s.l}</dt>
-              <dd className="order-1 text-2xl md:text-3xl font-extrabold gradient-text">{s.v}</dd>
+            <div key={s.l} className="flex flex-col bg-navy px-4 py-8">
+              <dt className="order-2 mt-1.5 text-sm text-white/75">{s.l}</dt>
+              <dd className="order-1 font-display text-3xl md:text-4xl font-extrabold tracking-[-0.03em] text-white">{s.v}</dd>
             </div>
           ))}
         </dl>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-20" aria-labelledby="features-title">
-        <h2 id="features-title" className="sr-only">{t.featuresTitle}</h2>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-24" aria-labelledby="features-title">
+        <div className="mb-12 text-center">
+          <p className="eyebrow mb-4">EAA · RGAA · WCAG</p>
+          <h2 id="features-title" className="text-3xl md:text-[2.75rem] font-extrabold text-balance">{t.featuresTitle}</h2>
+        </div>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f) => (
-            <Card key={f.title} className="hover:-translate-y-1 transition-transform">
+            <Card key={f.title} className="transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-card">
               <CardContent>
-                <div className="mb-4 inline-flex size-11 items-center justify-center rounded-[12px] bg-primary/15 border border-primary/30 text-primary-soft">
+                <div className="mb-5 inline-flex size-12 items-center justify-center rounded-[16px] bg-primary/10 text-primary">
                   {f.icon}
                 </div>
                 <CardTitle className="mb-2">{f.title}</CardTitle>
@@ -703,28 +709,30 @@ export function Landing() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 pb-20" aria-labelledby="how-title">
-        <h2 id="how-title" className="text-3xl font-bold tracking-tight text-center mb-10">
-          {t.howTitle}
-        </h2>
-        <ol className="grid gap-6 md:grid-cols-3">
-          {t.steps.map((s) => (
-            <li key={s.t} className="rounded-[14px] border border-border bg-surface/60 p-6">
-              <h3 className="font-bold mb-2">{s.t}</h3>
-              <p className="text-sm text-text-muted leading-relaxed">{s.d}</p>
-            </li>
-          ))}
-        </ol>
+      <section className="bg-surface-2 py-20 mb-24" aria-labelledby="how-title">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <h2 id="how-title" className="text-3xl md:text-[2.75rem] font-extrabold text-center mb-12">
+            {t.howTitle}
+          </h2>
+          <ol className="grid gap-6 md:grid-cols-3">
+            {t.steps.map((s) => (
+              <li key={s.t} className="glass-card p-8">
+                <h3 className="text-xl font-bold mb-3">{s.t}</h3>
+                <p className="text-text-muted leading-relaxed">{s.d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 pb-20" aria-labelledby="faq-title">
-        <h2 id="faq-title" className="text-3xl font-bold tracking-tight text-center mb-8">
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 pb-24" aria-labelledby="faq-title">
+        <h2 id="faq-title" className="text-3xl md:text-[2.75rem] font-extrabold text-center mb-10">
           {t.faqTitle}
         </h2>
         <div className="space-y-3">
           {FAQ.map((f) => (
-            <details key={f.q} className="group rounded-[12px] border border-border bg-surface/60 px-5 py-1">
-              <summary className="cursor-pointer py-3.5 font-semibold list-none flex items-center justify-between gap-3">
+            <details key={f.q} className="group rounded-[16px] border border-border bg-surface px-6 py-1 open:shadow-micro">
+              <summary className="cursor-pointer py-4 font-display text-lg font-semibold list-none flex items-center justify-between gap-3 hover:text-primary">
                 {f.q}
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" className="shrink-0 transition-transform group-open:rotate-180">
                   <path d="M6 9l6 6 6-6" />
@@ -736,41 +744,52 @@ export function Landing() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-16" aria-labelledby="trust-title">
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 pb-16" aria-labelledby="trust-title">
         <h2 id="trust-title" className="sr-only">{t.trustTitle}</h2>
-        <div className="rounded-[16px] border border-border bg-bg-deep/60 px-6 py-6 md:px-10 flex flex-col md:flex-row items-center gap-5 text-center md:text-left">
+        <div className="rounded-[24px] border border-border bg-surface-2 px-6 py-7 md:px-10 flex flex-col md:flex-row items-center gap-5 text-center md:text-left">
           <span aria-hidden="true" className="text-3xl">🇫🇷</span>
           <div className="flex-1">
-            <p className="font-bold">{t.trustHeadline}</p>
+            <p className="font-display text-lg font-bold">{t.trustHeadline}</p>
             <p className="text-sm text-text-muted mt-1">
               {t.trustBody}
             </p>
           </div>
-          <Link to={localizePath(lang, '/a-propos')} className="shrink-0">
-            <Button variant="ghost">{t.trustCta}</Button>
+          <Link to={localizePath(lang, '/a-propos')} className={cn(buttonVariants({ variant: 'ghost' }), 'shrink-0')}>
+            {t.trustCta}
           </Link>
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-balance mb-4">
-          {t.finalTitle}
-        </h2>
-        <p className="text-text-muted mb-8 max-w-xl mx-auto">
-          {t.finalBody}
-        </p>
-        <Link to="/login">
-          <Button size="lg" variant="primary">{t.finalCta}</Button>
-        </Link>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="rounded-[24px] bg-navy px-6 py-16 md:px-16 text-center">
+          <h2 className="text-3xl md:text-[2.75rem] font-extrabold text-balance text-white mb-5">
+            {t.finalTitle}
+          </h2>
+          <p className="text-lg text-white/75 mb-9 max-w-xl mx-auto">
+            {t.finalBody}
+          </p>
+          <Link to="/login" className={buttonVariants({ size: 'lg' })}>
+            {t.finalCta}
+            <IconArrow />
+          </Link>
+        </div>
       </section>
     </>
   )
 }
 
 /* Icônes SVG inline (stroke currentColor, décoratives) */
+function IconArrow() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  )
+}
+
 function CheckDot() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" strokeWidth="3" strokeLinecap="round" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="3" strokeLinecap="round" aria-hidden="true">
       <path d="M5 13l4 4L19 7" />
     </svg>
   )

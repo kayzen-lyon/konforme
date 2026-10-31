@@ -137,7 +137,7 @@ function shieldSvg(rate: number, date: string, lang: Lang): string {
   const w = leftW + rightW
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="42" viewBox="0 0 ${w} 42" role="img" aria-label="${label}${T.sep}${value}, ${sub}">
   <title>${label}${T.sep}${value} — ${sub}</title>
-  <rect width="${w}" height="42" rx="8" fill="#1f2437"/>
+  <rect width="${w}" height="42" rx="8" fill="#132944"/>
   <rect x="${leftW}" width="${rightW}" height="42" rx="8" fill="${bg}"/>
   <rect x="${leftW}" width="10" height="42" fill="${bg}"/>
   <g ${FONT} text-anchor="middle">
@@ -159,8 +159,8 @@ function roundSvg(rate: number, date: string, lang: Lang): string {
   const filled = (c * Math.min(Math.max(rate, 0), 100)) / 100
   return `<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72" role="img" aria-label="${label}${T.sep}${T.pctCompliance(Math.round(rate))}, ${sub}">
   <title>${label}${T.sep}${T.pct(Math.round(rate))} — ${sub}</title>
-  <circle cx="36" cy="36" r="34" fill="#1f2437"/>
-  <circle cx="36" cy="36" r="${r}" fill="none" stroke="#3a4160" stroke-width="6"/>
+  <circle cx="36" cy="36" r="34" fill="#132944"/>
+  <circle cx="36" cy="36" r="${r}" fill="none" stroke="#2c4466" stroke-width="6"/>
   <circle cx="36" cy="36" r="${r}" fill="none" stroke="${bg}" stroke-width="6" stroke-linecap="round"
     stroke-dasharray="${filled.toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 36 36)"/>
   <g ${FONT} text-anchor="middle" fill="#ffffff">

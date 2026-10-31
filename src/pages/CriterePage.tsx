@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 import { localizeCriterion, localizeTopic } from '@/i18n/rgaa-i18n'
@@ -284,7 +284,7 @@ export function CriterePage() {
         <Seo title={t.notFoundSeoTitle} description={t.notFoundSeoDescription} path="/rgaa" noindex />
         <h1 className="text-2xl font-bold mb-3">{t.notFoundTitle}</h1>
         <p className="text-text-muted mb-6">{t.notFoundText}</p>
-        <Link to={localizePath(lang, '/rgaa')}><Button variant="primary">{t.notFoundButton}</Button></Link>
+        <Link to={localizePath(lang, '/rgaa')} className={buttonVariants()}>{t.notFoundButton}</Link>
       </div>
     )
   }
@@ -325,17 +325,17 @@ export function CriterePage() {
       />
 
       <nav aria-label={t.breadcrumbLabel} className="text-sm text-text-dim mb-3">
-        <Link to={localizePath(lang, '/rgaa')} className="hover:text-white hover:underline">RGAA</Link>
+        <Link to={localizePath(lang, '/rgaa')} className="hover:text-text hover:underline">RGAA</Link>
         {' / '}
         <span>{topic.id}. {topicL10n.name}</span>
         {' / '}
         <span aria-current="page">{fmt(t.breadcrumbCurrentTpl, { id: criterion.id })}</span>
       </nav>
 
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">
+      <p className="eyebrow mb-5">
         {fmt(t.kickerTpl, { topicId: String(topic.id), topicName: topicL10n.name, level: criterion.level })}
       </p>
-      <h1 className="text-3xl font-extrabold tracking-tight mb-6">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-balance mb-6">
         {fmt(t.h1Tpl, { id: criterion.id, title: criterionL10n.title })}
       </h1>
 
@@ -363,7 +363,7 @@ export function CriterePage() {
         <h2 id="cadre" className="text-xl font-bold tracking-tight mb-3">{t.legalTitle}</h2>
         <p className="text-text-soft leading-relaxed">
           {t.legalTextA}
-          <Link to={localizePath(lang, '/guide-accessibilite')} className="underline text-link hover:text-white">
+          <Link to={localizePath(lang, '/guide-accessibilite')} className="underline text-link hover:text-text">
             {t.legalLink}
           </Link>
           {t.legalTextB}
@@ -375,14 +375,12 @@ export function CriterePage() {
         <p className="text-text-soft leading-relaxed mb-4">
           {criterion.coverage === 'manual' ? t.howManual : t.howAuto}
           {t.howOfficialA}
-          <a href={rgaaCriterionUrl(criterion.id)} target="_blank" rel="noreferrer" className="underline text-link hover:text-white">
+          <a href={rgaaCriterionUrl(criterion.id)} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
             {fmt(t.howOfficialLinkTpl, { id: criterion.id })}
           </a>
           {t.howOfficialB}
         </p>
-        <Link to={localizePath(lang, '/')}>
-          <Button variant="primary">{t.ctaButton}</Button>
-        </Link>
+        <Link to={localizePath(lang, '/')} className={buttonVariants()}>{t.ctaButton}</Link>
       </section>
 
       <section className="mb-8" aria-labelledby="theme">
@@ -393,7 +391,7 @@ export function CriterePage() {
         <ul className="space-y-1.5">
           {siblings.map((c) => (
             <li key={c.id}>
-              <Link to={localizePath(lang, `/rgaa/critere/${c.id}`)} className="text-sm text-text-soft underline hover:text-white">
+              <Link to={localizePath(lang, `/rgaa/critere/${c.id}`)} className="text-sm text-text-soft underline hover:text-text">
                 {fmt(t.siblingTpl, { id: c.id, title: localizeCriterion(lang, c).title })}
               </Link>
             </li>
@@ -403,12 +401,12 @@ export function CriterePage() {
 
       <nav className="flex justify-between gap-4 border-t border-border pt-5" aria-label={t.navLabel}>
         {prev ? (
-          <Link to={localizePath(lang, `/rgaa/critere/${prev.id}`)} className="text-sm text-text-muted hover:text-white hover:underline">
+          <Link to={localizePath(lang, `/rgaa/critere/${prev.id}`)} className="text-sm text-text-muted hover:text-text hover:underline">
             {fmt(t.prevTpl, { id: prev.id })}
           </Link>
         ) : <span />}
         {next ? (
-          <Link to={localizePath(lang, `/rgaa/critere/${next.id}`)} className="text-sm text-text-muted hover:text-white hover:underline">
+          <Link to={localizePath(lang, `/rgaa/critere/${next.id}`)} className="text-sm text-text-muted hover:text-text hover:underline">
             {fmt(t.nextTpl, { id: next.id })}
           </Link>
         ) : <span />}

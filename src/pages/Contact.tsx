@@ -152,8 +152,8 @@ export function Contact() {
         localized
         jsonLd={[ORGANIZATION_JSONLD]}
       />
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.eyebrow}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-4">{t.h1}</h1>
+      <p className="eyebrow mb-5">{t.eyebrow}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-5">{t.h1}</h1>
       <p className="text-lg text-text-muted mb-10">{t.intro}</p>
 
       <div className="grid gap-6 md:grid-cols-[1.2fr_1fr]">
@@ -168,7 +168,7 @@ export function Contact() {
                 type="text"
                 required
                 autoComplete="name"
-                className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text"
+                className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
               />
             </div>
             <div>
@@ -176,7 +176,7 @@ export function Contact() {
               <select
                 id="ct-subject"
                 name="subject"
-                className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text"
+                className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
               >
                 <option>{t.subjects.quote}</option>
                 <option>{t.subjects.audit}</option>
@@ -191,7 +191,7 @@ export function Contact() {
                 name="message"
                 required
                 rows={5}
-                className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text"
+                className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
               />
             </div>
             <Button type="submit" variant="primary">{t.submit}</Button>

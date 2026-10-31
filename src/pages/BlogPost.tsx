@@ -3,7 +3,7 @@ import { Seo, SITE_URL } from '@/components/Seo'
 import { localizedPost } from '@/i18n/content-i18n'
 import { formatDate } from '@/lib/format'
 import { NotFound } from '@/pages/NotFound'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 
 const L = defineMessages({
@@ -98,7 +98,7 @@ export function BlogPost() {
       />
 
       <nav aria-label={t.breadcrumb} className="text-sm text-text-dim mb-6">
-        <Link to={localizePath(lang, '/blog')} className="hover:text-white hover:underline">
+        <Link to={localizePath(lang, '/blog')} className="hover:text-text hover:underline">
           {t.allPosts}
         </Link>
       </nav>
@@ -108,7 +108,7 @@ export function BlogPost() {
           <time dateTime={post.date}>{formatDate(post.date, false, lang)}</time> ·{' '}
           {post.readingMinutes} {t.readingTime}
         </p>
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-balance">
           {post.title}
         </h1>
       </header>
@@ -133,12 +133,10 @@ export function BlogPost() {
         ))}
       </div>
 
-      <div className="mt-14 rounded-[14px] border border-primary/40 bg-primary/10 p-8 text-center">
-        <h2 className="text-xl font-bold mb-2">{t.ctaTitle}</h2>
-        <p className="text-sm text-text-muted mb-5">{t.ctaText}</p>
-        <Link to="/login">
-          <Button variant="primary">{t.ctaButton}</Button>
-        </Link>
+      <div className="mt-14 rounded-[24px] bg-surface-2 p-8 md:p-12 text-center">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-balance mb-3">{t.ctaTitle}</h2>
+        <p className="text-text-muted mb-7">{t.ctaText}</p>
+        <Link to="/login" className={buttonVariants()}>{t.ctaButton}</Link>
       </div>
     </article>
   )

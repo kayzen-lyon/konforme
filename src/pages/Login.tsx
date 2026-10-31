@@ -310,7 +310,7 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen grid place-items-center px-6 py-10">
+    <div className="min-h-screen grid place-items-center bg-surface-2 px-4 sm:px-6 py-10">
       <Seo title={t.seoTitle} description={t.seoDesc} path="/login" noindex />
       <div className="w-full max-w-md">
         <div className="mb-6 flex justify-center">
@@ -319,8 +319,8 @@ export function Login() {
           </Link>
         </div>
 
-        <Card className="p-8">
-          <h1 className="gradient-text text-2xl font-bold tracking-tight text-center mb-2">
+        <Card className="p-8 md:p-10 shadow-card">
+          <h1 className="text-3xl font-extrabold text-center mb-2">
             {mode === 'signin' ? t.titleSignin : t.titleSignup}
           </h1>
           <p className="text-center text-sm text-text-muted mb-6">
@@ -330,7 +330,7 @@ export function Login() {
           <form onSubmit={onSubmit} className="space-y-4" noValidate>
             {mode === 'signup' && (
               <div>
-                <label htmlFor="auth-name" className="block text-sm font-semibold mb-1.5">
+                <label htmlFor="auth-name" className="block font-display text-sm font-semibold mb-2">
                   {t.name}
                 </label>
                 <input
@@ -338,13 +338,13 @@ export function Login() {
                   name="name"
                   type="text"
                   autoComplete="name"
-                  className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text placeholder:text-text-dim"
+                  className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary placeholder:text-text-dim"
                   placeholder={t.namePlaceholder}
                 />
               </div>
             )}
             <div>
-              <label htmlFor="auth-email" className="block text-sm font-semibold mb-1.5">
+              <label htmlFor="auth-email" className="block font-display text-sm font-semibold mb-2">
                 {t.email}
               </label>
               <input
@@ -354,12 +354,12 @@ export function Login() {
                 required
                 autoComplete="email"
                 inputMode="email"
-                className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text placeholder:text-text-dim"
+                className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary placeholder:text-text-dim"
                 placeholder={t.emailPlaceholder}
               />
             </div>
             <div>
-              <label htmlFor="auth-password" className="block text-sm font-semibold mb-1.5">
+              <label htmlFor="auth-password" className="block font-display text-sm font-semibold mb-2">
                 {t.password}
               </label>
               <input
@@ -370,7 +370,7 @@ export function Login() {
                 minLength={8}
                 autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
                 aria-describedby={mode === 'signup' ? 'auth-password-help' : undefined}
-                className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text"
+                className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
               />
               {mode === 'signup' && (
                 <p id="auth-password-help" className="mt-1 text-xs text-text-dim">
@@ -382,7 +382,7 @@ export function Login() {
             {error && (
               <p
                 role="alert"
-                className="rounded-[10px] border border-danger/40 bg-danger/10 px-4 py-2.5 text-sm text-danger-soft"
+                className="rounded-[12px] border border-danger/40 bg-danger/10 px-4 py-2.5 text-sm text-danger-soft"
               >
                 {error}
               </p>
@@ -391,7 +391,7 @@ export function Login() {
             <Button type="submit" disabled={loading} variant="primary" size="lg" className="w-full">
               {loading ? (
                 <>
-                  <span className="size-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                  <span className="size-4 rounded-full border-2 border-current/30 border-t-current animate-spin" />
                   {mode === 'signin' ? t.loadingSignin : t.loadingSignup}
                 </>
               ) : mode === 'signin' ? (
@@ -445,7 +445,7 @@ export function Login() {
               >
                 {googleLoading ? (
                   <>
-                    <span className="size-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                    <span className="size-4 rounded-full border-2 border-current/30 border-t-current animate-spin" />
                     {t.googleRedirect}
                   </>
                 ) : (
@@ -472,7 +472,7 @@ export function Login() {
         </Card>
 
         <div className="mt-6 text-center text-sm text-text-muted">
-          <Link to={localizePath(lang, '/')} className="hover:text-white">
+          <Link to={localizePath(lang, '/')} className="hover:text-text">
             {t.backHome}
           </Link>
         </div>

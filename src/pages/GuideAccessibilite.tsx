@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 import { localizeCriterion, localizeTopic } from '@/i18n/rgaa-i18n'
@@ -1331,8 +1331,8 @@ export function GuideAccessibilite() {
         ]}
       />
 
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.kicker}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-6">
+      <p className="eyebrow mb-5">{t.kicker}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-6">
         {t.h1}
       </h1>
       <p className="text-lg text-text-muted leading-relaxed mb-4">
@@ -1432,7 +1432,7 @@ export function GuideAccessibilite() {
         </h2>
         <p className="text-text-soft leading-relaxed mb-3">
           {t.methodP1A}
-          <a href={RGAA_METHOD_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-white">
+          <a href={RGAA_METHOD_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
             {t.methodLink}
           </a>
           {t.methodP1B}
@@ -1448,7 +1448,7 @@ export function GuideAccessibilite() {
           </li>
           <li>
             {t.rule3A}
-            <Link to={localizePath(lang, '/glossaire')} className="underline text-link hover:text-white">
+            <Link to={localizePath(lang, '/glossaire')} className="underline text-link hover:text-text">
               {t.rule3Link}
             </Link>
             {t.rule3B}
@@ -1457,12 +1457,12 @@ export function GuideAccessibilite() {
         <h3 className="text-lg font-bold tracking-tight mb-2">{t.testEnvTitle}</h3>
         <p className="text-text-soft leading-relaxed mb-3">
           {t.testEnvA}
-          <a href={RGAA_TEST_ENV_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-white">
+          <a href={RGAA_TEST_ENV_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
             {t.testEnvLink}
           </a>
           {t.testEnvB}
         </p>
-        <div className="overflow-x-auto rounded-[14px] border border-border mb-4">
+        <div className="overflow-x-auto rounded-[16px] border border-border mb-4">
           <table className="w-full text-sm">
             <caption className="sr-only">{t.testEnvCaption}</caption>
             <thead>
@@ -1516,7 +1516,7 @@ export function GuideAccessibilite() {
                         <p className="mt-1 text-sm text-text-soft leading-relaxed">{cl.plain}</p>
                         <p className="mt-1.5 text-xs text-text-dim">
                           {t.levelLabel} {c.level} · WCAG {c.wcag.join(', ')} · {t.coverage[c.coverage]} ·{' '}
-                          <Link to={localizePath(lang, `/rgaa/critere/${c.id}`)} className="underline text-link hover:text-white">
+                          <Link to={localizePath(lang, `/rgaa/critere/${c.id}`)} className="underline text-link hover:text-text">
                             {t.detailLink}
                           </Link>{' '}
                           ·{' '}
@@ -1524,7 +1524,7 @@ export function GuideAccessibilite() {
                             href={rgaaCriterionUrl(c.id)}
                             target="_blank"
                             rel="noreferrer"
-                            className="underline text-link hover:text-white"
+                            className="underline text-link hover:text-text"
                           >
                             {t.officialLink}
                           </a>
@@ -1599,12 +1599,8 @@ export function GuideAccessibilite() {
           {t.finalText}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          <Link to={localizePath(lang, '/')}>
-            <Button variant="primary">{t.finalBtn1}</Button>
-          </Link>
-          <Link to={localizePath(lang, '/rgaa')}>
-            <Button variant="outline">{t.finalBtn2}</Button>
-          </Link>
+          <Link to={localizePath(lang, '/')} className={buttonVariants()}>{t.finalBtn1}</Link>
+          <Link to={localizePath(lang, '/rgaa')} className={buttonVariants({ variant: 'outline' })}>{t.finalBtn2}</Link>
         </div>
       </section>
     </div>

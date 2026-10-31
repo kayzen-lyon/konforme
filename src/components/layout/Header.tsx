@@ -3,6 +3,7 @@ import { defineMessages, LANG_LABELS, LANGS, localizePath, unlocalizePath, useLa
 import { useState, useRef, useEffect } from 'react'
 import { Logo } from '@/components/ui/logo'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
@@ -144,13 +145,12 @@ const L = defineMessages({
 
 /** Sélecteur de langue : bascule la page COURANTE dans la langue choisie
  * (le français reste à la racine, les autres langues sont préfixées). */
-function LangSelect() {
+function LangSelect({ className }: { className?: string }) {
   const navigate = useNavigate()
   const location = useLocation()
   const lang = useLang()
   return (
-    <label className="hidden sm:flex items-center gap-1.5 text-xs text-text-muted">
-      <span aria-hidden="true">🌐</span>
+    <label className={cn('items-center text-sm text-text', className)}>
       <span className="sr-only">Langue du site / Site language</span>
       <select
         value={lang}
@@ -159,7 +159,7 @@ function LangSelect() {
           const { path } = unlocalizePath(location.pathname)
           navigate(localizePath(next, path))
         }}
-        className="rounded-[8px] border border-border bg-bg px-1.5 py-1 text-xs text-text-muted"
+        className="h-10 cursor-pointer rounded-full border-0 bg-transparent px-2.5 font-display text-sm font-semibold text-text hover:bg-raise"
       >
         {LANGS.map((l) => (
           <option key={l} value={l}>
@@ -204,13 +204,13 @@ export function Header() {
   }, [contactOpen])
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-bg/75 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
-        <Link to={localizePath(lang, '/')} className="flex items-center gap-2.5" aria-label={t.homeAria}>
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-bg/90 backdrop-blur-md">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <Link to={localizePath(lang, '/')} className="flex items-center rounded-lg" aria-label={t.homeAria}>
           <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1" aria-label={t.mainNav}>
+        <nav className="hidden xl:flex items-center gap-1" aria-label={t.mainNav}>
           {NAV.map((n) => (
             <NavLink
               key={n.to}
@@ -218,8 +218,9 @@ export function Header() {
               end={n.to === '/'}
               className={({ isActive }) =>
                 cn(
-                  'rounded-[10px] px-3 py-2 text-sm font-medium text-text-muted hover:text-text hover:bg-raise',
-                  isActive && 'text-text bg-raise'
+                  'relative px-3 py-2 font-display text-[0.95rem] font-medium text-text transition-colors hover:text-primary',
+                  "after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:origin-left after:scale-x-0 after:transition-transform hover:after:scale-x-100",
+                  isActive && 'text-primary after:scale-x-100'
                 )
               }
             >
@@ -228,56 +229,64 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <LangSelect />
-          <ThemeToggle />
+        <div className="flex items-center gap-1.5">
           <button
             type="button"
             aria-haspopup="dialog"
             aria-controls="kf-contact-drawer"
             aria-expanded={contactOpen}
+            aria-label={t.contact}
+            title={t.contact}
             onClick={() => setContactOpen(true)}
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-primary to-accent-deep px-3.5 py-2 text-xs font-semibold text-white shadow-[0_6px_16px_rgba(37,99,235,0.35)] hover:-translate-y-px transition-transform"
+            className="hidden md:inline-flex size-10 items-center justify-center rounded-full text-text hover:text-primary hover:bg-raise transition-colors"
           >
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="16" rx="2" />
-              <path d="M7 8h6M7 12h10M7 16h7" />
+            {/* QR code : ouvre la carte de contact (QR site, vCard, Maps, avis) */}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" />
+              <path d="M14 14h3v3M21 14v.01M14 21h.01M17.5 21H21v-3.5" />
             </svg>
-            {t.contact}
           </button>
+          <LangSelect className="hidden sm:flex" />
+          <ThemeToggle className="hidden sm:inline-flex" />
 
+          {/* Sous 640 px : logo + menu seulement, le reste passe dans le menu */}
           {user ? (
             <>
-              <Link to="/dashboard">
-                <Button size="sm" variant="primary">{t.dashboard}</Button>
+              <Link to="/dashboard" className={cn(buttonVariants({ size: 'sm' }), 'ml-1.5 hidden sm:inline-flex')}>
+                {t.dashboard}
               </Link>
-              <Button size="sm" variant="ghost" onClick={() => signOut()}>
+              <Button size="sm" variant="ghost" className="hidden sm:inline-flex" onClick={() => signOut()}>
                 {t.signOut}
               </Button>
             </>
           ) : (
-            <Link to="/login">
-              <Button size="sm" variant="primary">{t.signIn}</Button>
+            <Link to="/login" className={cn(buttonVariants({ size: 'sm' }), 'ml-1.5 hidden sm:inline-flex')}>
+              {t.signIn}
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
             </Link>
           )}
 
           <button
             type="button"
-            className="md:hidden rounded-[10px] border border-border p-2 text-text"
+            className="xl:hidden inline-flex size-10 items-center justify-center rounded-full text-text hover:bg-raise"
             aria-label={menuOpen ? t.closeMenu : t.openMenu}
             aria-expanded={menuOpen}
             aria-controls="kf-mobile-nav"
             onClick={() => setMenuOpen((v) => !v)}
           >
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
             </svg>
           </button>
         </div>
       </div>
 
       {menuOpen && (
-        <nav id="kf-mobile-nav" className="md:hidden border-t border-border px-4 py-3" aria-label={t.mobileNav}>
+        <nav id="kf-mobile-nav" className="xl:hidden border-t border-border bg-bg px-4 py-3" aria-label={t.mobileNav}>
           {NAV.map((n) => (
             <NavLink
               key={n.to}
@@ -286,14 +295,41 @@ export function Header() {
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  'block rounded-[10px] px-3 py-2 text-sm font-medium text-text-muted',
-                  isActive && 'text-text bg-raise'
+                  'block rounded-[12px] px-3 py-2.5 font-display font-medium text-text hover:bg-raise',
+                  isActive && 'text-primary bg-primary/5'
                 )
               }
             >
               {n.label}
             </NavLink>
           ))}
+          <button
+            type="button"
+            onClick={() => { setMenuOpen(false); setContactOpen(true) }}
+            className="mt-1 block w-full rounded-[12px] px-3 py-2.5 text-left font-display font-medium text-text hover:bg-raise md:hidden"
+          >
+            {t.contact}
+          </button>
+          <div className="mt-3 flex items-center justify-between gap-2 border-t border-border pt-3 sm:hidden">
+            <LangSelect className="flex" />
+            <ThemeToggle />
+          </div>
+          <div className="mt-3 grid gap-2 sm:hidden">
+            {user ? (
+              <>
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className={cn(buttonVariants(), 'w-full')}>
+                  {t.dashboard}
+                </Link>
+                <Button variant="ghost" className="w-full" onClick={() => { setMenuOpen(false); signOut() }}>
+                  {t.signOut}
+                </Button>
+              </>
+            ) : (
+              <Link to="/login" onClick={() => setMenuOpen(false)} className={cn(buttonVariants(), 'w-full')}>
+                {t.signIn}
+              </Link>
+            )}
+          </div>
         </nav>
       )}
 
@@ -310,16 +346,16 @@ export function Header() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="kf-contact-title"
-            className="absolute right-0 top-0 h-full w-full max-w-md border-l border-border bg-gradient-to-b from-surface to-surface-2 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] overflow-y-auto"
+            className="absolute right-0 top-0 h-full w-full max-w-md border-l border-border bg-surface shadow-card overflow-y-auto"
           >
             <header className="flex items-center justify-between border-b border-border px-5 py-4">
-              <h2 id="kf-contact-title" className="font-bold text-base">{t.drawerTitle}</h2>
+              <h2 id="kf-contact-title" className="font-bold text-lg">{t.drawerTitle}</h2>
               <button
                 ref={drawerFirstBtn}
                 type="button"
                 aria-label={t.close}
                 onClick={() => setContactOpen(false)}
-                className="size-9 rounded-[10px] border border-border hover:bg-raise inline-flex items-center justify-center"
+                className="size-10 rounded-full hover:bg-raise inline-flex items-center justify-center"
               >
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                   <path d="M6 6l12 12M18 6L6 18" />
@@ -343,7 +379,7 @@ export function Header() {
                 ].map((qr) => (
                   <figure key={qr.label} className="rounded-[12px] border border-border bg-white p-2.5 text-center">
                     <img src={qr.src} alt={t.qrAlt(qr.label)} loading="lazy" className="aspect-square w-full" />
-                    <figcaption className="mt-1.5 text-[0.65rem] font-bold uppercase tracking-wider text-surface-2">
+                    <figcaption className="mt-1.5 font-display text-[0.65rem] font-bold uppercase tracking-wider text-[#1f2937]">
                       {qr.label}
                     </figcaption>
                   </figure>
@@ -351,13 +387,13 @@ export function Header() {
               </div>
 
               <div className="grid gap-2">
-                <a className="inline-flex justify-center rounded-[10px] bg-primary px-4 py-2.5 text-sm font-semibold hover:bg-primary-2" href="/contact/kayzen-konforme.vcf" download>
+                <a className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-6 font-display text-sm font-bold text-on-primary hover:bg-primary-2" href="/contact/kayzen-konforme.vcf" download>
                   {t.downloadVcard}
                 </a>
-                <a className="inline-flex justify-center rounded-[10px] border border-border px-4 py-2.5 text-sm font-semibold hover:bg-raise" href="https://www.google.com/maps/search/?api=1&query=KAYZEN+6+rue+Pierre+Termier+69009+Lyon" rel="noopener" target="_blank">
+                <a className="inline-flex h-12 items-center justify-center rounded-full border-2 border-text/15 px-6 font-display text-sm font-bold hover:bg-raise" href="https://www.google.com/maps/search/?api=1&query=KAYZEN+6+rue+Pierre+Termier+69009+Lyon" rel="noopener" target="_blank">
                   {t.mapsRoute}
                 </a>
-                <a className="inline-flex justify-center rounded-[10px] border border-border px-4 py-2.5 text-sm font-semibold hover:bg-raise" href="https://www.google.com/search?q=KAYZEN+Lyon+avis" rel="noopener" target="_blank">
+                <a className="inline-flex h-12 items-center justify-center rounded-full border-2 border-text/15 px-6 font-display text-sm font-bold hover:bg-raise" href="https://www.google.com/search?q=KAYZEN+Lyon+avis" rel="noopener" target="_blank">
                   {t.seeReviews}
                 </a>
               </div>

@@ -141,8 +141,8 @@ export function LegalPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-14">
       <Seo title={title} description={description} path={`/legal/${doc.slug}`} localized />
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.eyebrow}</p>
-      <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">{title}</h1>
+      <p className="eyebrow mb-5">{t.eyebrow}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-3">{title}</h1>
       <p className="text-sm text-text-dim mb-8">
         {t.updated}
         <time dateTime={doc.updated}>{formatDate(doc.updated, false, lang)}</time>

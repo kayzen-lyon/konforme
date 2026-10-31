@@ -238,10 +238,10 @@ export function RgaaCriteriaList({
         <p className="text-sm text-text-muted">
           {summary.rate !== null ? (
             <>
-              {t.ratePrefix} <strong className="text-white">{summary.rate} %</strong>{' '}
+              {t.ratePrefix} <strong className="text-text">{summary.rate} %</strong>{' '}
               {t.rateDetail(summary.ok, summary.tested)}{' '}
               {summary.aVerifier > 0 && (
-                <>{t.remainingBefore} <strong className="text-white">{summary.aVerifier}</strong> {t.remainingAfter}</>
+                <>{t.remainingBefore} <strong className="text-text">{summary.aVerifier}</strong> {t.remainingAfter}</>
               )}
             </>
           ) : (
@@ -257,8 +257,8 @@ export function RgaaCriteriaList({
               aria-pressed={filter === f.key}
               className={
                 filter === f.key
-                  ? 'rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-white'
-                  : 'rounded-full border border-border-strong px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-raise hover:text-white'
+                  ? 'rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-on-primary'
+                  : 'rounded-full border border-border-strong px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-raise hover:text-text'
               }
             >
               {f.label} ({f.count})
@@ -306,7 +306,7 @@ export function RgaaCriteriaList({
 const REVIEW_OPTIONS: { status: ReviewStatus; statusKey: CriterionStatus; activeClass: string }[] = [
   { status: 'conforme', statusKey: 'ok', activeClass: 'bg-success-bg/70 text-success-soft border-success/50' },
   { status: 'non_conforme', statusKey: 'non_conforme', activeClass: 'bg-danger-bg/70 text-danger-soft border-danger/50' },
-  { status: 'non_applicable', statusKey: 'non_applicable', activeClass: 'bg-raise text-white border-border-strong' },
+  { status: 'non_applicable', statusKey: 'non_applicable', activeClass: 'bg-raise text-text border-border-strong' },
 ]
 
 function reviewOptionLabel(lang: Lang, statusKey: CriterionStatus): string {
@@ -336,7 +336,7 @@ function CriterionRow({
   const reviewable = !!onReview && openIssues.length === 0
 
   return (
-    <li className="rounded-[10px] border border-border">
+    <li className="rounded-[12px] border border-border">
       <div className="flex items-center gap-3 px-3.5 py-2.5">
         <Badge className={`${meta.className} hidden sm:inline-flex shrink-0 w-28 justify-center`}>
           {statusLabels.shortLabel}
@@ -351,7 +351,7 @@ function CriterionRow({
               label={t.tooltipLabel(criterion.id)}
               content={
                 <>
-                  <strong className="block mb-1 text-white">{t.tooltipTitle}</strong>
+                  <strong className="block mb-1 text-text">{t.tooltipTitle}</strong>
                   {c.plain}
                   <span className="mt-2 block text-text-dim">{coverageLabel(lang, criterion.coverage)}.</span>
                 </>
@@ -366,7 +366,7 @@ function CriterionRow({
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-1 text-xs text-text-muted hover:bg-raise hover:text-white"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-1 text-xs text-text-muted hover:bg-raise hover:text-text"
         >
           <span className="tabular-nums">
             {openIssues.length > 0
@@ -401,7 +401,7 @@ function CriterionRow({
           )}
 
           {reviewable && (
-            <div className="rounded-[10px] border border-border bg-bg px-3.5 py-3">
+            <div className="rounded-[12px] border border-border bg-bg px-3.5 py-3">
               <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-2">
                 {t.reviewTitle}
               </p>
@@ -423,7 +423,7 @@ function CriterionRow({
                     className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
                       review?.status === opt.status
                         ? opt.activeClass
-                        : 'border-border-strong text-text-muted hover:bg-raise hover:text-white'
+                        : 'border-border-strong text-text-muted hover:bg-raise hover:text-text'
                     }`}
                   >
                     {reviewOptionLabel(lang, opt.statusKey)}
@@ -464,7 +464,7 @@ function CriterionRow({
             href={rgaaCriterionUrl(criterion.id)}
             target="_blank"
             rel="noreferrer"
-            className="inline-block text-xs text-link underline hover:text-white"
+            className="inline-block text-xs text-link underline hover:text-text"
           >
             {t.officialText(criterion.id)}
           </a>

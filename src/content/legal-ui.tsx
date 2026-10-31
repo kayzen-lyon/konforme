@@ -3,7 +3,7 @@
  * (src/i18n/legal/*.tsx) : la mise en page reste strictement identique. */
 
 export const H2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-xl font-bold tracking-tight mt-10 mb-3">{children}</h2>
+  <h2 className="text-2xl font-bold mt-12 mb-4">{children}</h2>
 )
 
 export const P = ({ children }: { children: React.ReactNode }) => (

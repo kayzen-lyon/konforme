@@ -33,16 +33,19 @@ export function PublicLayout() {
     <div className="min-h-screen flex flex-col">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only fixed top-0 left-0 z-50 bg-warning text-black font-bold px-4 py-2 rounded-br-[10px]"
+        className="sr-only focus:not-sr-only fixed top-0 left-0 z-50 bg-gold text-[#1f2937] font-bold px-4 py-2 rounded-br-[12px]"
       >
         {t.skipToContent}
       </a>
-      <Link
-        to={`${localizePath(lang, '/')}#checker`}
-        className="block bg-gradient-to-r from-primary to-accent-deep px-4 py-2 text-center text-xs sm:text-sm font-semibold text-white hover:underline"
-      >
-        {t.banner}
-      </Link>
+      {/* Bandeau d'annonce bleu nuit, lien or : même facture que kayzen-lyon.com */}
+      <div className="bg-[#132944] px-4 py-2.5 text-center text-xs sm:text-sm text-white/90">
+        <Link
+          to={`${localizePath(lang, '/')}#checker`}
+          className="font-display font-semibold text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold"
+        >
+          {t.banner}
+        </Link>
+      </div>
       <Header />
       <main id="main" className="flex-1">
         <Outlet />

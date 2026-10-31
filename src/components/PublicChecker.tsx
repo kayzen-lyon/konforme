@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { ScoreRing } from '@/components/ScoreRing'
 import { appwriteConfigured, functions, SCAN_FUNCTION_ID } from '@/lib/appwrite'
 import { defineMessages, useMessages } from '@/i18n'
@@ -193,9 +194,9 @@ export function PublicChecker() {
   }
 
   return (
-    <div id="checker" className="scroll-mt-24 rounded-[20px] border border-primary/40 bg-gradient-to-b from-surface to-bg-deep p-6 md:p-10 shadow-[0_20px_60px_rgba(37,99,235,0.15)]">
+    <div id="checker" className="scroll-mt-24 rounded-[24px] border border-border bg-surface p-6 md:p-10 shadow-card">
       <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-balance mb-3">
           {t.title}
         </h2>
         <p className="text-sm md:text-base text-text-muted mb-6">
@@ -211,12 +212,12 @@ export function PublicChecker() {
             inputMode="url"
             required
             placeholder={t.placeholder}
-            className="w-full sm:w-96 rounded-[12px] border border-border-strong bg-bg px-4 py-3 text-text placeholder:text-text-dim"
+            className="w-full sm:w-96 rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary placeholder:text-text-dim"
           />
           <Button type="submit" size="lg" variant="primary" disabled={state === 'loading'}>
             {state === 'loading' ? (
               <>
-                <span aria-hidden="true" className="size-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                <span aria-hidden="true" className="size-4 rounded-full border-2 border-current/30 border-t-current animate-spin" />
                 {t.loading}
               </>
             ) : (
@@ -230,7 +231,7 @@ export function PublicChecker() {
           </p>
         )}
         {state === 'error' && error && (
-          <p role="alert" className="mt-4 rounded-[10px] border border-danger/40 bg-danger-bg/30 px-4 py-2.5 text-sm text-danger-soft max-w-lg mx-auto">
+          <p role="alert" className="mt-4 rounded-[12px] border border-danger/40 bg-danger-bg/30 px-4 py-2.5 text-sm text-danger-soft max-w-lg mx-auto">
             {error}
           </p>
         )}
@@ -238,7 +239,7 @@ export function PublicChecker() {
 
       {state === 'done' && result && (
         <div className="mt-8 max-w-3xl mx-auto" role="region" aria-label={t.resultRegion}>
-          <div className="grid gap-6 md:grid-cols-[auto_1fr] items-center rounded-[16px] border border-border bg-bg-deep p-6">
+          <div className="grid gap-6 md:grid-cols-[auto_1fr] items-center rounded-[24px] border border-border bg-surface-2 p-6 md:p-8">
             <div className="justify-self-center">
               <ScoreRing score={result.score} size={120} label={t.scoreLabel} />
             </div>
@@ -267,7 +268,7 @@ export function PublicChecker() {
           {result.top_issues.length > 0 && (
             <ul className="mt-4 space-y-2" aria-label={t.topIssuesLabel}>
               {result.top_issues.slice(0, 5).map((i) => (
-                <li key={i.rule_id} className="flex items-center gap-3 rounded-[12px] border border-border bg-bg-deep px-4 py-2.5 text-left text-sm">
+                <li key={i.rule_id} className="flex items-center gap-3 rounded-[12px] border border-border bg-surface-2 px-4 py-2.5 text-left text-sm">
                   <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[0.68rem] font-semibold ${SEVERITY_META[i.severity].className}`}>
                     {t.sev[i.severity]}
                   </span>
@@ -278,16 +279,14 @@ export function PublicChecker() {
             </ul>
           )}
 
-          <div className="mt-6 rounded-[14px] border border-primary/40 bg-primary/10 p-5 text-center">
+          <div className="mt-6 rounded-[16px] bg-surface-2 p-6 text-center">
             <p className="font-semibold mb-1">
               {t.previewTitle}
             </p>
             <p className="text-sm text-text-muted mb-4">
               {t.previewDesc}
             </p>
-            <Link to="/login">
-              <Button variant="primary" size="lg">{t.cta}</Button>
-            </Link>
+            <Link to="/login" className={buttonVariants({ size: 'lg' })}>{t.cta}</Link>
           </div>
         </div>
       )}

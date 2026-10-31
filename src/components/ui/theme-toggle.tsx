@@ -26,7 +26,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         setThemeState(next)
       }}
       className={cn(
-        'inline-flex size-9 items-center justify-center rounded-[10px] border border-border text-text-muted hover:text-text hover:bg-raise transition-colors',
+        'inline-flex size-10 items-center justify-center rounded-full text-text hover:text-primary hover:bg-raise transition-colors',
         className
       )}
     >

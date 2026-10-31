@@ -45,7 +45,7 @@ export function Tooltip({
         onKeyDown={(e) => {
           if (e.key === 'Escape') setOpen(false)
         }}
-        className="inline-flex size-[18px] items-center justify-center rounded-full border border-border-strong text-[10px] font-bold text-text-muted hover:text-white hover:border-primary focus-visible:outline-2 focus-visible:outline-primary"
+        className="inline-flex size-[18px] items-center justify-center rounded-full border border-border-strong text-[10px] font-bold text-text-muted hover:text-text hover:border-primary focus-visible:outline-2 focus-visible:outline-primary"
       >
         ?
       </button>
@@ -53,7 +53,7 @@ export function Tooltip({
         <span
           id={id}
           role="tooltip"
-          className="absolute left-1/2 bottom-full z-30 mb-2 w-72 -translate-x-1/2 rounded-[10px] border border-border-strong bg-bg-deep px-3.5 py-3 text-xs leading-relaxed text-text-soft shadow-xl"
+          className="absolute left-1/2 bottom-full z-30 mb-2 w-72 -translate-x-1/2 rounded-[12px] border border-border bg-surface px-3.5 py-3 text-xs leading-relaxed text-text-soft shadow-lift"
         >
           {content}
         </span>

@@ -198,7 +198,7 @@ export function Declarations() {
     <div className="space-y-6">
       <Seo title={t.seoTitle} description={t.seoDesc} path="/dashboard/declarations" noindex />
       <header>
-        <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+        <h1 className="text-3xl font-extrabold">{t.title}</h1>
         <p className="text-text-muted mt-1">
           {t.subtitle}
         </p>
@@ -223,7 +223,7 @@ export function Declarations() {
                 value={siteId}
                 onChange={(e) => setSiteId(e.target.value)}
                 required
-                className="w-full rounded-[10px] border border-border-strong bg-bg px-3 py-2.5 text-sm text-text"
+                className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
               >
                 <option value="">{t.choosePlaceholder}</option>
                 {scannedSites.map((s) => (
@@ -237,7 +237,7 @@ export function Declarations() {
           </form>
         )}
         {error && (
-          <p role="alert" className="mt-4 rounded-[10px] border border-danger/40 bg-danger-bg/30 px-4 py-2.5 text-sm text-danger-soft">
+          <p role="alert" className="mt-4 rounded-[12px] border border-danger/40 bg-danger-bg/30 px-4 py-2.5 text-sm text-danger-soft">
             {error}
           </p>
         )}

@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { ScoreRing } from '@/components/ScoreRing'
 import { Seo } from '@/components/Seo'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -644,7 +645,7 @@ export function ScanDetail() {
     return (
       <Card className="text-center py-14">
         <h1 className="text-lg font-bold mb-2">{t.notFound}</h1>
-        <Link to="/dashboard/scans"><Button variant="ghost">{t.backToScans}</Button></Link>
+        <Link to="/dashboard/scans" className={buttonVariants({ variant: 'ghost' })}>{t.backToScans}</Link>
       </Card>
     )
   }
@@ -671,11 +672,11 @@ export function ScanDetail() {
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <nav aria-label={t.breadcrumb} className="text-sm text-text-dim mb-1">
-            <Link to="/dashboard/scans" className="hover:text-white hover:underline">{t.scans}</Link>
+            <Link to="/dashboard/scans" className="hover:text-text hover:underline">{t.scans}</Link>
             {' / '}
             <span aria-current="page">{t.report}</span>
           </nav>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-3xl font-extrabold">
             {scan.sites?.name ?? t.siteFallback}{' '}
             <Badge className={st.className}>{scanStatusLabel(lang, scan.status)}</Badge>
           </h1>
@@ -762,8 +763,8 @@ export function ScanDetail() {
                 onClick={() => setTab(tb.key)}
                 className={
                   tab === tb.key
-                    ? 'rounded-t-[10px] border border-border border-b-transparent bg-surface px-4 py-2.5 text-sm font-semibold text-white -mb-px'
-                    : 'rounded-t-[10px] px-4 py-2.5 text-sm font-semibold text-text-muted hover:text-white'
+                    ? 'rounded-t-[10px] border border-border border-b-transparent bg-surface px-4 py-2.5 text-sm font-semibold text-text -mb-px'
+                    : 'rounded-t-[10px] px-4 py-2.5 text-sm font-semibold text-text-muted hover:text-text'
                 }
               >
                 {tb.label}
@@ -839,7 +840,7 @@ export function ScanDetail() {
                 ) : (
                   <ol className="space-y-2">
                     {plan.map((a, idx) => (
-                      <li key={a.ruleId} className="flex flex-wrap items-center gap-3 rounded-[10px] border border-border px-4 py-3">
+                      <li key={a.ruleId} className="flex flex-wrap items-center gap-3 rounded-[12px] border border-border px-4 py-3">
                         <span className="shrink-0 w-6 text-right text-sm font-bold text-text-dim tabular-nums">
                           {idx + 1}.
                         </span>
@@ -971,7 +972,7 @@ export function ScanDetail() {
                 ) : (
                   <ul className="space-y-2">
                     {scan.page_scores!.map((p) => (
-                      <li key={p.url} className="flex flex-wrap items-center gap-3 rounded-[10px] border border-border px-4 py-2.5 text-sm">
+                      <li key={p.url} className="flex flex-wrap items-center gap-3 rounded-[12px] border border-border px-4 py-2.5 text-sm">
                         <span
                           className="shrink-0 font-bold tabular-nums w-12 text-right"
                           style={{ color: scoreColor(p.score) }}
@@ -1018,7 +1019,7 @@ export function ScanDetail() {
 
       <p className="text-xs text-text-dim">
         {t.footerNote}{' '}
-        <Link to={localizePath(lang, '/guide-accessibilite')} className="underline hover:text-white">
+        <Link to={localizePath(lang, '/guide-accessibilite')} className="underline hover:text-text">
           {t.footerLink}
         </Link>
         .
@@ -1066,7 +1067,7 @@ function ExportMenu({
 function EvolutionRow({ issue }: { issue: ScanIssue }) {
   const lang = useLang()
   return (
-    <li className="flex items-center gap-3 rounded-[10px] border border-border px-3.5 py-2 text-sm">
+    <li className="flex items-center gap-3 rounded-[12px] border border-border px-3.5 py-2 text-sm">
       <Badge className={`${SEVERITY_META[issue.severity].className} shrink-0`}>
         {severityLabel(lang, issue.severity)}
       </Badge>
@@ -1114,7 +1115,7 @@ function SharePanel({ scan }: { scan: Scan }) {
 
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
-      <code className="max-w-72 truncate rounded-[8px] border border-border bg-bg px-2.5 py-1.5 text-xs text-text-soft">
+      <code className="max-w-72 truncate rounded-[8px] border border-border bg-surface-2 px-2.5 py-1.5 text-xs text-text-soft">
         {shareUrl}
       </code>
       <Button size="sm" variant="outline" onClick={() => void copy()}>
@@ -1148,8 +1149,8 @@ function FilterChip({
       aria-pressed={active}
       className={
         active
-          ? 'rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-white'
-          : 'rounded-full border border-border-strong px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-raise hover:text-white'
+          ? 'rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-on-primary'
+          : 'rounded-full border border-border-strong px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-raise hover:text-text'
       }
     >
       {children}
@@ -1240,7 +1241,7 @@ function IssueRow({ issue }: { issue: ScanIssue }) {
           {issue.selector && (
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">{t.issueSelector}</h3>
-              <code className="block rounded-[8px] bg-bg border border-border px-3 py-2 text-xs text-primary-soft overflow-x-auto">
+              <code className="block rounded-[8px] bg-surface-2 border border-border px-3 py-2 text-xs text-primary-soft overflow-x-auto">
                 {issue.selector}
               </code>
             </div>
@@ -1249,7 +1250,7 @@ function IssueRow({ issue }: { issue: ScanIssue }) {
           {issue.html_snippet && (
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">{t.issueSnippet}</h3>
-              <pre className="rounded-[8px] bg-bg border border-border px-3 py-2 text-xs text-text-soft overflow-x-auto">
+              <pre className="rounded-[8px] bg-surface-2 border border-border px-3 py-2 text-xs text-text-soft overflow-x-auto">
                 <code>{issue.html_snippet}</code>
               </pre>
             </div>
@@ -1288,7 +1289,7 @@ function IssueRow({ issue }: { issue: ScanIssue }) {
                   <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">
                     {t.aiResultTitle}
                   </h3>
-                  <pre className="rounded-[8px] border border-info/30 bg-bg-deep px-3.5 py-3 text-xs text-info-soft whitespace-pre-wrap font-sans leading-relaxed overflow-x-auto">
+                  <pre className="rounded-[8px] border border-info/30 bg-surface-2 px-3.5 py-3 text-xs text-info-soft whitespace-pre-wrap font-sans leading-relaxed overflow-x-auto">
                     {aiText}
                   </pre>
                 </div>

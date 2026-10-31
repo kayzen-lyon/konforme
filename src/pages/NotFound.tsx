@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 
@@ -53,12 +53,12 @@ export function NotFound() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <Seo title={t.seoTitle} description={t.seoDescription} path="/404" lang={lang} noindex />
-      <p className="text-6xl font-extrabold gradient-text mb-4" aria-hidden="true">404</p>
-      <h1 className="text-2xl font-bold tracking-tight mb-3">{t.h1}</h1>
+      <p className="font-display text-8xl font-extrabold tracking-[-0.04em] text-primary mb-4" aria-hidden="true">404</p>
+      <h1 className="text-3xl md:text-4xl font-extrabold mb-4">{t.h1}</h1>
       <p className="text-text-muted mb-8">{t.text}</p>
       <div className="flex flex-wrap justify-center gap-3">
-        <Link to={localizePath(lang, '/')}><Button variant="primary">{t.home}</Button></Link>
-        <Link to={localizePath(lang, '/contact')}><Button variant="ghost">{t.contact}</Button></Link>
+        <Link to={localizePath(lang, '/')} className={buttonVariants()}>{t.home}</Link>
+        <Link to={localizePath(lang, '/contact')} className={buttonVariants({ variant: 'ghost' })}>{t.contact}</Link>
       </div>
     </div>
   )

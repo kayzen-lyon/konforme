@@ -266,7 +266,7 @@ export function Settings() {
     <div className="space-y-6 max-w-2xl">
       <Seo title={t.seoTitle} description={t.seoDesc} path="/dashboard/settings" noindex />
       <header>
-        <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+        <h1 className="text-3xl font-extrabold">{t.title}</h1>
         <p className="text-text-muted mt-1">{t.subtitle}</p>
       </header>
 
@@ -280,7 +280,7 @@ export function Settings() {
               type="email"
               value={user?.email ?? ''}
               disabled
-              className="w-full rounded-[10px] border border-border bg-surface px-3.5 py-2.5 text-sm text-text-muted"
+              className="w-full rounded-[12px] border border-border bg-surface px-3.5 py-2.5 text-sm text-text-muted"
             />
             <p className="mt-1 text-xs text-text-dim">{t.emailHint}</p>
           </div>
@@ -292,7 +292,7 @@ export function Settings() {
               type="text"
               defaultValue={profile?.full_name ?? ''}
               autoComplete="name"
-              className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text"
+              className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
             />
           </div>
           {profileMsg && <p role="status" className="text-sm text-success-soft">{profileMsg}</p>}
@@ -318,7 +318,7 @@ export function Settings() {
               type="text"
               defaultValue={org?.name ?? ''}
               disabled={!isAdmin}
-              className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text disabled:opacity-60"
+              className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary disabled:opacity-60"
             />
             {!isAdmin && (
               <p className="mt-1 text-xs text-text-dim">{t.orgAdminOnly}</p>
@@ -343,13 +343,13 @@ export function Settings() {
           </Badge>
         </div>
         <dl className="grid gap-3 sm:grid-cols-2 text-sm">
-          <div className="rounded-[10px] border border-border px-4 py-3">
+          <div className="rounded-[12px] border border-border px-4 py-3">
             <dt className="text-xs text-text-dim">{t.sitesMonitored}</dt>
             <dd className="mt-1 font-bold">
               {sites?.length ?? '—'} / {Number.isFinite(plan.maxSites) ? plan.maxSites : '∞'}
             </dd>
           </div>
-          <div className="rounded-[10px] border border-border px-4 py-3">
+          <div className="rounded-[12px] border border-border px-4 py-3">
             <dt className="text-xs text-text-dim">{t.auditsThisMonth}</dt>
             <dd className="mt-1 font-bold">
               {scans ? usedScans : '—'} / {Number.isFinite(plan.scansPerMonth) ? plan.scansPerMonth : '∞'}
@@ -375,7 +375,7 @@ export function Settings() {
             value={uiLang}
             onChange={(e) => onChangeLang(e.target.value as Lang)}
             aria-describedby="ui-lang-help"
-            className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text"
+            className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary"
           >
             {LANGS.map((l) => (
               <option key={l} value={l}>{LANG_LABELS[l]}</option>

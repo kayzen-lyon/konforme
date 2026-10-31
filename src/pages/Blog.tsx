@@ -64,14 +64,14 @@ export function Blog() {
   return (
     <div className="mx-auto max-w-4xl px-6 py-14">
       <Seo title={t.seoTitle} description={t.seoDescription} path="/blog" localized />
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.eyebrow}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-4">{t.h1}</h1>
+      <p className="eyebrow mb-5">{t.eyebrow}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-5">{t.h1}</h1>
       <p className="text-lg text-text-muted mb-12">{t.intro}</p>
 
       <ul className="space-y-6">
         {localizedPosts(lang).map((post) => (
           <li key={post.slug}>
-            <article className="rounded-[14px] border border-border bg-surface/60 p-7 hover:border-border-strong transition-colors">
+            <article className="glass-card p-7 md:p-8 transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card">
               <p className="text-xs text-text-dim mb-2">
                 <time dateTime={post.date}>{formatDate(post.date, false, lang)}</time> ·{' '}
                 {post.readingMinutes} {t.readingTime}

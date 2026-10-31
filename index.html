@@ -6,7 +6,7 @@
     <title>Konforme — Accessibilité web RGAA & WCAG automatisée</title>
     <!-- description / canonical / og:title / og:url sont gérés par route (composant Seo, hoisting React 19) -->
     <meta name="author" content="KAYZEN" />
-    <meta name="theme-color" content="#2563eb" />
+    <meta name="theme-color" content="#b7481f" />
     <script>
       // Exécuté avant le premier rendu, donc avant que quoi que ce soit ne soit peint.
       ;(function () {
@@ -16,15 +16,12 @@
         document.documentElement.classList.add('js')
 
         // Applique le thème (évite le flash de thème).
-        // Choix mémorisé (clé héritée de la v1), sinon préférence système, sinon sombre.
+        // Choix mémorisé (clé héritée de la v1), sinon clair, comme kayzen-lyon.com.
         try {
           var t = localStorage.getItem('konforme_theme')
-          if (t !== 'light' && t !== 'dark') {
-            t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-          }
-          document.documentElement.setAttribute('data-theme', t)
+          document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light')
         } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark')
+          document.documentElement.setAttribute('data-theme', 'light')
         }
       })()
     </script>
@@ -65,26 +62,38 @@
         font-size: 1.25rem;
         font-weight: 700;
         letter-spacing: -0.01em;
-        color: var(--color-text, #f1f5fb);
+        color: var(--color-text, #1f2937);
       }
       #boot-splash .boot-hint {
         font-size: 0.8125rem;
-        color: var(--color-text-dim, #8b98b8);
+        color: var(--color-text-dim, #5f6b7b);
       }
       @keyframes boot-splash-in { to { opacity: 1; } }
     </style>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/apple-touch-icon-167x167.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#132944" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="alternate" type="application/atom+xml" title="Blog Konforme" href="/blog.atom" />
 
     <meta property="og:site_name" content="Konforme" />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:image" content="https://konforme.kayzen-lyon.com/og-image.png" />
+    <meta property="og:image" content="https://konforme.kayzen-lyon.com/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Konforme, la conformité EAA by KAYZEN : l'accessibilité de votre site, enfin automatisée." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://konforme.kayzen-lyon.com/og-image.png" />
+    <meta name="twitter:image" content="https://konforme.kayzen-lyon.com/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Konforme, la conformité EAA by KAYZEN : l'accessibilité de votre site, enfin automatisée." />
   </head>
   <body>
     <div id="root">

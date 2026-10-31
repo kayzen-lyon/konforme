@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { defineMessages, useMessages } from '@/i18n'
 
@@ -216,8 +216,8 @@ export function Developpeurs() {
         localized
       />
 
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.kicker}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-6">
+      <p className="eyebrow mb-5">{t.kicker}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-6">
         {t.h1}
       </h1>
       <p className="text-lg text-text-muted leading-relaxed mb-10">
@@ -226,7 +226,7 @@ export function Developpeurs() {
 
       <section className="mb-10" aria-labelledby="endpoint-title">
         <h2 id="endpoint-title" className="text-2xl font-bold tracking-tight mb-3">{t.callTitle}</h2>
-        <pre className="overflow-x-auto rounded-[12px] border border-border bg-bg px-4 py-3 text-xs text-text-soft leading-relaxed">
+        <pre className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
           <code>{CURL_EXAMPLE}</code>
         </pre>
         <p className="text-sm text-text-dim mt-2">
@@ -236,7 +236,7 @@ export function Developpeurs() {
 
       <section className="mb-10" aria-labelledby="response-title">
         <h2 id="response-title" className="text-2xl font-bold tracking-tight mb-3">{t.responseTitle}</h2>
-        <pre className="overflow-x-auto rounded-[12px] border border-border bg-bg px-4 py-3 text-xs text-text-soft leading-relaxed">
+        <pre className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
           <code>{RESPONSE_EXAMPLE}</code>
         </pre>
       </section>
@@ -248,7 +248,7 @@ export function Developpeurs() {
         <p className="text-text-soft leading-relaxed mb-3">
           {t.actionNoteA}<code className="text-primary-soft">.github/workflows/accessibilite.yml</code>{t.actionNoteB}
         </p>
-        <pre className="overflow-x-auto rounded-[12px] border border-border bg-bg px-4 py-3 text-xs text-text-soft leading-relaxed">
+        <pre className="overflow-x-auto rounded-[12px] border border-border bg-surface-2 px-4 py-3 text-xs text-text-soft leading-relaxed">
           <code>{ACTION_EXAMPLE}</code>
         </pre>
       </section>
@@ -258,7 +258,7 @@ export function Developpeurs() {
         <ul className="space-y-2 text-text-soft leading-relaxed list-disc pl-5">
           <li>{t.limit1A}<strong className="text-text">{t.limit1S}</strong>{t.limit1B}</li>
           <li>
-            {t.limit2A}<Link to="/login" className="underline text-link hover:text-white">{t.limit2Link}</Link>{t.limit2B}
+            {t.limit2A}<Link to="/login" className="underline text-link hover:text-text">{t.limit2Link}</Link>{t.limit2B}
           </li>
           <li>{t.limit3}</li>
         </ul>
@@ -267,9 +267,7 @@ export function Developpeurs() {
       <section className="rounded-[16px] border border-border bg-surface px-6 py-8 text-center">
         <h2 className="text-xl font-bold tracking-tight mb-2">{t.ctaTitle}</h2>
         <p className="text-text-muted mb-5">{t.ctaText}</p>
-        <Link to="/login">
-          <Button variant="primary">{t.ctaButton}</Button>
-        </Link>
+        <Link to="/login" className={buttonVariants()}>{t.ctaButton}</Link>
       </section>
     </div>
   )

@@ -4,8 +4,8 @@ export function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivEl
   return (
     <div
       className={cn(
-        'rounded-[10px] bg-[length:200%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]',
-        'bg-[linear-gradient(90deg,rgba(26,34,56,0.6)_0%,rgba(60,75,118,0.7)_50%,rgba(26,34,56,0.6)_100%)]',
+        'rounded-[12px] bg-[length:200%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]',
+        'bg-[linear-gradient(90deg,var(--color-surface-2)_0%,var(--color-border)_50%,var(--color-surface-2)_100%)]',
         className
       )}
       {...props}

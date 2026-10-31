@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Badge } from '@/components/ui/badge'
 import { Seo } from '@/components/Seo'
 import {
@@ -297,7 +298,7 @@ export function Sites() {
       <Seo title={t.seoTitle} description={t.seoDesc} path="/dashboard/sites" noindex />
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+          <h1 className="text-3xl font-extrabold">{t.title}</h1>
           <p className="text-text-muted mt-1">{t.subtitle}</p>
           {sites && (
             <p className="text-xs text-text-dim mt-1.5">
@@ -316,9 +317,9 @@ export function Sites() {
       </header>
 
       {siteLimitReached && !formOpen && (
-        <p className="rounded-[10px] border border-info/30 bg-info-bg/30 px-4 py-2.5 text-sm text-info-soft">
+        <p className="rounded-[12px] border border-info/30 bg-info-bg/30 px-4 py-2.5 text-sm text-info-soft">
           {t.limitReached(planName(lang, plan))}{' '}
-          <Link to="/tarifs" className="font-semibold underline hover:text-white">
+          <Link to="/tarifs" className="font-semibold underline hover:text-text">
             {t.discoverPro}
           </Link>
         </p>
@@ -404,7 +405,7 @@ function AddSiteForm({ orgId, plan, onDone }: { orgId: string; plan: PlanId; onD
               autoComplete="off"
               aria-invalid={!!errors.name}
               aria-describedby={errors.name ? 'site-name-error' : undefined}
-              className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text placeholder:text-text-dim"
+              className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary placeholder:text-text-dim"
               placeholder={t.namePlaceholder}
             />
             {errors.name && (
@@ -423,7 +424,7 @@ function AddSiteForm({ orgId, plan, onDone }: { orgId: string; plan: PlanId; onD
               inputMode="url"
               aria-invalid={!!errors.url}
               aria-describedby={errors.url ? 'site-url-error' : undefined}
-              className="w-full rounded-[10px] border border-border-strong bg-bg px-3.5 py-2.5 text-sm text-text placeholder:text-text-dim"
+              className="w-full rounded-[16px] border border-border-strong bg-surface px-4 py-3 text-base text-text focus-visible:border-primary placeholder:text-text-dim"
               placeholder={t.urlPlaceholder}
             />
             {errors.url && (
@@ -432,7 +433,7 @@ function AddSiteForm({ orgId, plan, onDone }: { orgId: string; plan: PlanId; onD
           </div>
         </div>
         {errors.global && (
-          <p role="alert" className="mt-4 rounded-[10px] border border-danger/40 bg-danger-bg/30 px-4 py-2.5 text-sm text-danger-soft">
+          <p role="alert" className="mt-4 rounded-[12px] border border-danger/40 bg-danger-bg/30 px-4 py-2.5 text-sm text-danger-soft">
             {errors.global}
           </p>
         )}
@@ -511,7 +512,7 @@ function SiteCard({ site, plan, activeScanId }: { site: Site; plan: PlanId; acti
       </label>
 
       {error && (
-        <p role="alert" className="mt-3 rounded-[10px] border border-danger/40 bg-danger-bg/30 px-3 py-2 text-xs text-danger-soft">
+        <p role="alert" className="mt-3 rounded-[12px] border border-danger/40 bg-danger-bg/30 px-3 py-2 text-xs text-danger-soft">
           {error}
         </p>
       )}
@@ -527,9 +528,7 @@ function SiteCard({ site, plan, activeScanId }: { site: Site; plan: PlanId; acti
             {launchScan.isPending ? t.launching : t.launchScan}
           </Button>
         )}
-        <Link to={`/dashboard/scans?site=${site.id}`}>
-          <Button size="sm" variant="ghost">{t.history}</Button>
-        </Link>
+        <Link to={`/dashboard/scans?site=${site.id}`} className={buttonVariants({ variant: 'ghost', size: 'sm' })}>{t.history}</Link>
         {confirmDelete ? (
           <span className="inline-flex gap-2">
             <Button

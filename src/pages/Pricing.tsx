@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Seo } from '@/components/Seo'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
+import { cn } from '@/lib/utils'
 import { PLANS, type Plan } from '@/lib/plans'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 import {
@@ -167,12 +168,13 @@ export function Pricing() {
   const lang = useLang()
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-16">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16 md:py-20">
       <Seo title={t.seoTitle} description={t.seoDescription} path="/tarifs" localized />
 
-      <header className="text-center max-w-2xl mx-auto mb-14">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{t.h1}</h1>
-        <p className="text-text-muted mt-4">{t.intro}</p>
+      <header className="text-center max-w-2xl mx-auto mb-16">
+        <p className="eyebrow mb-5">EAA · RGAA · WCAG</p>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-balance">{t.h1}</h1>
+        <p className="text-lg text-text-muted mt-5">{t.intro}</p>
       </header>
 
       <div className="grid gap-6 md:grid-cols-3 items-stretch">
@@ -180,27 +182,27 @@ export function Pricing() {
           <section
             key={plan.id}
             aria-labelledby={`plan-${plan.id}`}
-            className={`flex flex-col rounded-[16px] border p-7 ${
+            className={`relative flex flex-col rounded-[24px] border p-8 ${
               plan.highlighted
-                ? 'border-primary bg-gradient-to-b from-surface to-surface-2 shadow-[0_10px_40px_rgba(37,99,235,0.25)] relative'
-                : 'border-border bg-surface/60'
+                ? 'border-2 border-primary bg-surface shadow-card'
+                : 'border-border bg-surface shadow-micro'
             }`}
           >
             {plan.highlighted && (
-              <p className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-bold text-white">
+              <p className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-4 py-1.5 font-display text-xs font-bold uppercase tracking-[0.12em] text-on-primary">
                 {t.recommended}
               </p>
             )}
-            <h2 id={`plan-${plan.id}`} className="text-lg font-bold">
+            <h2 id={`plan-${plan.id}`} className="text-xl font-bold">
               {planName(lang, plan.id)}
             </h2>
             <p className="mt-3">
-              <span className="text-3xl font-extrabold">{planPrice(lang, plan.id)}</span>{' '}
+              <span className="font-display text-4xl font-extrabold tracking-[-0.03em]">{planPrice(lang, plan.id)}</span>{' '}
               <span className="text-sm text-text-dim">{planPeriod(lang, plan.id)}</span>
             </p>
             <p className="text-sm text-text-muted mt-3">{planTagline(lang, plan.id)}</p>
 
-            <ul className="mt-6 space-y-2.5 text-sm flex-1">
+            <ul className="mt-6 space-y-3 border-t border-border pt-6 text-sm flex-1">
               {planFeatures(lang, plan.id).map((f) => (
                 <li key={f} className="flex gap-2.5">
                   <svg
@@ -208,7 +210,7 @@ export function Pricing() {
                     width="16"
                     height="16"
                     fill="none"
-                    stroke="var(--color-success)"
+                    stroke="var(--color-primary)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     aria-hidden="true"
@@ -221,14 +223,12 @@ export function Pricing() {
               ))}
             </ul>
 
-            <div className="mt-7">
+            <div className="mt-8">
               <Link
                 to={plan.id === 'free' ? '/login' : localizePath(lang, '/contact')}
-                className="block"
+                className={cn(buttonVariants({ variant: plan.highlighted ? 'primary' : 'ghost' }), 'w-full')}
               >
-                <Button variant={plan.highlighted ? 'primary' : 'ghost'} className="w-full">
-                  {planCta(lang, plan.id)}
-                </Button>
+                {planCta(lang, plan.id)}
               </Link>
               {plan.id === 'pro' && (
                 <p className="mt-2 text-center text-xs text-text-dim">{t.proNote}</p>
@@ -238,17 +238,17 @@ export function Pricing() {
         ))}
       </div>
 
-      <section aria-labelledby="pricing-faq" className="mt-16 max-w-2xl mx-auto">
-        <h2 id="pricing-faq" className="text-xl font-bold text-center mb-6">
+      <section aria-labelledby="pricing-faq" className="mt-20 max-w-3xl mx-auto rounded-[24px] bg-surface-2 p-8 md:p-10">
+        <h2 id="pricing-faq" className="text-2xl md:text-3xl font-extrabold text-center mb-8">
           {t.faqTitle}
         </h2>
-        <dl className="space-y-5 text-sm">
+        <dl className="space-y-6">
           <div>
-            <dt className="font-semibold">{t.faq.scope.q}</dt>
+            <dt className="font-display text-lg font-semibold">{t.faq.scope.q}</dt>
             <dd className="text-text-muted mt-1">{t.faq.scope.a}</dd>
           </div>
           <div>
-            <dt className="font-semibold">{t.faq.legal.q}</dt>
+            <dt className="font-display text-lg font-semibold">{t.faq.legal.q}</dt>
             <dd className="text-text-muted mt-1">
               {t.faq.legal.a1}
               <Link to={localizePath(lang, '/rgaa')} className="text-link underline">
@@ -258,7 +258,7 @@ export function Pricing() {
             </dd>
           </div>
           <div>
-            <dt className="font-semibold">{t.faq.change.q}</dt>
+            <dt className="font-display text-lg font-semibold">{t.faq.change.q}</dt>
             <dd className="text-text-muted mt-1">
               {t.faq.change.a1}1<sup>{t.faq.change.sup}</sup>
               {t.faq.change.a2}

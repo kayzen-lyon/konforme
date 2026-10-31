@@ -161,15 +161,15 @@ export function Glossaire() {
         localized
       />
 
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.kicker}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-6">
+      <p className="eyebrow mb-5">{t.kicker}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-6">
         {fmt(t.h1Tpl, { version: RGAA_VERSION })}
       </h1>
       <p className="text-lg text-text-muted leading-relaxed mb-4">
         {t.introA}
         <strong className="text-text">{fmt(t.introStrongTpl, { count: String(ENTRIES.length) })}</strong>
         {t.introB}
-        <a href={RGAA_GLOSSARY_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-white">
+        <a href={RGAA_GLOSSARY_URL} target="_blank" rel="noreferrer" className="underline text-link hover:text-text">
           accessibilite.numerique.gouv.fr
         </a>
         {t.introC}
@@ -191,7 +191,7 @@ export function Glossaire() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t.searchPlaceholder}
-          className="w-full rounded-[10px] border border-border bg-surface px-4 py-2.5 text-sm text-text"
+          className="w-full rounded-[12px] border border-border bg-surface px-4 py-2.5 text-sm text-text"
         />
         <p className="mt-1 text-xs text-text-dim" role="status">
           {fmt(filtered.length > 1 ? t.countManyTpl : t.countOneTpl, { count: String(filtered.length) })}
@@ -203,7 +203,7 @@ export function Glossaire() {
           <article
             key={e.title}
             id={slugify(e.title)}
-            className="rounded-[14px] border border-border px-5 py-4"
+            className="rounded-[16px] border border-border px-5 py-4"
             aria-labelledby={`term-${slugify(e.title)}`}
             lang="fr"
           >

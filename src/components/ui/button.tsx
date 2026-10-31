@@ -1,33 +1,7 @@
 import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { type VariantProps } from 'class-variance-authority'
+import { buttonVariants } from './button-variants'
 import { cn } from '@/lib/utils'
-
-const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[10px] font-semibold transition-all focus-visible:outline-3 focus-visible:outline-focus focus-visible:outline-offset-3 disabled:opacity-50 disabled:pointer-events-none',
-  {
-    variants: {
-      variant: {
-        primary:
-          'bg-gradient-to-br from-primary to-accent-deep text-white shadow-[0_8px_22px_rgba(37,99,235,0.4)] hover:shadow-[0_12px_30px_rgba(37,99,235,0.55)] hover:-translate-y-px',
-        ghost:
-          'bg-transparent text-text border border-border hover:bg-raise hover:border-border-strong',
-        outline:
-          'bg-transparent text-text border border-border-strong hover:bg-raise',
-        danger:
-          'bg-[#b91c1c] text-white hover:bg-[#dc2626]',
-        link:
-          'bg-transparent text-primary-2 hover:text-link underline-offset-4 hover:underline',
-      },
-      size: {
-        sm: 'h-9 px-3 text-sm',
-        md: 'h-11 px-5 text-[0.95rem]',
-        lg: 'h-12 px-7 text-base',
-        icon: 'h-10 w-10',
-      },
-    },
-    defaultVariants: { variant: 'primary', size: 'md' },
-  }
-)
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,

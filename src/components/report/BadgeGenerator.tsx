@@ -129,7 +129,7 @@ export function BadgeGenerator({ rate, date, siteUrl }: { rate: number; date: st
     <div className="space-y-4">
       <p className="text-sm text-text-muted">
         {t.descBefore}{' '}
-        <strong className="text-white">{t.rateAndLevel(Math.round(rate), level)}</strong>{' '}
+        <strong className="text-text">{t.rateAndLevel(Math.round(rate), level)}</strong>{' '}
         {t.descAfter}
       </p>
 
@@ -142,8 +142,8 @@ export function BadgeGenerator({ rate, date, siteUrl }: { rate: number; date: st
             aria-pressed={variant === v}
             className={
               variant === v
-                ? 'rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-white'
-                : 'rounded-full border border-border-strong px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-raise hover:text-white'
+                ? 'rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-on-primary'
+                : 'rounded-full border border-border-strong px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-raise hover:text-text'
             }
           >
             {v === 'shield' ? t.variantShield : t.variantRound}
@@ -180,7 +180,7 @@ export function BadgeGenerator({ rate, date, siteUrl }: { rate: number; date: st
           value={embed}
           rows={3}
           onFocus={(e) => e.currentTarget.select()}
-          className="w-full rounded-[10px] border border-border bg-bg px-3 py-2 font-mono text-xs text-text-soft"
+          className="w-full rounded-[12px] border border-border bg-surface-2 px-3 py-2 font-mono text-xs text-text-soft"
         />
       </div>
     </div>

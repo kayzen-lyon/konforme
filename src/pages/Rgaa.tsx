@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Seo } from '@/components/Seo'
 import { defineMessages, useLang, useMessages } from '@/i18n'
 import { localizeTopic } from '@/i18n/rgaa-i18n'
@@ -336,8 +336,8 @@ export function Rgaa() {
         ]}
       />
 
-      <p className="text-xs font-semibold uppercase tracking-wider text-link mb-3">{t.kicker}</p>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-6">
+      <p className="eyebrow mb-5">{t.kicker}</p>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-balance mb-6">
         {t.h1}
       </h1>
       <p className="text-lg text-text-muted leading-relaxed mb-10">
@@ -359,7 +359,7 @@ export function Rgaa() {
         <h2 id="themes-title" className="text-2xl font-bold tracking-tight mb-4">
           {t.themesTitle}
         </h2>
-        <div className="overflow-x-auto rounded-[14px] border border-border">
+        <div className="overflow-x-auto rounded-[16px] border border-border">
           <table className="w-full text-sm">
             <caption className="sr-only">{t.tableCaption}</caption>
             <thead>
@@ -405,12 +405,10 @@ export function Rgaa() {
         </p>
       </section>
 
-      <div className="rounded-[14px] border border-primary/40 bg-primary/10 p-8 text-center">
-        <h2 className="text-xl font-bold mb-2">{t.ctaTitle}</h2>
-        <p className="text-sm text-text-muted mb-5">{t.ctaText}</p>
-        <Link to="/login">
-          <Button variant="primary" size="lg">{t.ctaButton}</Button>
-        </Link>
+      <div className="rounded-[24px] bg-surface-2 p-8 md:p-12 text-center">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-balance mb-3">{t.ctaTitle}</h2>
+        <p className="text-text-muted mb-7">{t.ctaText}</p>
+        <Link to="/login" className={buttonVariants({ size: 'lg' })}>{t.ctaButton}</Link>
       </div>
     </div>
   )

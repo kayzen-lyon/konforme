@@ -174,15 +174,15 @@ export function Footer() {
   ]
 
   return (
-    <footer className="mt-24 border-t border-border bg-bg/60" role="contentinfo">
-      <div className="mx-auto max-w-7xl px-6 py-12">
+    <footer className="mt-24 bg-navy text-on-navy" role="contentinfo">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-14">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
-            <Logo />
-            <p className="mt-3 text-sm text-text-muted max-w-xs leading-relaxed">
+            <Logo onDark />
+            <p className="mt-4 text-sm text-white/75 max-w-xs leading-relaxed">
               {t.tagline}
             </p>
-            <p className="mt-4 text-xs text-text-dim">
+            <p className="mt-4 text-xs text-white/70">
               6 rue Pierre Termier, 69009 Lyon
               <br />
               SIREN 493 857 262 — {t.vat}
@@ -190,7 +190,7 @@ export function Footer() {
           </div>
           {SECTIONS.map((s) => (
             <div key={s.title}>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-4">
+              <h3 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-gold mb-4">
                 {s.title}
               </h3>
               <ul className="space-y-2.5">
@@ -198,7 +198,7 @@ export function Footer() {
                   <li key={l.to}>
                     <Link
                       to={l.to.startsWith('/dashboard') ? l.to : localizePath(lang, l.to)}
-                      className="text-sm text-text-soft hover:text-white hover:underline underline-offset-4"
+                      className="text-sm text-white/75 hover:text-white hover:underline underline-offset-4"
                     >
                       {l.label}
                     </Link>
@@ -209,11 +209,11 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-text-dim md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-white/70 md:flex-row md:items-center md:justify-between">
           <p>{t.rights(new Date().getFullYear())}</p>
           <p>
             {t.madeBy}{' '}
-            <a href="https://internet.kayzen-lyon.fr" rel="noopener" target="_blank" className="text-link hover:underline">
+            <a href="https://internet.kayzen-lyon.fr" rel="noopener" target="_blank" className="font-semibold text-gold hover:underline">
               Kayzen Web
             </a>
             .
