@@ -213,7 +213,7 @@ export function Footer() {
           <p>{t.rights(new Date().getFullYear())}</p>
           <p>
             {t.madeBy}{' '}
-            <a href="https://internet.kayzen-lyon.fr" rel="noopener" target="_blank" className="font-semibold text-gold hover:underline">
+            <a href="https://www.kayzen-lyon.com" rel="noopener" target="_blank" className="font-semibold text-gold hover:underline">
               Kayzen Web
             </a>
             .

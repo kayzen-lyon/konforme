@@ -6,7 +6,7 @@
 
 /* AGENCY */
   Réalisation : Kayzen Web
-  Site : https://internet.kayzen-lyon.fr
+  Site : https://www.kayzen-lyon.com
 
 /* THANKS */
   La communauté open-source de l'accessibilité web :
