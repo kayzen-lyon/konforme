@@ -1,0 +1,36 @@
+# Garde le projet Appwrite « konforme » actif.
+#
+# POURQUOI
+# Appwrite Cloud met en pause les projets gratuits restés sans activité :
+# le 31 octobre 2026, le test gratuit et la connexion de konforme.kayzen-lyon.com
+# échouaient (« Failed to fetch ») parce que le projet était en pause
+# (403 project_paused). Une requête par jour suffit à le maintenir actif.
+#
+# La requête n'utilise aucune clé : /v1/locale est un point d'accès public du
+# projet. Le job échoue — et GitHub prévient par e-mail — si le projet répond
+# encore « project_paused », pour qu'une nouvelle pause ne passe pas inaperçue.
+name: Appwrite keep-alive
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Interroger le projet Appwrite
+        run: |
+          body=$(curl -sS --max-time 30 \
+            -H "X-Appwrite-Project: konforme" \
+            https://fra.cloud.appwrite.io/v1/locale)
+          echo "$body" | head -c 300
+          if echo "$body" | grep -q "project_paused"; then
+            echo "::error::Le projet Appwrite konforme est en pause : le restaurer depuis la console."
+            exit 1
+          fi
