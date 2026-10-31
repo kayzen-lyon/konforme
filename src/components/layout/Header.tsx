@@ -28,7 +28,7 @@ const L = defineMessages({
     signIn: 'Connexion',
     openMenu: 'Ouvrir le menu',
     closeMenu: 'Fermer le menu',
-    drawerTitle: 'Konforme · KAYZEN SASU',
+    drawerTitle: 'Konforme · KAYZEN',
     close: 'Fermer',
     qr: { site: 'Site', vcard: 'vCard', maps: 'Maps', reviews: 'Avis' },
     qrAlt: (label: string) => `QR code vers ${label}`,
@@ -54,7 +54,7 @@ const L = defineMessages({
     signIn: 'Sign in',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
-    drawerTitle: 'Konforme · KAYZEN SASU',
+    drawerTitle: 'Konforme · KAYZEN',
     close: 'Close',
     qr: { site: 'Website', vcard: 'vCard', maps: 'Maps', reviews: 'Reviews' },
     qrAlt: (label: string) => `QR code to ${label}`,
@@ -80,7 +80,7 @@ const L = defineMessages({
     signIn: 'Anmelden',
     openMenu: 'Menü öffnen',
     closeMenu: 'Menü schließen',
-    drawerTitle: 'Konforme · KAYZEN SASU',
+    drawerTitle: 'Konforme · KAYZEN',
     close: 'Schließen',
     qr: { site: 'Website', vcard: 'vCard', maps: 'Maps', reviews: 'Bewertungen' },
     qrAlt: (label: string) => `QR-Code zu ${label}`,
@@ -106,7 +106,7 @@ const L = defineMessages({
     signIn: 'Iniciar sesión',
     openMenu: 'Abrir el menú',
     closeMenu: 'Cerrar el menú',
-    drawerTitle: 'Konforme · KAYZEN SASU',
+    drawerTitle: 'Konforme · KAYZEN',
     close: 'Cerrar',
     qr: { site: 'Sitio web', vcard: 'vCard', maps: 'Maps', reviews: 'Opiniones' },
     qrAlt: (label: string) => `Código QR hacia ${label}`,
@@ -132,7 +132,7 @@ const L = defineMessages({
     signIn: 'Accedi',
     openMenu: 'Apri il menu',
     closeMenu: 'Chiudi il menu',
-    drawerTitle: 'Konforme · KAYZEN SASU',
+    drawerTitle: 'Konforme · KAYZEN',
     close: 'Chiudi',
     qr: { site: 'Sito web', vcard: 'vCard', maps: 'Maps', reviews: 'Recensioni' },
     qrAlt: (label: string) => `Codice QR verso ${label}`,
@@ -354,7 +354,7 @@ export function Header() {
                 <a className="inline-flex justify-center rounded-[10px] bg-primary px-4 py-2.5 text-sm font-semibold hover:bg-primary-2" href="/contact/kayzen-konforme.vcf" download>
                   {t.downloadVcard}
                 </a>
-                <a className="inline-flex justify-center rounded-[10px] border border-border px-4 py-2.5 text-sm font-semibold hover:bg-raise" href="https://www.google.com/maps/search/?api=1&query=KAYZEN+SASU+6+rue+Pierre+Termier+69009+Lyon" rel="noopener" target="_blank">
+                <a className="inline-flex justify-center rounded-[10px] border border-border px-4 py-2.5 text-sm font-semibold hover:bg-raise" href="https://www.google.com/maps/search/?api=1&query=KAYZEN+6+rue+Pierre+Termier+69009+Lyon" rel="noopener" target="_blank">
                   {t.mapsRoute}
                 </a>
                 <a className="inline-flex justify-center rounded-[10px] border border-border px-4 py-2.5 text-sm font-semibold hover:bg-raise" href="https://www.google.com/search?q=KAYZEN+Lyon+avis" rel="noopener" target="_blank">

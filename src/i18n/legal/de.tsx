@@ -15,30 +15,31 @@ export const LEGAL_DE: LegalDoc[] = [
     slug: 'mentions-legales',
     title: 'Impressum',
     description:
-      'Herausgeber, Verantwortlicher für die Veröffentlichung und Hoster der Website konforme.kayzen-lyon.fr.',
+      'Herausgeber, Verantwortlicher für die Veröffentlichung und Hoster der Website konforme.kayzen-lyon.com.',
     updated: '2026-07-12',
     body: (
       <>
         {LANGUAGE_CLAUSE}
         <H2>Herausgeber der Website</H2>
         <P>
-          Die Website konforme.kayzen-lyon.fr wird herausgegeben von{' '}
-          <strong className="text-text">KAYZEN SASU</strong>, einer vereinfachten
-          Aktiengesellschaft mit einem einzigen Gesellschafter (société par actions simplifiée
-          unipersonnelle), eingetragen im Handelsregister (RCS) von Lyon unter der Nummer
-          SIREN 999 418 346 (Umsatzsteuer-Identifikationsnummer: FR85 999 418 346), mit Sitz in
-          6 rue Pierre Termier, 69009 Lyon, Frankreich.
+          Die Website konforme.kayzen-lyon.com wird herausgegeben von{' '}
+          <strong className="text-text">Tarek BELHADJ</strong>, Einzelunternehmer (entrepreneur
+          individuel) unter dem Handelsnamen <strong className="text-text">KAYZEN</strong> —
+          SIREN 493 857 262, SIRET 493 857 262 00098, APE-Code 62.01Z — mit Sitz in
+          6 rue Pierre Termier, 69009 Lyon, Frankreich. Keine Umsatzsteuer ausgewiesen gemäß
+          Art. L. 233-3 des französischen CIBS (Kleinunternehmerregelung, franchise en base).
         </P>
         <P>
           Telefon: +33 (0)4 87 77 68 61 — E-Mail: contact@kayzen-lyon.fr.
           <br />
-          Verantwortlicher für die Veröffentlichung: der gesetzliche Vertreter von KAYZEN SASU.
+          Verantwortlicher für die Veröffentlichung: Tarek BELHADJ.
         </P>
         <H2>Hosting</H2>
         <P>
-          Die Website wird gehostet von Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789,
-          Vereinigte Staaten (vercel.com). Die Anwendungsdaten werden von Appwrite Cloud (Appwrite
-          Inc.) in der Region Frankfurt, Europäische Union, gehostet.
+          Die Website wird gehostet von Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723,
+          Vereinigte Staaten (vercel.com). Die Anwendungsdaten (Konten, Datenbank, Funktionen)
+          werden von Appwrite Cloud (Appwrite Code Ltd., appwrite.io) in der Region Frankfurt,
+          Deutschland (Europäische Union), gehostet.
         </P>
         <H2>Geistiges Eigentum</H2>
         <P>
@@ -59,7 +60,7 @@ export const LEGAL_DE: LegalDoc[] = [
         <H2>1. Gegenstand</H2>
         <P>
           Diese Allgemeinen Nutzungsbedingungen regeln die Nutzung der Plattform Konforme, eines
-          von KAYZEN SASU herausgegebenen Dienstes zur Prüfung der Barrierefreiheit im Web. Mit der
+          von KAYZEN (Tarek BELHADJ, Einzelunternehmer) herausgegebenen Dienstes zur Prüfung der Barrierefreiheit im Web. Mit der
           Erstellung eines Kontos akzeptieren Sie diese Bedingungen vorbehaltlos.
         </P>
         <H2>2. Konto und Zugang</H2>
@@ -86,8 +87,8 @@ export const LEGAL_DE: LegalDoc[] = [
         </P>
         <H2>5. Haftung</H2>
         <P>
-          KAYZEN SASU setzt angemessene Mittel ein, um die Verfügbarkeit des Dienstes
-          sicherzustellen, ohne jedoch einen Erfolg zu schulden. KAYZEN SASU haftet nicht für
+          KAYZEN setzt angemessene Mittel ein, um die Verfügbarkeit des Dienstes
+          sicherzustellen, ohne jedoch einen Erfolg zu schulden. KAYZEN haftet nicht für
           mittelbare Schäden, die aus der Nutzung oder der Nichtverfügbarkeit des Dienstes
           entstehen.
         </P>
@@ -145,7 +146,7 @@ export const LEGAL_DE: LegalDoc[] = [
       <>
         {LANGUAGE_CLAUSE}
         <H2>Verantwortlicher für die Verarbeitung</H2>
-        <P>KAYZEN SASU, 6 rue Pierre Termier, 69009 Lyon — contact@kayzen-lyon.fr.</P>
+        <P>Tarek BELHADJ, Einzelunternehmer (Handelsname KAYZEN), 6 rue Pierre Termier, 69009 Lyon — contact@kayzen-lyon.fr.</P>
         <H2>Erhobene Daten</H2>
         <UL
           items={[

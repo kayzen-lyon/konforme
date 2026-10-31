@@ -6,7 +6,7 @@
   "dir": "ltr",
   "scope": "/",
   "start_url": "/?source=pwa",
-  "id": "konforme.kayzen-lyon.fr",
+  "id": "konforme.kayzen-lyon.com",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",

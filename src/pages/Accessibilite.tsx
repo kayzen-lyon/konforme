@@ -5,14 +5,14 @@ const L = defineMessages({
   fr: {
     seoTitle: "Déclaration d'accessibilité",
     seoDescription:
-      "Déclaration d'accessibilité RGAA du site konforme.kayzen-lyon.fr : état de conformité, résultats des tests et voies de recours.",
+      "Déclaration d'accessibilité RGAA du site konforme.kayzen-lyon.com : état de conformité, résultats des tests et voies de recours.",
     eyebrow: 'Accessibilité',
     h1: "Déclaration d'accessibilité",
     introA: ' s’engage à rendre son site internet accessible conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.',
     scopeA: 'Cette déclaration d’accessibilité s’applique au site ',
     scopeB: '.',
     statusTitle: 'État de conformité',
-    statusA: 'Le site konforme.kayzen-lyon.fr est ',
+    statusA: 'Le site konforme.kayzen-lyon.com est ',
     statusStrong: 'partiellement conforme',
     statusB: ' avec le référentiel général d’amélioration de l’accessibilité (RGAA), version 4.1, en raison des non-conformités et dérogations énumérées ci-dessous.',
     testsTitle: 'Résultats des tests',
@@ -42,14 +42,14 @@ const L = defineMessages({
   en: {
     seoTitle: 'Accessibility statement',
     seoDescription:
-      'RGAA accessibility statement for konforme.kayzen-lyon.fr: compliance status, test results and remedies.',
+      'RGAA accessibility statement for konforme.kayzen-lyon.com: compliance status, test results and remedies.',
     eyebrow: 'Accessibility',
     h1: 'Accessibility statement',
     introA: ' is committed to making its website accessible in accordance with Article 47 of French act no. 2005-102 of 11 February 2005.',
     scopeA: 'This accessibility statement applies to the website ',
     scopeB: '.',
     statusTitle: 'Compliance status',
-    statusA: 'The website konforme.kayzen-lyon.fr is ',
+    statusA: 'The website konforme.kayzen-lyon.com is ',
     statusStrong: 'partially compliant',
     statusB: ' with the RGAA (French general accessibility improvement framework), version 4.1, because of the non-conformities and exemptions listed below.',
     testsTitle: 'Test results',
@@ -79,14 +79,14 @@ const L = defineMessages({
   de: {
     seoTitle: 'Erklärung zur Barrierefreiheit',
     seoDescription:
-      'RGAA-Erklärung zur Barrierefreiheit von konforme.kayzen-lyon.fr: Konformitätsstatus, Testergebnisse und Rechtsbehelfe.',
+      'RGAA-Erklärung zur Barrierefreiheit von konforme.kayzen-lyon.com: Konformitätsstatus, Testergebnisse und Rechtsbehelfe.',
     eyebrow: 'Barrierefreiheit',
     h1: 'Erklärung zur Barrierefreiheit',
     introA: ' verpflichtet sich, seine Website gemäß Artikel 47 des französischen Gesetzes Nr. 2005-102 vom 11. Februar 2005 barrierefrei zu gestalten.',
     scopeA: 'Diese Erklärung zur Barrierefreiheit gilt für die Website ',
     scopeB: '.',
     statusTitle: 'Stand der Konformität',
-    statusA: 'Die Website konforme.kayzen-lyon.fr ist aufgrund der nachstehend aufgeführten Verstöße und Ausnahmen ',
+    statusA: 'Die Website konforme.kayzen-lyon.com ist aufgrund der nachstehend aufgeführten Verstöße und Ausnahmen ',
     statusStrong: 'teilweise konform',
     statusB: ' mit dem allgemeinen französischen Referenzrahmen zur Verbesserung der Barrierefreiheit (RGAA) in der Version 4.1.',
     testsTitle: 'Testergebnisse',
@@ -116,14 +116,14 @@ const L = defineMessages({
   es: {
     seoTitle: 'Declaración de accesibilidad',
     seoDescription:
-      'Declaración de accesibilidad RGAA del sitio konforme.kayzen-lyon.fr: estado de conformidad, resultados de las pruebas y vías de recurso.',
+      'Declaración de accesibilidad RGAA del sitio konforme.kayzen-lyon.com: estado de conformidad, resultados de las pruebas y vías de recurso.',
     eyebrow: 'Accesibilidad',
     h1: 'Declaración de accesibilidad',
     introA: ' se compromete a hacer accesible su sitio web de conformidad con el artículo 47 de la ley francesa n.º 2005-102 de 11 de febrero de 2005.',
     scopeA: 'Esta declaración de accesibilidad se aplica al sitio ',
     scopeB: '.',
     statusTitle: 'Estado de conformidad',
-    statusA: 'El sitio konforme.kayzen-lyon.fr es ',
+    statusA: 'El sitio konforme.kayzen-lyon.com es ',
     statusStrong: 'parcialmente conforme',
     statusB: ' con el referencial general de mejora de la accesibilidad (RGAA), versión 4.1, debido a las no conformidades y excepciones enumeradas a continuación.',
     testsTitle: 'Resultados de las pruebas',
@@ -153,14 +153,14 @@ const L = defineMessages({
   it: {
     seoTitle: 'Dichiarazione di accessibilità',
     seoDescription:
-      'Dichiarazione di accessibilità RGAA del sito konforme.kayzen-lyon.fr: stato di conformità, risultati dei test e mezzi di ricorso.',
+      'Dichiarazione di accessibilità RGAA del sito konforme.kayzen-lyon.com: stato di conformità, risultati dei test e mezzi di ricorso.',
     eyebrow: 'Accessibilità',
     h1: 'Dichiarazione di accessibilità',
     introA: ' si impegna a rendere il proprio sito internet accessibile conformemente all’articolo 47 della legge francese n. 2005-102 dell’11 febbraio 2005.',
     scopeA: 'La presente dichiarazione di accessibilità si applica al sito ',
     scopeB: '.',
     statusTitle: 'Stato di conformità',
-    statusA: 'Il sito konforme.kayzen-lyon.fr è ',
+    statusA: 'Il sito konforme.kayzen-lyon.com è ',
     statusStrong: 'parzialmente conforme',
     statusB: ' al referenziale generale di miglioramento dell’accessibilità (RGAA), versione 4.1, a causa delle non conformità e delle deroghe elencate di seguito.',
     testsTitle: 'Risultati dei test',
@@ -200,12 +200,12 @@ export function Accessibilite() {
 
       <div className="space-y-4 text-text-soft leading-relaxed">
         <p>
-          <strong className="text-text">KAYZEN SASU</strong>
+          <strong className="text-text">KAYZEN</strong>
           {t.introA}
         </p>
         <p>
           {t.scopeA}
-          <strong className="text-text">konforme.kayzen-lyon.fr</strong>
+          <strong className="text-text">konforme.kayzen-lyon.com</strong>
           {t.scopeB}
         </p>
       </div>

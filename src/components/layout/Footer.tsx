@@ -24,8 +24,9 @@ const L = defineMessages({
     gdpr: 'RGPD',
     cookies: 'Cookies',
     tagline:
-      "Plateforme d'accessibilité web RGAA 4.1.2 & WCAG 2.2 automatisée par IA. Édité par KAYZEN SASU.",
-    rights: (year: number) => `© ${year} KAYZEN SASU — Tous droits réservés.`,
+      "Plateforme d'accessibilité web RGAA 4.1.2 & WCAG 2.2 automatisée par IA. Édité par KAYZEN.",
+    rights: (year: number) => `© ${year} KAYZEN — Tous droits réservés.`,
+    vat: 'TVA non applicable, art. L. 233-3 du CIBS',
     madeBy: 'Fièrement réalisé par',
   },
   en: {
@@ -49,8 +50,9 @@ const L = defineMessages({
     gdpr: 'GDPR',
     cookies: 'Cookies',
     tagline:
-      'AI-automated web accessibility platform for RGAA 4.1.2 & WCAG 2.2. Published by KAYZEN SASU.',
-    rights: (year: number) => `© ${year} KAYZEN SASU — All rights reserved.`,
+      'AI-automated web accessibility platform for RGAA 4.1.2 & WCAG 2.2. Published by KAYZEN.',
+    rights: (year: number) => `© ${year} KAYZEN — All rights reserved.`,
+    vat: 'VAT not applicable, art. L. 233-3 of the French CIBS',
     madeBy: 'Proudly built by',
   },
   de: {
@@ -74,8 +76,9 @@ const L = defineMessages({
     gdpr: 'DSGVO',
     cookies: 'Cookies',
     tagline:
-      'KI-automatisierte Plattform für digitale Barrierefreiheit nach RGAA 4.1.2 & WCAG 2.2. Herausgegeben von KAYZEN SASU.',
-    rights: (year: number) => `© ${year} KAYZEN SASU — Alle Rechte vorbehalten.`,
+      'KI-automatisierte Plattform für digitale Barrierefreiheit nach RGAA 4.1.2 & WCAG 2.2. Herausgegeben von KAYZEN.',
+    rights: (year: number) => `© ${year} KAYZEN — Alle Rechte vorbehalten.`,
+    vat: 'Keine Umsatzsteuer gemäß Art. L. 233-3 des französischen CIBS',
     madeBy: 'Mit Sorgfalt umgesetzt von',
   },
   es: {
@@ -99,8 +102,9 @@ const L = defineMessages({
     gdpr: 'RGPD',
     cookies: 'Cookies',
     tagline:
-      'Plataforma de accesibilidad web RGAA 4.1.2 y WCAG 2.2 automatizada con IA. Editada por KAYZEN SASU.',
-    rights: (year: number) => `© ${year} KAYZEN SASU — Todos los derechos reservados.`,
+      'Plataforma de accesibilidad web RGAA 4.1.2 y WCAG 2.2 automatizada con IA. Editada por KAYZEN.',
+    rights: (year: number) => `© ${year} KAYZEN — Todos los derechos reservados.`,
+    vat: 'IVA no aplicable, art. L. 233-3 del CIBS francés',
     madeBy: 'Desarrollado con orgullo por',
   },
   it: {
@@ -124,8 +128,9 @@ const L = defineMessages({
     gdpr: 'GDPR',
     cookies: 'Cookie',
     tagline:
-      'Piattaforma di accessibilità web RGAA 4.1.2 e WCAG 2.2 automatizzata con IA. Edita da KAYZEN SASU.',
-    rights: (year: number) => `© ${year} KAYZEN SASU — Tutti i diritti riservati.`,
+      'Piattaforma di accessibilità web RGAA 4.1.2 e WCAG 2.2 automatizzata con IA. Edita da KAYZEN.',
+    rights: (year: number) => `© ${year} KAYZEN — Tutti i diritti riservati.`,
+    vat: 'IVA non applicabile, art. L. 233-3 del CIBS francese',
     madeBy: 'Realizzato con cura da',
   },
 })
@@ -180,7 +185,7 @@ export function Footer() {
             <p className="mt-4 text-xs text-text-dim">
               6 rue Pierre Termier, 69009 Lyon
               <br />
-              SIREN 999 418 346 — TVA FR85 999 418 346
+              SIREN 493 857 262 — {t.vat}
             </p>
           </div>
           {SECTIONS.map((s) => (

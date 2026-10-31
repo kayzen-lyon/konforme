@@ -79,7 +79,7 @@ export function BlogPost() {
             inLanguage: lang,
             url: `${SITE_URL}${localizePath(lang, `/blog/${post.slug}`)}`,
             author: { '@type': 'Organization', name: 'Konforme' },
-            publisher: { '@type': 'Organization', name: 'KAYZEN SASU' },
+            publisher: { '@type': 'Organization', name: 'KAYZEN' },
           },
           {
             '@context': 'https://schema.org',

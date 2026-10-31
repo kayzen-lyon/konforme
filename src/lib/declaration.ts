@@ -110,7 +110,7 @@ ${conformityDetail}
 
 <footer>
   <p>Niveau déclaré : ${levelText} — taux de conformité : ${rate}.<br>
-  Déclaration générée avec <a href="https://konforme.kayzen-lyon.fr">Konforme</a>, plateforme d'audit d'accessibilité RGAA/WCAG.</p>
+  Déclaration générée avec <a href="https://konforme.kayzen-lyon.com">Konforme</a>, plateforme d'audit d'accessibilité RGAA/WCAG.</p>
 </footer>
 </body>
 </html>`

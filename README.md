@@ -1,6 +1,6 @@
 # Konforme — accessibilité web RGAA & WCAG automatisée
 
-Plateforme SaaS éditée par **KAYZEN SASU** (Lyon).
+Plateforme SaaS éditée par **KAYZEN** (Lyon).
 
 Stack : **Vite 8 + React 19 + TypeScript + Tailwind v4 + Appwrite (open source — Auth email/Google, TablesDB, Functions)** + TanStack Query + Zod + Recharts + axe-core.
 
@@ -31,7 +31,7 @@ npm run dev                          # http://localhost:5173
    (`VITE_APPWRITE_PROJECT_ID`).
 2. **Plateforme Web** : dans le projet, *Add platform → Web*, hostname `localhost`, puis
    ajouter une deuxième plateforme avec votre domaine de production
-   (`konforme.kayzen-lyon.fr`).
+   (`konforme.kayzen-lyon.com`).
 3. **Clé API** : *Integrations → API keys → Create API key* avec les scopes
    `databases`, `tables`, `columns`, `indexes`, `rows`, `functions`, `deployments`, `teams`
    (read + write) → `APPWRITE_API_KEY` dans `.env.local`.
@@ -126,5 +126,5 @@ dans Vercel (Settings → Environment Variables).
 
 ## Crédit
 
-Édité par **KAYZEN SASU** — 6 rue Pierre Termier, 69009 Lyon — SIREN 999 418 346.
+Édité par **KAYZEN** — 6 rue Pierre Termier, 69009 Lyon — SIREN 493 857 262.
 Réalisé par [Kayzen Web](https://internet.kayzen-lyon.fr).

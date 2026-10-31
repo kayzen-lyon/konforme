@@ -16,29 +16,31 @@ export const LEGAL_ES: LegalDoc[] = [
     slug: 'mentions-legales',
     title: 'Aviso legal',
     description:
-      'Editor, director de publicación y proveedor de alojamiento del sitio konforme.kayzen-lyon.fr.',
+      'Editor, director de publicación y proveedor de alojamiento del sitio konforme.kayzen-lyon.com.',
     updated: '2026-07-12',
     body: (
       <>
         <LanguageClause />
         <H2>Editor del sitio</H2>
         <P>
-          El sitio konforme.kayzen-lyon.fr está editado por{' '}
-          <strong className="text-text">KAYZEN SASU</strong>, sociedad por acciones simplificada
-          unipersonal inscrita en el Registro Mercantil (RCS) de Lyon con el número SIREN
-          999 418 346 (NIF intracomunitario: FR85 999 418 346), con domicilio social en 6 rue Pierre
-          Termier, 69009 Lyon, Francia.
+          El sitio konforme.kayzen-lyon.com está editado por{' '}
+          <strong className="text-text">Tarek BELHADJ</strong>, empresario individual (entrepreneur
+          individuel) con el nombre comercial <strong className="text-text">KAYZEN</strong> —
+          SIREN 493 857 262, SIRET 493 857 262 00098, código APE 62.01Z — con domicilio en 6 rue
+          Pierre Termier, 69009 Lyon, Francia. IVA no aplicable, art. L. 233-3 del CIBS francés
+          (régimen de franquicia, franchise en base).
         </P>
         <P>
           Teléfono: +33 (0)4 87 77 68 61 — Correo electrónico: contact@kayzen-lyon.fr.
           <br />
-          Director de la publicación: el representante legal de KAYZEN SASU.
+          Director de la publicación: Tarek BELHADJ.
         </P>
         <H2>Alojamiento</H2>
         <P>
-          El sitio está alojado por Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, Estados
-          Unidos (vercel.com). Los datos de la aplicación están alojados por Appwrite Cloud (Appwrite
-          Inc.), región de Fráncfort, Unión Europea.
+          El sitio está alojado por Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, Estados
+          Unidos (vercel.com). Los datos de la aplicación (cuentas, base de datos, funciones) están
+          alojados por Appwrite Cloud (Appwrite Code Ltd., appwrite.io), región de Fráncfort,
+          Alemania (Unión Europea).
         </P>
         <H2>Propiedad intelectual</H2>
         <P>
@@ -59,7 +61,7 @@ export const LEGAL_ES: LegalDoc[] = [
         <H2>1. Objeto</H2>
         <P>
           Las presentes condiciones generales de uso regulan la utilización de la plataforma
-          Konforme, servicio de auditoría de accesibilidad web editado por KAYZEN SASU. Al crear una
+          Konforme, servicio de auditoría de accesibilidad web editado por KAYZEN (Tarek BELHADJ, empresario individual). Al crear una
           cuenta, usted las acepta sin reservas.
         </P>
         <H2>2. Cuenta y acceso</H2>
@@ -85,8 +87,8 @@ export const LEGAL_ES: LegalDoc[] = [
         </P>
         <H2>5. Responsabilidad</H2>
         <P>
-          KAYZEN SASU emplea medios razonables para garantizar la disponibilidad del servicio, sin
-          obligación de resultado. No podrá exigirse responsabilidad a KAYZEN SASU por los daños
+          KAYZEN emplea medios razonables para garantizar la disponibilidad del servicio, sin
+          obligación de resultado. No podrá exigirse responsabilidad a KAYZEN por los daños
           indirectos derivados del uso o de la indisponibilidad del servicio.
         </P>
         <H2>6. Derecho aplicable</H2>
@@ -142,7 +144,7 @@ export const LEGAL_ES: LegalDoc[] = [
       <>
         <LanguageClause />
         <H2>Responsable del tratamiento</H2>
-        <P>KAYZEN SASU, 6 rue Pierre Termier, 69009 Lyon — contact@kayzen-lyon.fr.</P>
+        <P>Tarek BELHADJ, empresario individual (nombre comercial KAYZEN), 6 rue Pierre Termier, 69009 Lyon — contact@kayzen-lyon.fr.</P>
         <H2>Datos recopilados</H2>
         <UL
           items={[

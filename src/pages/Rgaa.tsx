@@ -331,7 +331,7 @@ export function Rgaa() {
             headline: t.jsonLdHeadline,
             inLanguage: t.locale,
             author: { '@type': 'Organization', name: 'Konforme' },
-            publisher: { '@type': 'Organization', name: 'KAYZEN SASU' },
+            publisher: { '@type': 'Organization', name: 'KAYZEN' },
           },
         ]}
       />

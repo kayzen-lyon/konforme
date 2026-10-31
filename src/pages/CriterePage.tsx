@@ -319,7 +319,7 @@ export function CriterePage() {
             headline: pageTitle,
             inLanguage: t.locale,
             author: { '@type': 'Organization', name: 'Konforme' },
-            publisher: { '@type': 'Organization', name: 'KAYZEN SASU' },
+            publisher: { '@type': 'Organization', name: 'KAYZEN' },
           },
         ]}
       />

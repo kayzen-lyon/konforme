@@ -1,6 +1,6 @@
 /* TEAM */
-  Édité par : KAYZEN SASU
-  Site : https://konforme.kayzen-lyon.fr
+  Édité par : KAYZEN
+  Site : https://konforme.kayzen-lyon.com
   Contact : contact@kayzen-lyon.fr
   Localisation : Lyon, France
 
@@ -15,5 +15,5 @@
 /* SITE */
   Standards : HTML5, CSS3, RGAA 4.1, WCAG 2.2 AA, EAA 2025
   Composants : React 18, Vite 5
-  Hébergement : EX2 + Vercel (CDN)
+  Hébergement : Vercel (site) + Appwrite Cloud, région Francfort (comptes, données)
   Dernière mise à jour : 2026-04-26

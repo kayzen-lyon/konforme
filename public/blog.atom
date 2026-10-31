@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr">
-  <id>https://konforme.kayzen-lyon.fr/blog</id>
+  <id>https://konforme.kayzen-lyon.com/blog</id>
   <title>Konforme — Blog accessibilité web</title>
-  <subtitle>Guides RGAA 4.1, WCAG 2.2 et EAA par KAYZEN SASU</subtitle>
-  <link href="https://konforme.kayzen-lyon.fr/blog.atom" rel="self" type="application/atom+xml"/>
-  <link href="https://konforme.kayzen-lyon.fr/blog" rel="alternate" type="text/html"/>
+  <subtitle>Guides RGAA 4.1, WCAG 2.2 et EAA par KAYZEN</subtitle>
+  <link href="https://konforme.kayzen-lyon.com/blog.atom" rel="self" type="application/atom+xml"/>
+  <link href="https://konforme.kayzen-lyon.com/blog" rel="alternate" type="text/html"/>
   <updated>2026-07-12T00:00:00Z</updated>
   <author>
-    <name>KAYZEN SASU — Konforme</name>
+    <name>KAYZEN — Konforme</name>
     <email>contact@kayzen-lyon.fr</email>
-    <uri>https://konforme.kayzen-lyon.fr</uri>
+    <uri>https://konforme.kayzen-lyon.com</uri>
   </author>
-  <rights>© 2026 KAYZEN SASU — Tous droits réservés.</rights>
-  <icon>https://konforme.kayzen-lyon.fr/favicon.svg</icon>
-  <logo>https://konforme.kayzen-lyon.fr/og-image.png</logo>
+  <rights>© 2026 KAYZEN — Tous droits réservés.</rights>
+  <icon>https://konforme.kayzen-lyon.com/favicon.svg</icon>
+  <logo>https://konforme.kayzen-lyon.com/og-image.png</logo>
 
   <entry>
-    <id>https://konforme.kayzen-lyon.fr/blog/european-accessibility-act-2025-obligations</id>
+    <id>https://konforme.kayzen-lyon.com/blog/european-accessibility-act-2025-obligations</id>
     <title>EAA 2025 : quelles obligations d'accessibilité pour votre site ?</title>
-    <link href="https://konforme.kayzen-lyon.fr/blog/european-accessibility-act-2025-obligations"/>
+    <link href="https://konforme.kayzen-lyon.com/blog/european-accessibility-act-2025-obligations"/>
     <updated>2026-06-02T00:00:00Z</updated>
     <summary>Depuis le 28 juin 2025, l'European Accessibility Act s'applique. Qui est concerné, quels risques, et par où commencer pour mettre votre site en conformité.</summary>
     <category term="EAA"/><category term="Conformité"/>
   </entry>
 
   <entry>
-    <id>https://konforme.kayzen-lyon.fr/blog/rgaa-vs-wcag-differences</id>
+    <id>https://konforme.kayzen-lyon.com/blog/rgaa-vs-wcag-differences</id>
     <title>RGAA vs WCAG : quelles différences, lequel viser ?</title>
-    <link href="https://konforme.kayzen-lyon.fr/blog/rgaa-vs-wcag-differences"/>
+    <link href="https://konforme.kayzen-lyon.com/blog/rgaa-vs-wcag-differences"/>
     <updated>2026-05-12T00:00:00Z</updated>
     <summary>Le RGAA applique les WCAG au contexte français. Comprendre ce qui les distingue pour choisir le bon référentiel et éviter les erreurs de conformité.</summary>
     <category term="RGAA"/><category term="WCAG"/>
   </entry>
 
   <entry>
-    <id>https://konforme.kayzen-lyon.fr/blog/10-erreurs-accessibilite-les-plus-courantes</id>
+    <id>https://konforme.kayzen-lyon.com/blog/10-erreurs-accessibilite-les-plus-courantes</id>
     <title>Les 10 erreurs d'accessibilité les plus courantes (et leurs corrections)</title>
-    <link href="https://konforme.kayzen-lyon.fr/blog/10-erreurs-accessibilite-les-plus-courantes"/>
+    <link href="https://konforme.kayzen-lyon.com/blog/10-erreurs-accessibilite-les-plus-courantes"/>
     <updated>2026-04-20T00:00:00Z</updated>
     <summary>Images sans alt, contrastes trop faibles, liens « cliquez ici »… le top 10 des non-conformités détectées sur les sites français, avec la correction pour chacune.</summary>
     <category term="Accessibilité"/><category term="Développement"/>

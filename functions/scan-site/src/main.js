@@ -918,7 +918,7 @@ async function fetchPage(url) {
       signal: ctrl.signal,
       redirect: 'follow',
       headers: {
-        'User-Agent': 'KonformeBot/1.0 (+https://konforme.kayzen-lyon.fr) audit accessibilite',
+        'User-Agent': 'KonformeBot/1.0 (+https://konforme.kayzen-lyon.com) audit accessibilite',
         Accept: 'text/html,application/xhtml+xml',
       },
     })
@@ -964,7 +964,7 @@ async function fetchText(url, maxBytes = 500_000) {
     const res = await fetch(url, {
       signal: ctrl.signal,
       redirect: 'follow',
-      headers: { 'User-Agent': 'KonformeBot/1.0 (+https://konforme.kayzen-lyon.fr) audit accessibilite' },
+      headers: { 'User-Agent': 'KonformeBot/1.0 (+https://konforme.kayzen-lyon.com) audit accessibilite' },
     })
     if (!res.ok) return null
     const body = await res.text()

@@ -13,27 +13,29 @@ export const LEGAL_DOCS: LegalDoc[] = [
   {
     slug: 'mentions-legales',
     title: 'Mentions légales',
-    description: 'Éditeur, directeur de publication et hébergeur du site konforme.kayzen-lyon.fr.',
+    description: 'Éditeur, directeur de publication et hébergeur du site konforme.kayzen-lyon.com.',
     updated: '2026-07-12',
     body: (
       <>
         <H2>Éditeur du site</H2>
         <P>
-          Le site konforme.kayzen-lyon.fr est édité par <strong className="text-text">KAYZEN SASU</strong>,
-          société par actions simplifiée unipersonnelle immatriculée au RCS de Lyon sous le numéro
-          SIREN 999 418 346 (TVA intracommunautaire : FR85 999 418 346), dont le siège social est
-          situé 6 rue Pierre Termier, 69009 Lyon, France.
+          Le site konforme.kayzen-lyon.com est édité par <strong className="text-text">Tarek BELHADJ</strong>,
+          entrepreneur individuel, nom commercial <strong className="text-text">KAYZEN</strong> —
+          SIREN 493 857 262, SIRET 493 857 262 00098, code APE 62.01Z — dont le siège est situé
+          6 rue Pierre Termier, 69009 Lyon, France. TVA non applicable, art. L. 233-3 du CIBS
+          (franchise en base).
         </P>
         <P>
           Téléphone : +33 (0)4 87 77 68 61 — Email : contact@kayzen-lyon.fr.
           <br />
-          Directeur de la publication : le représentant légal de KAYZEN SASU.
+          Directeur de la publication : Tarek BELHADJ.
         </P>
         <H2>Hébergement</H2>
         <P>
-          Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis
-          (vercel.com). Les données applicatives sont hébergées par Appwrite Cloud (Appwrite
-          Inc.), région Francfort, Union européenne.
+          Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723,
+          États-Unis (vercel.com). Les données applicatives (comptes, base de données, fonctions)
+          sont hébergées par Appwrite Cloud (Appwrite Code Ltd., appwrite.io), région Francfort,
+          Allemagne (Union européenne).
         </P>
         <H2>Propriété intellectuelle</H2>
         <P>
@@ -53,7 +55,7 @@ export const LEGAL_DOCS: LegalDoc[] = [
         <H2>1. Objet</H2>
         <P>
           Les présentes CGU encadrent l'utilisation de la plateforme Konforme, service d'audit
-          d'accessibilité web édité par KAYZEN SASU. En créant un compte, vous les acceptez sans
+          d'accessibilité web édité par KAYZEN (Tarek BELHADJ, entrepreneur individuel). En créant un compte, vous les acceptez sans
           réserve.
         </P>
         <H2>2. Compte et accès</H2>
@@ -79,8 +81,8 @@ export const LEGAL_DOCS: LegalDoc[] = [
         </P>
         <H2>5. Responsabilité</H2>
         <P>
-          KAYZEN SASU met en œuvre des moyens raisonnables pour assurer la disponibilité du
-          service, sans obligation de résultat. La responsabilité de KAYZEN SASU ne saurait être
+          KAYZEN met en œuvre des moyens raisonnables pour assurer la disponibilité du
+          service, sans obligation de résultat. La responsabilité de KAYZEN ne saurait être
           engagée pour les dommages indirects résultant de l'utilisation ou de l'indisponibilité du
           service.
         </P>
@@ -132,7 +134,7 @@ export const LEGAL_DOCS: LegalDoc[] = [
       <>
         <H2>Responsable de traitement</H2>
         <P>
-          KAYZEN SASU, 6 rue Pierre Termier, 69009 Lyon — contact@kayzen-lyon.fr.
+          Tarek BELHADJ, entrepreneur individuel (nom commercial KAYZEN), 6 rue Pierre Termier, 69009 Lyon — contact@kayzen-lyon.fr.
         </P>
         <H2>Données collectées</H2>
         <UL

@@ -207,7 +207,7 @@ export function Contact() {
           <h2 className="text-lg font-bold mb-4">{t.detailsTitle}</h2>
           <address className="not-italic space-y-3 text-sm text-text-soft leading-relaxed">
             <p>
-              <strong className="text-text">KAYZEN SASU</strong>
+              <strong className="text-text">KAYZEN</strong>
               <br />6 rue Pierre Termier
               <br />69009 Lyon, France
             </p>

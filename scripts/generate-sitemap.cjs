@@ -4,7 +4,7 @@
 const fs = require('node:fs')
 const path = require('node:path')
 
-const SITE_URL = 'https://konforme.kayzen-lyon.fr'
+const SITE_URL = 'https://konforme.kayzen-lyon.com'
 const TODAY = new Date().toISOString().slice(0, 10)
 const LANGS = ['fr', 'en', 'de', 'es', 'it']
 

@@ -1,6 +1,6 @@
 Contact: mailto:security@kayzen-lyon.fr
-Contact: https://konforme.kayzen-lyon.fr/contact
+Contact: https://konforme.kayzen-lyon.com/contact
 Expires: 2027-04-26T00:00:00Z
 Preferred-Languages: fr, en
-Canonical: https://konforme.kayzen-lyon.fr/.well-known/security.txt
-Policy: https://konforme.kayzen-lyon.fr/legal/securite
+Canonical: https://konforme.kayzen-lyon.com/.well-known/security.txt
+Policy: https://konforme.kayzen-lyon.com/legal/securite

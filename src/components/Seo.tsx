@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components -- constantes SEO co-localisées volontairement */
 import { alternatesFor, localizePath, useLang } from '@/i18n'
 
-const SITE_URL = 'https://konforme.kayzen-lyon.fr'
+const SITE_URL = 'https://konforme.kayzen-lyon.com'
 const SITE_NAME = 'Konforme'
 
 type JsonLd = Record<string, unknown>
@@ -67,7 +67,7 @@ export const ORGANIZATION_JSONLD: JsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Konforme',
-  legalName: 'KAYZEN SASU',
+  legalName: 'KAYZEN',
   url: SITE_URL,
   logo: `${SITE_URL}/favicon.svg`,
   email: 'contact@kayzen-lyon.fr',
@@ -91,7 +91,7 @@ export const SOFTWARE_JSONLD: JsonLd = {
   description:
     "Plateforme SaaS d'audit d'accessibilité web : conformité RGAA 4.1.2 et WCAG 2.2, corrections assistées par IA, déclaration d'accessibilité automatique.",
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', description: 'Audit gratuit' },
-  publisher: { '@type': 'Organization', name: 'KAYZEN SASU' },
+  publisher: { '@type': 'Organization', name: 'KAYZEN' },
 }
 
 export { SITE_URL }

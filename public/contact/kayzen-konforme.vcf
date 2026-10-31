@@ -1,17 +1,17 @@
 BEGIN:VCARD
 VERSION:3.0
-PRODID:-//KAYZEN SASU//Konforme//FR
+PRODID:-//KAYZEN//Konforme//FR
 N:KAYZEN;Konforme;;;
-FN:Konforme — KAYZEN SASU
-ORG:KAYZEN SASU;Konforme
+FN:Konforme — KAYZEN
+ORG:KAYZEN;Konforme
 TITLE:Plateforme d'accessibilité web RGAA & WCAG automatisée par IA
 ADR;TYPE=WORK:;;6 rue Pierre Termier;Lyon;;69009;France
 TEL;TYPE=WORK,VOICE:+33487776861
 EMAIL;TYPE=WORK,INTERNET:contact@kayzen-lyon.fr
 EMAIL;TYPE=WORK,INTERNET:direction@kayzen-lyon.fr
-URL;TYPE=WORK:https://konforme.kayzen-lyon.fr
+URL;TYPE=WORK:https://konforme.kayzen-lyon.com
 URL;TYPE=AGENCY:https://internet.kayzen-lyon.fr
-NOTE:Konforme — Audit & corrections d'accessibilité RGAA 4.1 / WCAG 2.2 / EAA 2025. SIREN 999 418 346 — TVA FR85999418346 — RCS Lyon — APE 4791B.
+NOTE:Konforme — Audit & corrections d'accessibilité RGAA 4.1 / WCAG 2.2 / EAA 2025. SIREN 493 857 262 — APE 62.01Z — TVA non applicable, art. L. 233-3 du CIBS.
 CATEGORIES:Business,Accessibility,SaaS
 REV:2026-04-26T00:00:00Z
 END:VCARD

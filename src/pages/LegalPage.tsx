@@ -26,7 +26,7 @@ const L = defineMessages({
     } as Record<string, string>,
     descriptions: {
       'mentions-legales':
-        'Éditeur, directeur de publication et hébergeur du site konforme.kayzen-lyon.fr.',
+        'Éditeur, directeur de publication et hébergeur du site konforme.kayzen-lyon.com.',
       cgu: "Règles d'utilisation de la plateforme Konforme.",
       cgv: 'Conditions applicables aux offres payantes de Konforme.',
       confidentialite: 'Quelles données Konforme collecte, pourquoi, et vos droits RGPD.',
@@ -49,7 +49,7 @@ const L = defineMessages({
     } as Record<string, string>,
     descriptions: {
       'mentions-legales':
-        'Publisher, publication director and host of the konforme.kayzen-lyon.fr website.',
+        'Publisher, publication director and host of the konforme.kayzen-lyon.com website.',
       cgu: 'Rules for using the Konforme platform.',
       cgv: 'Conditions applying to the paid Konforme plans.',
       confidentialite: 'What data Konforme collects, why, and your GDPR rights.',
@@ -72,7 +72,7 @@ const L = defineMessages({
     } as Record<string, string>,
     descriptions: {
       'mentions-legales':
-        'Herausgeber, verantwortlicher Redakteur und Hoster der Website konforme.kayzen-lyon.fr.',
+        'Herausgeber, verantwortlicher Redakteur und Hoster der Website konforme.kayzen-lyon.com.',
       cgu: 'Regeln für die Nutzung der Plattform Konforme.',
       cgv: 'Bedingungen für die kostenpflichtigen Angebote von Konforme.',
       confidentialite: 'Welche Daten Konforme erhebt, warum, und Ihre Rechte nach der DSGVO.',
@@ -95,7 +95,7 @@ const L = defineMessages({
     } as Record<string, string>,
     descriptions: {
       'mentions-legales':
-        'Editor, director de publicación y alojamiento del sitio konforme.kayzen-lyon.fr.',
+        'Editor, director de publicación y alojamiento del sitio konforme.kayzen-lyon.com.',
       cgu: 'Normas de uso de la plataforma Konforme.',
       cgv: 'Condiciones aplicables a las ofertas de pago de Konforme.',
       confidentialite: 'Qué datos recopila Konforme, por qué, y sus derechos RGPD.',
@@ -118,7 +118,7 @@ const L = defineMessages({
     } as Record<string, string>,
     descriptions: {
       'mentions-legales':
-        'Editore, direttore della pubblicazione e host del sito konforme.kayzen-lyon.fr.',
+        'Editore, direttore della pubblicazione e host del sito konforme.kayzen-lyon.com.',
       cgu: 'Regole di utilizzo della piattaforma Konforme.',
       cgv: 'Condizioni applicabili alle offerte a pagamento di Konforme.',
       confidentialite: 'Quali dati raccoglie Konforme, perché, e i suoi diritti ai sensi del GDPR.',

@@ -7,7 +7,7 @@ const L = defineMessages({
   fr: {
     seoTitle: 'À propos de Konforme',
     seoDescription:
-      "Konforme est la plateforme d'audit d'accessibilité web de KAYZEN SASU (Lyon) : rendre la conformité RGAA et WCAG simple, mesurable et abordable.",
+      "Konforme est la plateforme d'audit d'accessibilité web de KAYZEN (Lyon) : rendre la conformité RGAA et WCAG simple, mesurable et abordable.",
     eyebrow: 'À propos',
     h1: "Rendre l'accessibilité web simple et mesurable",
     p1: "Konforme est né d'un constat simple : depuis l'entrée en application de l'European Accessibility Act en juin 2025, des centaines de milliers de sites français doivent se mettre en conformité — mais les audits traditionnels coûtent plusieurs milliers d'euros et prennent des semaines.",
@@ -37,7 +37,7 @@ const L = defineMessages({
   en: {
     seoTitle: 'About Konforme',
     seoDescription:
-      'Konforme is the web accessibility audit platform built by KAYZEN SASU (Lyon): making RGAA and WCAG compliance simple, measurable and affordable.',
+      'Konforme is the web accessibility audit platform built by KAYZEN (Lyon): making RGAA and WCAG compliance simple, measurable and affordable.',
     eyebrow: 'About',
     h1: 'Making web accessibility simple and measurable',
     p1: 'Konforme started from a simple observation: since the European Accessibility Act came into force in June 2025, hundreds of thousands of websites have to become compliant — yet traditional audits cost several thousand euros and take weeks.',
@@ -67,7 +67,7 @@ const L = defineMessages({
   de: {
     seoTitle: 'Über Konforme',
     seoDescription:
-      'Konforme ist die Plattform für Web-Barrierefreiheitsaudits von KAYZEN SASU (Lyon): RGAA- und WCAG-Konformität einfach, messbar und bezahlbar machen.',
+      'Konforme ist die Plattform für Web-Barrierefreiheitsaudits von KAYZEN (Lyon): RGAA- und WCAG-Konformität einfach, messbar und bezahlbar machen.',
     eyebrow: 'Über uns',
     h1: 'Web-Barrierefreiheit einfach und messbar machen',
     p1: 'Konforme entstand aus einer einfachen Feststellung: Seit dem Inkrafttreten des European Accessibility Act im Juni 2025 müssen Hunderttausende Websites konform werden — klassische Audits kosten jedoch mehrere Tausend Euro und dauern Wochen.',
@@ -97,7 +97,7 @@ const L = defineMessages({
   es: {
     seoTitle: 'Acerca de Konforme',
     seoDescription:
-      'Konforme es la plataforma de auditoría de accesibilidad web de KAYZEN SASU (Lyon): hacer que la conformidad RGAA y WCAG sea sencilla, medible y asequible.',
+      'Konforme es la plataforma de auditoría de accesibilidad web de KAYZEN (Lyon): hacer que la conformidad RGAA y WCAG sea sencilla, medible y asequible.',
     eyebrow: 'Acerca de',
     h1: 'Hacer que la accesibilidad web sea sencilla y medible',
     p1: 'Konforme nació de una constatación sencilla: desde la entrada en vigor del European Accessibility Act en junio de 2025, cientos de miles de sitios deben cumplir la normativa, pero las auditorías tradicionales cuestan varios miles de euros y tardan semanas.',
@@ -127,7 +127,7 @@ const L = defineMessages({
   it: {
     seoTitle: 'Chi siamo — Konforme',
     seoDescription:
-      'Konforme è la piattaforma di audit di accessibilità web di KAYZEN SASU (Lione): rendere la conformità RGAA e WCAG semplice, misurabile e accessibile.',
+      'Konforme è la piattaforma di audit di accessibilità web di KAYZEN (Lione): rendere la conformità RGAA e WCAG semplice, misurabile e accessibile.',
     eyebrow: 'Chi siamo',
     h1: "Rendere l'accessibilità web semplice e misurabile",
     p1: 'Konforme nasce da una constatazione semplice: dall’entrata in vigore dell’European Accessibility Act nel giugno 2025, centinaia di migliaia di siti devono mettersi in conformità, ma gli audit tradizionali costano diverse migliaia di euro e richiedono settimane.',
@@ -176,7 +176,7 @@ export function About() {
         <p>{t.p2}</p>
         <p>
           {t.p3a}
-          <strong className="text-text">KAYZEN SASU</strong>
+          <strong className="text-text">KAYZEN</strong>
           {t.p3b}
           <Link to={localizePath(lang, '/accessibilite')} className="text-link hover:underline">
             {t.p3link}
