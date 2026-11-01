@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from 'react'
 import { BrowserRouter, Routes, Route, Outlet, useParams } from 'react-router-dom'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { PublicLayout } from '@/components/layout/PublicLayout'
@@ -150,6 +151,7 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
+        <SpeedInsights />
       </BrowserRouter>
     </AuthProvider>
     </ErrorBoundary>
