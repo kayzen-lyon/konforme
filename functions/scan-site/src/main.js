@@ -1431,14 +1431,15 @@ Pas de préambule, pas de conclusion générique.`
   const maxPages = Math.min(Math.max(Number(scan.max_pages) || DEFAULT_MAX_PAGES, 1), MAX_PAGES_HARD_CAP)
 
   const startedAt = Date.now()
-  await tables.updateRow({
-    databaseId: DB_ID,
-    tableId: T.scans,
-    rowId: scanId,
-    data: { status: 'running', started_at: new Date().toISOString() },
-  })
 
   try {
+    await tables.updateRow({
+      databaseId: DB_ID,
+      tableId: T.scans,
+      rowId: scanId,
+      data: { status: 'running', started_at: new Date().toISOString() },
+    })
+
     const homeHtml = await fetchPage(baseUrl.toString())
     if (!homeHtml) {
       return fail(`La page ${baseUrl} est injoignable (délai dépassé, erreur HTTP ou contenu non HTML).`)
@@ -1454,6 +1455,12 @@ Pas de préambule, pas de conclusion générique.`
     // Budget global : axe est coupé quand on approche du timeout de la fonction
     const AXE_GLOBAL_BUDGET_MS = 200_000
     const pages = [await analyzePage(baseUrl.toString(), homeHtml, { axeTimeoutMs: 12_000 })]
+    await tables.updateRow({
+      databaseId: DB_ID,
+      tableId: T.scans,
+      rowId: scanId,
+      data: { pages_count: pages.length },
+    })
     const extraHtml = await Promise.all(extraUrls.map((u) => fetchPage(u)))
     // Analyse séquentielle : jsdom+axe est gourmand en mémoire et en CPU.
     // Budget DUR : mieux vaut finaliser avec moins de pages que d'être tué
@@ -1467,6 +1474,12 @@ Pas de préambule, pas de conclusion générique.`
       }
       const withAxe = Date.now() - startedAt < AXE_GLOBAL_BUDGET_MS
       pages.push(await analyzePage(extraUrls[i], extraHtml[i], { withAxe, axeTimeoutMs: 12_000 }))
+      await tables.updateRow({
+        databaseId: DB_ID,
+        tableId: T.scans,
+        rowId: scanId,
+        data: { pages_count: pages.length },
+      })
     }
     log(`Pages analysées : ${pages.length}`)
 

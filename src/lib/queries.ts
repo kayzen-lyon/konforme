@@ -324,9 +324,8 @@ export function useDeleteSite() {
 /* Scans                                                               */
 /* ------------------------------------------------------------------ */
 
-/** Au-delà de ce délai, un scan pending/running est considéré interrompu
- * (la fonction est plafonnée à 300 s) et marqué failed. */
-const SCAN_STALE_MS = 6 * 60_000
+/** Laisse une marge après le timeout de 300 s de la fonction Appwrite. */
+const SCAN_STALE_MS = 8 * 60_000
 const SCAN_STALE_ERROR =
   "Audit interrompu (délai d'exécution dépassé). Relancez l'audit — un seul à la fois par site."
 

@@ -50,7 +50,7 @@ const L = defineMessages({
     oauthCallback:
       "La connexion Google n'a pas pu aboutir (session non créée). Réessayez, ou utilisez votre email et mot de passe.",
     oauthProvider:
-      'Google a refusé la connexion (configuration du fournisseur en cours de correction). Utilisez votre email et mot de passe en attendant.',
+      'La connexion Google n’est pas configurée côté serveur. L’administrateur doit vérifier le fournisseur Google et son URL de redirection dans Appwrite.',
     oauthDetail: (msg: string) => `Connexion Google impossible : ${msg}`,
     oauthGeneric: 'La connexion Google a échoué. Utilisez votre email et mot de passe.',
     errCredentials: 'Email ou mot de passe incorrect.',
@@ -95,7 +95,7 @@ const L = defineMessages({
     oauthCallback:
       'Google sign-in could not be completed (no session was created). Try again, or use your email and password.',
     oauthProvider:
-      'Google refused the sign-in (provider configuration is being fixed). Please use your email and password in the meantime.',
+      'Google sign-in is not configured on the server. The administrator must check the Google provider and its redirect URL in Appwrite.',
     oauthDetail: (msg: string) => `Google sign-in failed: ${msg}`,
     oauthGeneric: 'Google sign-in failed. Please use your email and password.',
     errCredentials: 'Incorrect email or password.',
@@ -140,7 +140,7 @@ const L = defineMessages({
     oauthCallback:
       'Die Google-Anmeldung konnte nicht abgeschlossen werden (keine Sitzung erstellt). Versuchen Sie es erneut oder verwenden Sie E-Mail und Passwort.',
     oauthProvider:
-      'Google hat die Anmeldung abgelehnt (die Anbieterkonfiguration wird gerade korrigiert). Verwenden Sie in der Zwischenzeit E-Mail und Passwort.',
+      'Die Google-Anmeldung ist serverseitig nicht konfiguriert. Der Administrator muss den Google-Anbieter und dessen Weiterleitungs-URL in Appwrite prüfen.',
     oauthDetail: (msg: string) => `Google-Anmeldung nicht möglich: ${msg}`,
     oauthGeneric: 'Die Google-Anmeldung ist fehlgeschlagen. Verwenden Sie E-Mail und Passwort.',
     errCredentials: 'E-Mail-Adresse oder Passwort ist falsch.',
@@ -185,7 +185,7 @@ const L = defineMessages({
     oauthCallback:
       'La conexión con Google no ha podido completarse (sesión no creada). Vuelva a intentarlo o utilice su correo electrónico y contraseña.',
     oauthProvider:
-      'Google ha rechazado la conexión (la configuración del proveedor se está corrigiendo). Mientras tanto, utilice su correo electrónico y contraseña.',
+      'El inicio de sesión con Google no está configurado en el servidor. El administrador debe comprobar el proveedor de Google y su URL de redirección en Appwrite.',
     oauthDetail: (msg: string) => `Conexión con Google imposible: ${msg}`,
     oauthGeneric:
       'La conexión con Google ha fallado. Utilice su correo electrónico y contraseña.',
@@ -231,7 +231,7 @@ const L = defineMessages({
     oauthCallback:
       'L’accesso con Google non è andato a buon fine (sessione non creata). Riprovi, oppure utilizzi email e password.',
     oauthProvider:
-      'Google ha rifiutato l’accesso (la configurazione del fornitore è in corso di correzione). Nel frattempo utilizzi email e password.',
+      'L’accesso con Google non è configurato sul server. L’amministratore deve verificare il provider Google e il relativo URL di reindirizzamento in Appwrite.',
     oauthDetail: (msg: string) => `Accesso con Google impossibile: ${msg}`,
     oauthGeneric: 'L’accesso con Google non è riuscito. Utilizzi email e password.',
     errCredentials: 'Email o password non corretti.',
