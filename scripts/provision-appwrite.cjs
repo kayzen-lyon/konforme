@@ -38,7 +38,11 @@ async function ensure(label, fn) {
     if (e && (e.code === 409 || /already exists/i.test(String(e.message)))) {
       console.log(`· ${label} (déjà présent)`)
     } else {
-      throw new Error(`${label} : ${e.message || e}`)
+      const cause = e && e.cause
+      const causeDetail = cause
+        ? ` (cause : ${cause.code || cause.name || 'erreur'}${cause.message ? ` — ${cause.message}` : ''})`
+        : ''
+      throw new Error(`${label} : ${e.message || e}${causeDetail}`, { cause: e })
     }
   }
 }
@@ -183,7 +187,14 @@ async function main() {
   try {
     await tables.get({ databaseId: DB_ID })
     console.log(`· database "${DB_ID}" (déjà présente)`)
-  } catch {
+  } catch (e) {
+    if (e.code !== 404) {
+      const cause = e.cause
+      const causeDetail = cause
+        ? ` (cause : ${cause.code || cause.name || 'erreur'}${cause.message ? ` — ${cause.message}` : ''})`
+        : ''
+      throw new Error(`Impossible de vérifier la base "${DB_ID}" : ${e.message || e}${causeDetail}`, { cause: e })
+    }
     await ensure(`database "${DB_ID}"`, () => tables.create({ databaseId: DB_ID, name: 'Konforme' }))
   }
 
@@ -327,5 +338,6 @@ async function main() {
 
 main().catch((e) => {
   console.error('✗', e.message || e)
+  if (e.cause && e.cause.cause) console.error('Détail réseau :', e.cause.cause)
   process.exit(1)
 })
