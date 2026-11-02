@@ -6,6 +6,7 @@ import { Logo } from '@/components/ui/logo'
 import { useAuth } from '@/contexts/AuthContext'
 import { defineMessages, localizePath, useLang, useMessages } from '@/i18n'
 import { Seo } from '@/components/Seo'
+import { MfaStep } from '@/pages/MfaStep'
 
 type Mode = 'signin' | 'signup'
 
@@ -246,7 +247,7 @@ const L = defineMessages({
 type Messages = (typeof L)['fr']
 
 export function Login() {
-  const { signInWithGoogle, signInWithEmail, signUpWithEmail, user } = useAuth()
+  const { signInWithGoogle, signInWithEmail, signUpWithEmail, user, mfaRequired } = useAuth()
   const t = useMessages(L)
   const lang = useLang()
   const [mode, setMode] = useState<Mode>('signin')
@@ -273,7 +274,7 @@ export function Login() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user) navigate('/dashboard', { replace: true })
+    if (user) navigate(user.emailVerified ? '/dashboard' : '/verify-email', { replace: true })
   }, [user, navigate])
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -308,6 +309,8 @@ export function Login() {
       setGoogleLoading(false)
     }
   }
+
+  if (mfaRequired) return <MfaStep />
 
   return (
     <main id="main" className="min-h-screen grid place-items-center bg-surface-2 px-4 sm:px-6 py-10">

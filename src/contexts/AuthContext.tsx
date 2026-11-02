@@ -1,6 +1,6 @@
-/* eslint-disable react-refresh/only-export-components -- hook useAuth co-localisé avec le provider */
+﻿/* eslint-disable react-refresh/only-export-components -- hook useAuth co-localisé avec le provider */
 import * as React from 'react'
-import { ID, OAuthProvider } from 'appwrite'
+import { AuthenticationFactor, ID, OAuthProvider } from 'appwrite'
 import { account, appwriteConfigured, type AppUser } from '@/lib/appwrite'
 
 const NOT_CONFIGURED_MSG =
@@ -13,45 +13,63 @@ function assertConfigured() {
 type AuthState = {
   user: AppUser | null
   loading: boolean
+  /** Mot de passe validé, en attente du code reçu par email (2e facteur). */
+  mfaRequired: boolean
   signInWithGoogle: () => Promise<void>
   signInWithEmail: (email: string, password: string) => Promise<void>
   signUpWithEmail: (name: string, email: string, password: string) => Promise<void>
+  sendVerificationEmail: () => Promise<void>
+  confirmEmailVerification: (userId: string, secret: string) => Promise<void>
+  sendMfaCode: () => Promise<void>
+  verifyMfaCode: (code: string) => Promise<void>
   signOut: () => Promise<void>
   refresh: () => Promise<void>
 }
 
 const AuthContext = React.createContext<AuthState | undefined>(undefined)
 
+type SessionState = { user: AppUser | null; mfaRequired: boolean }
+
+/** Lit la session courante ; distingue « non connecté » de « 2e facteur requis ». */
+async function readSession(): Promise<SessionState> {
+  try {
+    const me = await account.get()
+    return {
+      user: { id: me.$id, email: me.email, name: me.name, emailVerified: me.emailVerification },
+      mfaRequired: false,
+    }
+  } catch (e) {
+    const type = (e as { type?: string } | null)?.type
+    return { user: null, mfaRequired: type === 'user_more_factors_required' }
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<AppUser | null>(null)
+  const [mfaRequired, setMfaRequired] = React.useState(false)
+  const challengeId = React.useRef<string | null>(null)
   // Backend non configuré : pas de session à restaurer, on démarre déjà « chargé »
   const [loading, setLoading] = React.useState(appwriteConfigured)
 
+  const apply = React.useCallback((s: SessionState) => {
+    setUser(s.user)
+    setMfaRequired(s.mfaRequired)
+  }, [])
+
   const refresh = React.useCallback(async () => {
     if (!appwriteConfigured) {
-      setUser(null)
+      apply({ user: null, mfaRequired: false })
       return
     }
-    try {
-      const me = await account.get()
-      setUser({ id: me.$id, email: me.email, name: me.name })
-    } catch {
-      // 401 = simple visiteur non connecté
-      setUser(null)
-    }
-  }, [])
+    apply(await readSession())
+  }, [apply])
 
   React.useEffect(() => {
     if (!appwriteConfigured) return
     let mounted = true
-    account
-      .get()
-      .then((me) => {
-        if (mounted) setUser({ id: me.$id, email: me.email, name: me.name })
-      })
-      .catch(() => {
-        // 401 = simple visiteur non connecté
-        if (mounted) setUser(null)
+    readSession()
+      .then((s) => {
+        if (mounted) apply(s)
       })
       .finally(() => {
         if (mounted) setLoading(false)
@@ -59,8 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       mounted = false
     }
-  }, [])
-
+  }, [apply])
   const signInWithGoogle = React.useCallback(async () => {
     assertConfigured()
     const origin = window.location.origin
@@ -75,13 +92,59 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
   }, [])
 
+  const sendMfaCode = React.useCallback(async () => {
+    assertConfigured()
+    const challenge = await account.createMFAChallenge({ factor: AuthenticationFactor.Email })
+    challengeId.current = challenge.$id
+  }, [])
+
+  const verifyMfaCode = React.useCallback(
+    async (code: string) => {
+      assertConfigured()
+      if (!challengeId.current) await sendMfaCode()
+      await account.updateMFAChallenge({ challengeId: challengeId.current as string, otp: code.trim() })
+      challengeId.current = null
+      await refresh()
+    },
+    [refresh, sendMfaCode],
+  )
+
   const signInWithEmail = React.useCallback(
     async (email: string, password: string) => {
       assertConfigured()
       await account.createEmailPasswordSession({ email, password })
-      await refresh()
+      const s = await readSession()
+      if (s.user && s.user.emailVerified) {
+        // Compte vérifié : le 2e facteur par email est obligatoire. On l'active
+        // (comptes existants) puis on exige le code avant d'ouvrir l'accès.
+        await account.updateMFA({ mfa: true })
+        setUser(null)
+        setMfaRequired(true)
+        await sendMfaCode()
+        return
+      }
+      apply(s)
+      if (s.mfaRequired) await sendMfaCode()
     },
-    [refresh],
+    [apply, sendMfaCode],
+  )
+
+  const sendVerificationEmail = React.useCallback(async () => {
+    assertConfigured()
+    await account.createVerification({ url: `${window.location.origin}/verify-email` })
+  }, [])
+
+  const confirmEmailVerification = React.useCallback(
+    async (userId: string, secret: string) => {
+      assertConfigured()
+      await account.updateVerification({ userId, secret })
+      // Email prouvé : on active le 2e facteur par email, puis on repasse
+      // par la connexion pour saisir le code.
+      await account.updateMFA({ mfa: true })
+      await account.deleteSession({ sessionId: 'current' }).catch(() => {})
+      apply({ user: null, mfaRequired: false })
+    },
+    [apply],
   )
 
   const signUpWithEmail = React.useCallback(
@@ -89,6 +152,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       assertConfigured()
       await account.create({ userId: ID.unique(), email, password, name })
       await account.createEmailPasswordSession({ email, password })
+      // Session limitée : l'accès au tableau de bord reste bloqué tant que
+      // l'adresse email n'est pas confirmée.
+      await account.createVerification({ url: `${window.location.origin}/verify-email` })
       await refresh()
     },
     [refresh],
@@ -99,15 +165,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await account.deleteSession({ sessionId: 'current' })
     } finally {
       setUser(null)
+      setMfaRequired(false)
     }
   }, [])
 
   const value: AuthState = {
     user,
     loading,
+    mfaRequired,
     signInWithGoogle,
     signInWithEmail,
     signUpWithEmail,
+    sendVerificationEmail,
+    confirmEmailVerification,
+    sendMfaCode,
+    verifyMfaCode,
     signOut,
     refresh,
   }

@@ -1452,21 +1452,28 @@ Pas de préambule, pas de conclusion générique.`
       if (extraUrls.length > 0) log(`Aucun lien dans le HTML brut : ${extraUrls.length} page(s) découvertes via sitemap.xml`)
     }
     // Budget global : axe est coupé quand on approche du timeout de la fonction
-    const AXE_GLOBAL_BUDGET_MS = 200_000
+    // Le timeout de la fonction est de 300 s : on garde ≥ 100 s de marge pour
+    // l'écriture des non-conformités et la finalisation du scan.
+    const AXE_GLOBAL_BUDGET_MS = 90_000
     const pages = [await analyzePage(baseUrl.toString(), homeHtml, { axeTimeoutMs: 12_000 })]
     const extraHtml = await Promise.all(extraUrls.map((u) => fetchPage(u)))
     // Analyse séquentielle : jsdom+axe est gourmand en mémoire et en CPU.
     // Budget DUR : mieux vaut finaliser avec moins de pages que d'être tué
     // par le timeout de la fonction (ce qui laisserait un scan « running »).
-    const HARD_BUDGET_MS = 240_000
+    const HARD_BUDGET_MS = 160_000
+    let slowestPageMs = 0
     for (let i = 0; i < extraHtml.length; i++) {
       if (!extraHtml[i]) continue
-      if (Date.now() - startedAt > HARD_BUDGET_MS) {
+      const elapsed = Date.now() - startedAt
+      // La page suivante ne doit pas pouvoir dépasser le budget dur
+      if (elapsed + slowestPageMs > HARD_BUDGET_MS) {
         log(`Budget temps global atteint : crawl arrêté à ${pages.length} page(s)`)
         break
       }
-      const withAxe = Date.now() - startedAt < AXE_GLOBAL_BUDGET_MS
-      pages.push(await analyzePage(extraUrls[i], extraHtml[i], { withAxe, axeTimeoutMs: 12_000 }))
+      const withAxe = elapsed + slowestPageMs < AXE_GLOBAL_BUDGET_MS
+      const t0 = Date.now()
+      pages.push(await analyzePage(extraUrls[i], extraHtml[i], { withAxe, axeTimeoutMs: 8_000 }))
+      slowestPageMs = Math.max(slowestPageMs, Date.now() - t0)
     }
     log(`Pages analysées : ${pages.length}`)
 
@@ -1495,7 +1502,7 @@ Pas de préambule, pas de conclusion générique.`
       Permission.delete(Role.team(scan.team_id)),
     ]
     // Insertion avec une concurrence limitée
-    const CONCURRENCY = 5
+    const CONCURRENCY = 15
     for (let i = 0; i < allIssues.length; i += CONCURRENCY) {
       await Promise.all(
         allIssues.slice(i, i + CONCURRENCY).map((data) =>

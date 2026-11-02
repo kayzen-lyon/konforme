@@ -13,6 +13,7 @@ const DashboardLayout = lazy(() =>
 )
 const Login = lazy(() => import('@/pages/Login').then((m) => ({ default: m.Login })))
 const AuthCallback = lazy(() => import('@/pages/AuthCallback').then((m) => ({ default: m.AuthCallback })))
+const VerifyEmail = lazy(() => import('@/pages/VerifyEmail').then((m) => ({ default: m.VerifyEmail })))
 const DashboardHome = lazy(() => import('@/pages/DashboardHome').then((m) => ({ default: m.DashboardHome })))
 const Sites = lazy(() => import('@/pages/dashboard/Sites').then((m) => ({ default: m.Sites })))
 const Scans = lazy(() => import('@/pages/dashboard/Scans').then((m) => ({ default: m.Scans })))
@@ -130,6 +131,7 @@ function App() {
             <Route element={<DashboardShell />}>
               <Route path="/login" element={<Login />} />
               <Route path="/auth/callback" element={<AuthCallback />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
 
               {/* Dashboard (protégé) */}
               <Route
