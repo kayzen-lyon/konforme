@@ -10,6 +10,8 @@ import { countCriticalIssues, useAlerts, useMarkAlertRead, useMembership, useSca
 import { scoreColor } from '@/lib/format'
 import { defineMessages, useLang, useMessages } from '@/i18n'
 import type { ScorePoint } from '@/components/ScoreChart'
+import { SitesOverview } from '@/components/SitesOverview'
+import { buildSiteHealth } from '@/lib/dashboard'
 
 const ScoreChart = lazy(() => import('@/components/ScoreChart'))
 
@@ -263,6 +265,7 @@ export function DashboardHome() {
   )
 
   const hasSites = (sites?.length ?? 0) > 0
+  const health = useMemo(() => buildSiteHealth(sites ?? [], scans ?? []), [sites, scans])
 
   return (
     <div className="space-y-8">
@@ -329,6 +332,8 @@ export function DashboardHome() {
           accent="var(--color-success)"
         />
       </div>
+
+      <SitesOverview health={health} alerts={alerts ?? []} />
 
       {chartData.length >= 2 && (
         <Card>
