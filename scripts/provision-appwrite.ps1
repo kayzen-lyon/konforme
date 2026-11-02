@@ -3,19 +3,23 @@ $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repositoryRoot
 
-$key = Read-Host 'Collez la nouvelle cle API Appwrite (la saisie reste masquee)' -AsSecureString
-$pointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($key)
+$key = (Get-Clipboard -Raw).Trim()
+Set-Clipboard -Value ''
+
+if ([string]::IsNullOrWhiteSpace($key)) {
+  throw 'Le presse-papiers est vide. Copiez la valeur de la clé API Appwrite puis relancez ce script.'
+}
+if ($key -notmatch '^[\x21-\x7E]+$') {
+  throw 'La clé copiée contient des caractères inattendus. Copiez uniquement la valeur de la clé API Appwrite.'
+}
 
 try {
-  $env:APPWRITE_API_KEY = ([Runtime.InteropServices.Marshal]::PtrToStringBSTR($pointer) -replace '\s', '')
-  if ([string]::IsNullOrWhiteSpace($env:APPWRITE_API_KEY)) {
-    throw 'La clé Appwrite est vide. Relancez le script et collez la valeur secrète de la clé.'
-  }
+  $env:APPWRITE_API_KEY = $key
+  $key = $null
   node .\scripts\provision-appwrite.cjs
   if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
   }
 } finally {
   Remove-Item Env:\APPWRITE_API_KEY -ErrorAction SilentlyContinue
-  [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointer)
 }
