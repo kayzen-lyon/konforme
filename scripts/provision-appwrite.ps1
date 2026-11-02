@@ -3,12 +3,14 @@ $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repositoryRoot
 
-$key = (Get-Clipboard -Raw).Trim()
-Set-Clipboard -Value ''
-
-if ([string]::IsNullOrWhiteSpace($key)) {
+$clipboardText = Get-Clipboard -Raw
+if ([string]::IsNullOrWhiteSpace($clipboardText)) {
   throw 'Le presse-papiers est vide. Copiez la valeur de la clé API Appwrite puis relancez ce script.'
 }
+$key = $clipboardText.Trim()
+Set-Clipboard -Value ' '
+Remove-Variable clipboardText
+
 if ($key -notmatch '^[\x21-\x7E]+$') {
   throw 'La clé copiée contient des caractères inattendus. Copiez uniquement la valeur de la clé API Appwrite.'
 }
