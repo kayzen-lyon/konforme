@@ -24,7 +24,7 @@ function loadEnv() {
   // BOM + fins de ligne CRLF/CR tolérés (fichiers édités sous Windows)
   for (const line of fs.readFileSync(envPath, 'utf8').replace(/^﻿/, '').split(/\r\n|\r|\n/)) {
     const m = line.match(/^([A-Z_]+)\s*=\s*(.*)$/)
-    if (m) env[m[1]] = m[2].trim()
+    if (m) env[m[1]] = m[2].trim().replace(/^(['"])(.*)\1$/, '$2')
   }
   return env
 }
@@ -167,7 +167,7 @@ async function main() {
   const env = loadEnv()
   const endpoint = env.VITE_APPWRITE_ENDPOINT
   const projectId = env.VITE_APPWRITE_PROJECT_ID
-  const apiKey = env.APPWRITE_API_KEY
+  const apiKey = process.env.APPWRITE_API_KEY || env.APPWRITE_API_KEY
   if (!endpoint || !projectId || !apiKey) {
     throw new Error('VITE_APPWRITE_ENDPOINT, VITE_APPWRITE_PROJECT_ID et APPWRITE_API_KEY sont requis dans .env.local')
   }
