@@ -135,6 +135,19 @@ describe('computeConformity', () => {
     expect(summary.aVerifier).toBeGreaterThan(50)
   })
 
+  it('ne déclare pas conformes les critères seulement partiellement automatisés', () => {
+    const summary = computeConformity([])
+    expect(summary.results.find((r) => r.criterion.id === '1.2')!.status).toBe('a_verifier')
+    expect(summary.results.find((r) => r.criterion.id === '2.2')!.status).toBe('a_verifier')
+  })
+
+  it('garde à vérifier un critère partiel même si une alerte est résolue', () => {
+    const summary = computeConformity([
+      issue({ rule_id: 'RGAA 1.2 / WCAG 1.1.1', status: 'fixed' }),
+    ])
+    expect(summary.results.find((r) => r.criterion.id === '1.2')!.status).toBe('a_verifier')
+  })
+
   it('restreint l’analyse à une page quand pageUrl est fourni', () => {
     const issues = [
       issue({ page_url: 'https://example.com/a' }),

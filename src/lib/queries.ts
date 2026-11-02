@@ -146,6 +146,39 @@ function teamPermissions(teamId: string): string[] {
   ]
 }
 
+async function startScanExecution(scanId: string) {
+  const workerUrl = (import.meta.env.VITE_SCAN_WORKER_URL as string | undefined)?.trim()
+  if (workerUrl) {
+    const { jwt } = await account.createJWT()
+    const response = await fetch(`${workerUrl.replace(/\/+$/, '')}/start`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ scan_id: scanId }),
+    })
+    const text = await response.text()
+    let payload: { error?: string } = {}
+    try {
+      payload = JSON.parse(text) as { error?: string }
+    } catch {
+      if (!response.ok) throw new Error(`Le moteur d'audit a répondu avec le statut ${response.status}.`)
+    }
+    if (!response.ok) throw new Error(payload.error || `Le moteur d'audit a répondu avec le statut ${response.status}.`)
+    return
+  }
+
+  const execution = await functions.createExecution({
+    functionId: SCAN_FUNCTION_ID,
+    body: JSON.stringify({ scan_id: scanId }),
+    async: true,
+  })
+  if (execution.responseStatusCode >= 400) {
+    throw new Error("Le moteur d'analyse n'a pas pu démarrer l'audit.")
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Organisation courante = première team Appwrite de l'utilisateur     */
 /* (créée automatiquement au premier passage)                          */
@@ -390,17 +423,26 @@ export function useScan(scanId: string | undefined) {
         })
         const scan = rowToScan(row)
         if (scan.status === 'done') {
-          const pages = await tables.listRows({
-            databaseId: DB_ID,
-            tableId: TABLES.scan_pages,
-            queries: [
+          const pages: Row[] = []
+          let cursor: string | undefined
+          for (;;) {
+            const queries = [
               Query.equal('scan_id', scan.id),
               Query.equal('status', 'done'),
-              Query.orderAsc('position'),
-              Query.limit(30),
-            ],
-          })
-          scan.page_scores = pages.rows.map((page) => ({
+              Query.limit(100),
+            ]
+            if (cursor) queries.push(Query.cursorAfter(cursor))
+            const result = await tables.listRows({
+              databaseId: DB_ID,
+              tableId: TABLES.scan_pages,
+              queries,
+            })
+            pages.push(...result.rows)
+            if (result.rows.length < 100) break
+            cursor = result.rows[result.rows.length - 1].$id
+          }
+          pages.sort((a, b) => (a.position as number) - (b.position as number) || a.$id.localeCompare(b.$id))
+          scan.page_scores = pages.map((page) => ({
             url: page.page_url as string,
             score: (page.score as number | null) ?? null,
             issues: (page.issues_count as number) ?? 0,
@@ -703,17 +745,13 @@ export function useLaunchScan(plan: PlanId = 'free') {
           site_name: site.name,
           site_url: site.url,
           started_at: new Date().toISOString(),
-          max_pages: Number.isFinite(limits.pagesPerScan) ? limits.pagesPerScan : 25,
-          pages_total: Number.isFinite(limits.pagesPerScan) ? limits.pagesPerScan : 25,
+          max_pages: Number.isFinite(limits.pagesPerScan) ? limits.pagesPerScan : 0,
+          pages_total: 0,
         },
         permissions: teamPermissions(site.organization_id),
       })
       try {
-        await functions.createExecution({
-          functionId: SCAN_FUNCTION_ID,
-          body: JSON.stringify({ scan_id: scanRow.$id }),
-          async: true,
-        })
+        await startScanExecution(scanRow.$id)
       } catch (e) {
         await tables.updateRow({
           databaseId: DB_ID,

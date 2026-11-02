@@ -65,7 +65,7 @@ const L = defineMessages({
       },
       {
         title: 'Rapport multi-pages',
-        desc: "Jusqu'à 30 pages analysées par audit, avec le score de chaque page et le détail par sévérité.",
+        desc: "Pages analysées sans plafond, avec le score de chaque page et le détail par sévérité.",
       },
     ],
     howTitle: 'Comment ça marche ?',
@@ -90,7 +90,7 @@ const L = defineMessages({
       },
       {
         q: 'Combien de temps prend un audit Konforme ?',
-        a: "Environ une minute pour un site classique : la plateforme analyse jusqu'à 30 pages par audit avec une centaine de règles, et vous rend un rapport détaillé avec un score de conformité RGAA et WCAG pondéré par sévérité.",
+        a: "La durée dépend de la taille du site : la plateforme analyse ses pages sans plafond prédéfini avec une centaine de règles, et vous rend un rapport détaillé avec un score de conformité RGAA et WCAG pondéré par sévérité.",
       },
       {
         q: 'Konforme est-il un « overlay » d’accessibilité ?',
@@ -164,7 +164,7 @@ const L = defineMessages({
       },
       {
         title: 'Multi-page report',
-        desc: 'Up to 30 pages analysed per audit, with the score of each page and the breakdown by severity.',
+        desc: 'No preset page limit, with a score for every page and a breakdown by severity.',
       },
     ],
     howTitle: 'How does it work?',
@@ -189,7 +189,7 @@ const L = defineMessages({
       },
       {
         q: 'How long does a Konforme audit take?',
-        a: 'About a minute for a typical website: the platform analyses up to 30 pages per audit with around a hundred rules, and returns a detailed report with an RGAA and WCAG compliance score weighted by severity.',
+        a: 'Duration depends on website size: the platform analyses pages with no preset cap using around a hundred rules, and returns a detailed report with an RGAA and WCAG compliance score weighted by severity.',
       },
       {
         q: 'Is Konforme an accessibility “overlay”?',
@@ -362,7 +362,7 @@ const L = defineMessages({
       },
       {
         title: 'Informe de varias páginas',
-        desc: 'Hasta 30 páginas analizadas por auditoría, con la puntuación de cada página y el detalle por gravedad.',
+        desc: 'Páginas analizadas sin límite preestablecido, con la puntuación de cada página y el detalle por gravedad.',
       },
     ],
     howTitle: '¿Cómo funciona?',
@@ -387,7 +387,7 @@ const L = defineMessages({
       },
       {
         q: '¿Cuánto tiempo lleva una auditoría Konforme?',
-        a: 'La plataforma analiza hasta 30 páginas por auditoría con un centenar de reglas y le entrega un informe detallado con una puntuación de conformidad RGAA y WCAG ponderada por gravedad.',
+        a: 'La duración depende del tamaño del sitio: la plataforma analiza páginas sin un límite preestablecido con un centenar de reglas y entrega un informe detallado con una puntuación RGAA y WCAG ponderada por gravedad.',
       },
       {
         q: '¿Konforme es un «overlay» de accesibilidad?',
@@ -461,7 +461,7 @@ const L = defineMessages({
       },
       {
         title: 'Rapporto su più pagine',
-        desc: 'Fino a 30 pagine analizzate per audit, con il punteggio di ogni pagina e il dettaglio per gravità.',
+        desc: 'Pagine analizzate senza un limite prestabilito, con il punteggio di ogni pagina e il dettaglio per gravità.',
       },
     ],
     howTitle: 'Come funziona?',
@@ -486,7 +486,7 @@ const L = defineMessages({
       },
       {
         q: 'Quanto tempo richiede un audit Konforme?',
-        a: 'La piattaforma analizza fino a 30 pagine per audit con un centinaio di regole e restituisce un rapporto dettagliato con un punteggio di conformità RGAA e WCAG ponderato per gravità.',
+        a: 'La durata dipende dalle dimensioni del sito: la piattaforma analizza le pagine senza un limite prestabilito con circa cento regole e restituisce un rapporto dettagliato con un punteggio RGAA e WCAG ponderato per gravità.',
       },
       {
         q: 'Konforme è un «overlay» di accessibilità?',

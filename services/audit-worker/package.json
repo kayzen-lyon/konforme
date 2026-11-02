@@ -1,0 +1,16 @@
+{
+  "name": "konforme-audit-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.node.cjs"
+  },
+  "dependencies": {
+    "@google-cloud/tasks": "^6.2.0",
+    "ipaddr.js": "^2.2.0",
+    "node-appwrite": "^26.2.0",
+    "undici": "^6.21.1"
+  }
+}

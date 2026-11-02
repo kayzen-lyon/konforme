@@ -65,6 +65,17 @@ describe('buildAuditReportHtml', () => {
     const html = buildAuditReportHtml(scan, [])
     expect(html).toContain('Aucune non-conformité')
   })
+
+  it('sépare les scores automatiques du taux officiel et liste les pages auditées', () => {
+    const html = buildAuditReportHtml(scan, [issue({})])
+    expect(html).toContain('Score automatique global')
+    expect(html).toContain('ne vaut ni audit manuel exhaustif')
+    expect(html).toContain('Pages incluses dans cet audit')
+    expect(html).toContain('https://exemple.fr')
+    expect(html).toContain('article 47')
+    expect(html).toContain('directive (UE) 2019/882')
+    expect(html).not.toContain('50 000 €')
+  })
 })
 
 describe('buildIssuesCsv', () => {

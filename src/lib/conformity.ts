@@ -8,8 +8,8 @@ import { criterionForRule, RGAA_CRITERIA, RGAA_TOPICS, type RgaaCriterion } from
  *  - `non_conforme`   : au moins une non-conformité ouverte détectée par le
  *                       moteur, ou verdict manuel « non conforme » ;
  *  - `ok`             : conforme — aucune non-conformité détectée sur un
- *                       critère testé automatiquement, ou verdict manuel
- *                       « conforme » ;
+ *                       critère entièrement automatisable, ou verdict
+ *                       manuel « conforme » ;
  *  - `non_applicable` : verdict manuel « non applicable » (exclu du taux) ;
  *  - `a_verifier`     : critère non automatisable, pas encore évalué
  *                       manuellement.
@@ -69,8 +69,8 @@ function isOpen(issue: ScanIssue): boolean {
  *     manuelle ne peut pas contredire un constat outillé : corrigez ou
  *     marquez l'issue en faux positif) ;
  *  2. verdict manuel (conforme / non conforme / non applicable) ;
- *  3. critère testé automatiquement sans non-conformité → conforme ;
- *  4. sinon → à vérifier manuellement.
+ *  3. critère entièrement automatisable sans non-conformité → conforme ;
+ *  4. critère partiellement automatisable ou manuel sans revue → à vérifier.
  */
 export function computeConformity(
   issues: ScanIssue[],
@@ -105,7 +105,7 @@ export function computeConformity(
     else if (review) {
       status =
         review.status === 'conforme' ? 'ok' : review.status === 'non_conforme' ? 'non_conforme' : 'non_applicable'
-    } else if (criterion.coverage !== 'manual' || resolvedIssues.length > 0) status = 'ok'
+    } else if (criterion.coverage === 'auto') status = 'ok'
     else status = 'a_verifier'
     return { criterion, status, openIssues, resolvedIssues, review }
   })

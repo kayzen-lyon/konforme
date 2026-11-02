@@ -21,12 +21,9 @@ const T = {
   alerts: 'alerts',
 }
 
-const DEFAULT_MAX_PAGES = 30
-const MAX_PAGES_HARD_CAP = 30
 const FETCH_TIMEOUT_MS = 10_000
 const MAX_HTML_BYTES = 1_500_000
 const MAX_PER_RULE_PER_PAGE = 10
-const MAX_TOTAL_ISSUES = 400
 
 /** Poids des sévérités dans le score (un critique pèse 6× un mineur). */
 const SEVERITY_WEIGHT = { critical: 3, serious: 2, moderate: 1, minor: 0.5 }
@@ -982,7 +979,7 @@ function parseSitemapLocs(xml) {
   const out = []
   const re = /<loc>\s*([^<\s][^<]*?)\s*<\/loc>/g
   let m
-  while ((m = re.exec(xml)) !== null && out.length < 500) out.push(m[1].trim())
+  while ((m = re.exec(xml)) !== null) out.push(m[1].trim())
   return out
 }
 
@@ -1025,7 +1022,7 @@ async function discoverFromSitemap(base, maxPages) {
   return []
 }
 
-function discoverLinks(doc, base, maxPages = DEFAULT_MAX_PAGES) {
+function discoverLinks(doc, base, maxPages = Number.MAX_SAFE_INTEGER) {
   const found = new Set()
   for (const a of doc.querySelectorAll('a')) {
     const href = a.getAttribute('href') || ''
@@ -1175,6 +1172,24 @@ async function sendRegressionEmail({ teams, teamId, siteName, scanId, message, l
   }
 }
 
+async function listScanPages(tables, scanId, filters = []) {
+  const rows = []
+  let cursor
+  for (;;) {
+    const queries = [Query.equal('scan_id', scanId), ...filters, Query.limit(100)]
+    if (cursor) queries.push(Query.cursorAfter(cursor))
+    const result = await tables.listRows({
+      databaseId: DB_ID,
+      tableId: T.scan_pages,
+      queries,
+    })
+    rows.push(...result.rows)
+    if (result.rows.length < 100) break
+    cursor = result.rows[result.rows.length - 1].$id
+  }
+  return rows.sort((a, b) => (a.position ?? 0) - (b.position ?? 0) || a.$id.localeCompare(b.$id))
+}
+
 /* ------------------------------------------------------------------ */
 /* Handler Appwrite                                                    */
 /* ------------------------------------------------------------------ */
@@ -1317,17 +1332,8 @@ Pas de préambule, pas de conclusion générique.`
     }
     let pageScores = null
     try {
-      const pageRows = await tables.listRows({
-        databaseId: DB_ID,
-        tableId: T.scan_pages,
-        queries: [
-          Query.equal('scan_id', s.$id),
-          Query.equal('status', 'done'),
-          Query.orderAsc('position'),
-          Query.limit(MAX_PAGES_HARD_CAP),
-        ],
-      })
-      pageScores = pageRows.rows.map((page) => ({
+      const pageRows = await listScanPages(tables, s.$id, [Query.equal('status', 'done')])
+      pageScores = pageRows.map((page) => ({
         url: page.page_url,
         score: page.score ?? null,
         issues: page.issues_count ?? 0,
@@ -1460,7 +1466,10 @@ Pas de préambule, pas de conclusion générique.`
   }
   if (isForbiddenTarget(baseUrl)) return fail('Cette cible n’est pas autorisée.', 422)
 
-  const maxPages = Math.min(Math.max(Number(scan.max_pages) || DEFAULT_MAX_PAGES, 1), MAX_PAGES_HARD_CAP)
+  const requestedMaxPages = Number(scan.max_pages)
+  const maxPages = Number.isFinite(requestedMaxPages) && requestedMaxPages > 0
+    ? Math.floor(requestedMaxPages)
+    : Number.MAX_SAFE_INTEGER
 
   const startedAt = Date.now()
   try {
@@ -1481,7 +1490,7 @@ Pas de préambule, pas de conclusion générique.`
           started_at: new Date().toISOString(),
           pages_count: 0,
           pages_processed: 0,
-          pages_total: maxPages,
+          pages_total: 0,
           issues_count: 0,
           worker_token_hash: createHash('sha256').update(activeWorkerToken).digest('hex'),
         },
@@ -1548,9 +1557,7 @@ Pas de préambule, pas de conclusion générique.`
         })
       } else {
         const page = await analyzePage(pageRow.page_url, html, { axeTimeoutMs: 8_000 })
-        const issueData = page.issues
-          .slice(0, Math.max(0, MAX_TOTAL_ISSUES - (scan.issues_count || 0)))
-          .map((i) => ({
+        const issueData = page.issues.map((i) => ({
             scan_id: scanId,
             team_id: scan.team_id,
             rule_id: i.rule.id,
@@ -1592,25 +1599,38 @@ Pas de préambule, pas de conclusion générique.`
         scan.issues_count = (scan.issues_count || 0) + issueData.length
       }
 
-      const processedPages = await tables.listRows({
-        databaseId: DB_ID,
-        tableId: T.scan_pages,
-        queries: [Query.equal('scan_id', scanId), Query.limit(MAX_PAGES_HARD_CAP)],
-      })
-      const finishedPages = processedPages.rows.filter((row) => row.status === 'done' || row.status === 'failed')
-      const successfulPages = processedPages.rows.filter((row) => row.status === 'done')
+      const [allPageCount, finishedPageCount, successfulPageCount] = await Promise.all([
+        tables.listRows({
+          databaseId: DB_ID,
+          tableId: T.scan_pages,
+          queries: [Query.equal('scan_id', scanId), Query.limit(1)],
+          total: true,
+        }).then((result) => result.total ?? 0),
+        tables.listRows({
+          databaseId: DB_ID,
+          tableId: T.scan_pages,
+          queries: [Query.equal('scan_id', scanId), Query.equal('status', ['done', 'failed']), Query.limit(1)],
+          total: true,
+        }).then((result) => result.total ?? 0),
+        tables.listRows({
+          databaseId: DB_ID,
+          tableId: T.scan_pages,
+          queries: [Query.equal('scan_id', scanId), Query.equal('status', 'done'), Query.limit(1)],
+          total: true,
+        }).then((result) => result.total ?? 0),
+      ])
       await tables.updateRow({
         databaseId: DB_ID,
         tableId: T.scans,
         rowId: scanId,
         data: {
-          pages_count: successfulPages.length,
-          pages_processed: finishedPages.length,
+          pages_count: successfulPageCount,
+          pages_processed: finishedPageCount,
           issues_count: scan.issues_count || 0,
         },
       })
 
-      if (finishedPages.length < Number(scan.pages_total || maxPages)) {
+      if (finishedPageCount < Number(scan.pages_total || allPageCount)) {
         await functions.createExecution({
           functionId: 'scan-site',
           body: JSON.stringify({ scan_id: scanId, worker_token: activeWorkerToken }),
@@ -1619,22 +1639,14 @@ Pas de préambule, pas de conclusion générique.`
         return res.json({
           scan_id: scanId,
           status: 'running',
-          pages_count: successfulPages.length,
+          pages_count: successfulPageCount,
           pages_total: scan.pages_total,
         }, 202)
       }
     }
 
-    const pageRows = await tables.listRows({
-      databaseId: DB_ID,
-      tableId: T.scan_pages,
-      queries: [
-        Query.equal('scan_id', scanId),
-        Query.orderAsc('position'),
-        Query.limit(MAX_PAGES_HARD_CAP),
-      ],
-    })
-    const pages = pageRows.rows
+    const pageRows = await listScanPages(tables, scanId)
+    const pages = pageRows
       .filter((row) => row.status === 'done')
       .map((row) => {
         const applicable = new Map()
@@ -1662,10 +1674,7 @@ Pas de préambule, pas de conclusion générique.`
       issues: p.issues,
     }))
     let pageScores = JSON.stringify(pageScoreRows)
-    while (pageScores.length > 7900 && pageScoreRows.length > 1) {
-      pageScoreRows.pop()
-      pageScores = JSON.stringify(pageScoreRows)
-    }
+    if (pageScores.length > 7900) pageScores = '[]'
     const doneData = {
       status: 'done',
       finished_at: finishedAt,
@@ -1763,3 +1772,4 @@ module.exports.registrableDomain = registrableDomain
 module.exports.isSameSite = isSameSite
 module.exports.parseSitemapLocs = parseSitemapLocs
 module.exports.discoverFromSitemap = discoverFromSitemap
+module.exports.parse = parse

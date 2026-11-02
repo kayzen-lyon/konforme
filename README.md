@@ -90,6 +90,8 @@ functions/
 │                                 #  - mode { url } : mini-audit public sans compte
 │                                 #  - mode { explain } : assistant IA (ANTHROPIC_API_KEY)
 └── scan-scheduler/               # Cron quotidien : relance les sites surveillés
+services/
+└── audit-worker/                 # API Cloud Run + workers déclenchés par Cloud Tasks
 scripts/
 └── provision-appwrite.cjs        # Setup backend complet (idempotent)
 ```
@@ -103,16 +105,17 @@ scripts/
 
 ### Moteur d'audit (`functions/scan-site`)
 
-Le client crée le scan (`status: pending`) puis déclenche la fonction avec `{ scan_id }`.
-La fonction (clé API dynamique, scopes rows/tables/teams) vérifie l'appartenance à la team,
-crawle jusqu'à 30 pages par audit, une page par exécution pour réduire l'usage mémoire, exécute
-~40 règles statiques RGAA 4.1 maison **+ axe-core dans jsdom** (locale FR, dédoublonné,
-garde-fous CPU : skip > 250 Ko, timeout 15 s/page), calcule des scores **pondérés par
-sévérité** (`score` / `rgaa_score` / `wcag_score` + `page_scores` par page) et enregistre
-chaque non-conformité avec sélecteur CSS, extrait HTML et correction suggérée. Le front
-suit l'avancement par polling (TanStack Query). Un garde anti-SSRF refuse les cibles
-locales/privées. Le mode public `{ url }` (exécution synchrone, `Role.any()`) alimente le
-test gratuit de la landing sans écrire en base.
+Le client crée le scan (`status: pending`) puis le déclencheur analyse les pages découvertes
+sans plafond applicatif prédéfini. Le moteur historique Appwrite traite une page par exécution.
+Le nouveau moteur `services/audit-worker` délègue une tâche par page à Cloud Tasks ; il doit être
+déployé et configuré avant de renseigner `VITE_SCAN_WORKER_URL` (voir son README). Il conserve
+Appwrite pour les comptes et les données, prend en charge les sites IPv4/IPv6 publics et
+actualise la progression du scan. Les deux moteurs exécutent ~40 règles statiques RGAA 4.1
+maison **+ axe-core dans jsdom** (locale FR, dédoublonné, garde-fous CPU : skip > 250 Ko,
+timeout 15 s/page), calculent des scores **pondérés par sévérité** et enregistrent les
+non-conformités avec sélecteur CSS, extrait HTML et correction suggérée. Le front suit
+l'avancement par polling (TanStack Query). Le mode public `{ url }` (exécution synchrone,
+`Role.any()`) alimente le test gratuit de la landing sans écrire en base.
 
 ---
 

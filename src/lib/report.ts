@@ -52,6 +52,13 @@ type ReportL10n = {
   scoreRgaaTested: string
   scoreGlobal: string
   scoreCriteriaTested: string
+  reportKicker: string
+  methodNote: string
+  pagesHeading: string
+  pageColumnUrl: string
+  pageColumnScore: string
+  pageColumnIssues: string
+  pageIssueCount: (count: number) => string
 
   /* --- Sévérités et statuts --- */
   severity: Record<Severity, string>
@@ -155,9 +162,16 @@ const L10N: Record<Lang, ReportL10n> = {
     mdPagesAnalysed: (n) => `${n} page(s) analysée(s)`,
 
     scorePage: 'Score de la page',
-    scoreRgaaTested: 'Conformité RGAA (critères testés)',
-    scoreGlobal: 'Conformité globale',
-    scoreCriteriaTested: 'Critères RGAA testés',
+    scoreRgaaTested: 'Score RGAA automatisé',
+    scoreGlobal: 'Score automatique global',
+    scoreCriteriaTested: 'Taux RGAA des critères évalués',
+    reportKicker: 'RAPPORT D’AUDIT D’ACCESSIBILITÉ NUMÉRIQUE',
+    methodNote: 'Les scores automatiques sont des indicateurs de dépistage, pas le taux officiel de conformité. Seuls les critères entièrement automatisables sans alerte peuvent être indiqués conformes automatiquement ; les critères partiellement automatisables ou manuels restent à vérifier par un auditeur.',
+    pagesHeading: 'Pages incluses dans cet audit',
+    pageColumnUrl: 'Page auditée',
+    pageColumnScore: 'Score auto',
+    pageColumnIssues: 'Constats ouverts',
+    pageIssueCount: (n) => `${n} constat${n > 1 ? 's' : ''}`,
 
     severity: { critical: 'Critique', serious: 'Majeur', moderate: 'Modéré', minor: 'Mineur' },
     severityCount: (sev, n) => {
@@ -177,16 +191,18 @@ const L10N: Record<Lang, ReportL10n> = {
     },
     noOpenIssues: 'Aucune non-conformité ouverte',
 
-    legalBlock: `  <strong>Rappel réglementaire.</strong> Depuis le <strong>28 juin 2025</strong>, la directive européenne
-  (UE) 2019/882 (European Accessibility Act) impose l'accessibilité des sites e-commerce et de nombreux
-  services numériques. En France, la conformité se démontre via le <strong>RGAA 4.1.2</strong> et la DGCCRF
-  contrôle activement : jusqu'à <strong>50 000 € d'amende par service non conforme</strong> et
-  <strong>25 000 €</strong> en l'absence de déclaration d'accessibilité.`,
+    legalBlock: `  <strong>Textes applicables — à confirmer selon le service.</strong> En France, l’<strong>article 47 de la loi n° 2005-102 du 11 février 2005</strong> et ses textes d’application encadrent l’accessibilité des services de communication au public en ligne des organismes concernés ; le référentiel utilisé dans ce rapport est le <strong>RGAA 4.1.2</strong>. La <strong>directive (UE) 2019/882</strong> (European Accessibility Act) s’applique, depuis le 28 juin 2025, à certains produits et services relevant de son champ — elle ne rend pas automatiquement tous les sites soumis aux mêmes obligations. Le champ exact, les exemptions et la version réglementaire en vigueur doivent être vérifiés par l’entité responsable. Cet audit automatisé porte sur les pages et contrôles indiqués : il ne vaut ni audit manuel exhaustif, ni certification, ni avis juridique.<br>
+  <strong>Sources officielles :</strong> <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/">loi du 11 février 2005</a> · <a href="https://accessibilite.numerique.gouv.fr/">RGAA et obligations françaises</a> · <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=fr">directive (UE) 2019/882</a>.`,
     mdLegalLines: [
-      '> **Rappel réglementaire** — Depuis le 28 juin 2025, la directive (UE) 2019/882 (European',
-      "> Accessibility Act) impose l'accessibilité de nombreux services numériques. La DGCCRF peut",
-      "> prononcer jusqu'à 50 000 € d'amende par service non conforme et 25 000 € en l'absence de",
-      "> déclaration d'accessibilité.",
+      '> **Textes applicables — à confirmer selon le service.** En France, l’article 47 de la loi n° 2005-102',
+      '> du 11 février 2005 et ses textes d’application encadrent les services en ligne des organismes concernés.',
+      '> Ce rapport utilise le RGAA 4.1.2. La directive (UE) 2019/882 s’applique depuis le 28 juin 2025 à',
+      '> certains produits et services relevant de son champ, pas automatiquement à tous les sites.',
+      '> Le champ, les exemptions et la version en vigueur doivent être confirmés par l’entité responsable.',
+      '> Cet audit automatisé n’est ni un audit manuel exhaustif, ni une certification, ni un avis juridique.',
+      '> Sources : [Loi n° 2005-102](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/) ·',
+      '> [RGAA](https://accessibilite.numerique.gouv.fr/) ·',
+      '> [Directive (UE) 2019/882](https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=fr).',
     ],
 
     criteriaHeading: 'Les 106 critères du RGAA 4.1.2',
@@ -307,9 +323,16 @@ selon la méthode technique du RGAA 4.1.2${method}.`,
     mdPagesAnalysed: (n) => `${n} page(s) analysed`,
 
     scorePage: 'Page score',
-    scoreRgaaTested: 'RGAA compliance (tested criteria)',
-    scoreGlobal: 'Overall compliance',
-    scoreCriteriaTested: 'RGAA criteria tested',
+    scoreRgaaTested: 'Automated RGAA score',
+    scoreGlobal: 'Overall automated score',
+    scoreCriteriaTested: 'RGAA rate for assessed criteria',
+    reportKicker: 'DIGITAL ACCESSIBILITY AUDIT REPORT',
+    methodNote: 'Automated scores are screening indicators, not the official compliance rate. Only fully automated criteria with no detected issue may be marked compliant automatically; partially automated and manual criteria still require auditor review.',
+    pagesHeading: 'Pages included in this audit',
+    pageColumnUrl: 'Audited page',
+    pageColumnScore: 'Automated score',
+    pageColumnIssues: 'Open findings',
+    pageIssueCount: (n) => `${n} finding${n === 1 ? '' : 's'}`,
 
     severity: { critical: 'Critical', serious: 'Serious', moderate: 'Moderate', minor: 'Minor' },
     severityCount: (sev, n) => {
@@ -329,16 +352,16 @@ selon la méthode technique du RGAA 4.1.2${method}.`,
     },
     noOpenIssues: 'No open issues',
 
-    legalBlock: `  <strong>Regulatory reminder.</strong> Since <strong>28 June 2025</strong>, European Directive
-  (EU) 2019/882 (European Accessibility Act) has required e-commerce websites and many digital
-  services to be accessible. In France, compliance is demonstrated through the <strong>RGAA 4.1.2</strong>
-  and the DGCCRF actively enforces it: fines of up to <strong>€50,000 per non-compliant service</strong> and
-  <strong>€25,000</strong> where no accessibility statement is published.`,
+    legalBlock: `<strong>Applicable law — verify for each service.</strong> In France, Article 47 of Law No. 2005-102 and its implementing rules govern online public communication services of covered organizations; this report uses <strong>RGAA 4.1.2</strong>. Directive (EU) 2019/882 (European Accessibility Act) has applied since 28 June 2025 to certain products and services within its scope; it does not automatically subject every website to the same obligations. The responsible organization must confirm scope, exemptions and the currently applicable version. This automated audit covers only the pages and checks stated here; it is not a complete manual audit, certification or legal opinion.<br><strong>Official sources:</strong> <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/">French Law of 11 February 2005</a> · <a href="https://accessibilite.numerique.gouv.fr/">French RGAA and obligations</a> · <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=en">Directive (EU) 2019/882</a>.`,
     mdLegalLines: [
-      '> **Regulatory reminder** — Since 28 June 2025, Directive (EU) 2019/882 (European',
-      '> Accessibility Act) has required many digital services to be accessible. In France, the DGCCRF',
-      '> can impose fines of up to €50,000 per non-compliant service and €25,000 where no',
-      '> accessibility statement is published.',
+      '> **Applicable law — verify for each service.** French Law No. 2005-102 and its implementing rules',
+      '> govern online public communication services of covered organizations; this report uses RGAA 4.1.2.',
+      '> Directive (EU) 2019/882 applies to certain products and services in scope, not automatically to',
+      '> every website. Confirm scope, exemptions and the current version. This automated audit is not a',
+      '> complete manual audit, certification or legal opinion.',
+      '> Sources: [French Law](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/) ·',
+      '> [RGAA](https://accessibilite.numerique.gouv.fr/) ·',
+      '> [Directive (EU) 2019/882](https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=en).',
     ],
 
     criteriaHeading: 'The 106 RGAA 4.1.2 criteria',
@@ -459,9 +482,16 @@ following the technical method of RGAA 4.1.2${method}.`,
     mdPagesAnalysed: (n) => `${n} Seite(n) analysiert`,
 
     scorePage: 'Seiten-Score',
-    scoreRgaaTested: 'RGAA-Konformität (geprüfte Kriterien)',
-    scoreGlobal: 'Gesamtkonformität',
-    scoreCriteriaTested: 'Geprüfte RGAA-Kriterien',
+    scoreRgaaTested: 'Automatisierter RGAA-Score',
+    scoreGlobal: 'Gesamter automatisierter Score',
+    scoreCriteriaTested: 'RGAA-Rate der bewerteten Kriterien',
+    reportKicker: 'BERICHT ZUR DIGITALEN BARRIEREFREIHEIT',
+    methodNote: 'Automatisierte Scores sind Screening-Indikatoren und keine offizielle Konformitätsquote. Nur vollständig automatisierbare Kriterien ohne festgestellte Probleme können automatisch als konform eingestuft werden; teilweise automatisierte und manuelle Kriterien müssen weiterhin menschlich geprüft werden.',
+    pagesHeading: 'In diesem Audit enthaltene Seiten',
+    pageColumnUrl: 'Geprüfte Seite',
+    pageColumnScore: 'Automatisierter Score',
+    pageColumnIssues: 'Offene Befunde',
+    pageIssueCount: (n) => `${n} Befund${n === 1 ? '' : 'e'}`,
 
     severity: { critical: 'Kritisch', serious: 'Schwerwiegend', moderate: 'Mittel', minor: 'Gering' },
     severityCount: (sev, n) => {
@@ -486,17 +516,16 @@ following the technical method of RGAA 4.1.2${method}.`,
     },
     noOpenIssues: 'Keine offenen Verstöße',
 
-    legalBlock: `  <strong>Rechtlicher Hinweis.</strong> Seit dem <strong>28. Juni 2025</strong> verpflichtet die
-  europäische Richtlinie (EU) 2019/882 (European Accessibility Act) E-Commerce-Websites und zahlreiche
-  digitale Dienste zur Barrierefreiheit. In Frankreich wird die Konformität über den
-  <strong>RGAA 4.1.2</strong> nachgewiesen, und die DGCCRF kontrolliert aktiv: bis zu
-  <strong>50 000 € Bußgeld je nicht konformem Dienst</strong> und <strong>25 000 €</strong>, wenn keine
-  Barrierefreiheitserklärung vorliegt.`,
+    legalBlock: `<strong>Rechtlicher Rahmen — für jeden Dienst zu prüfen.</strong> In Frankreich regeln Artikel 47 des Gesetzes Nr. 2005-102 und seine Durchführungsvorschriften die Barrierefreiheit öffentlicher Online-Kommunikationsdienste der erfassten Einrichtungen; dieser Bericht verwendet <strong>RGAA 4.1.2</strong>. Die Richtlinie (EU) 2019/882 gilt seit dem 28. Juni 2025 für bestimmte Produkte und Dienstleistungen in ihrem Anwendungsbereich und nicht automatisch für jede Website. Die verantwortliche Stelle muss Anwendungsbereich, Ausnahmen und die aktuell geltende Fassung prüfen. Diese automatisierte Prüfung umfasst nur die hier genannten Seiten und Tests; sie ist weder eine vollständige manuelle Prüfung noch eine Zertifizierung oder Rechtsberatung.<br><strong>Amtliche Quellen:</strong> <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/">Französisches Gesetz vom 11. Februar 2005</a> · <a href="https://accessibilite.numerique.gouv.fr/">RGAA</a> · <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=de">Richtlinie (EU) 2019/882</a>.`,
     mdLegalLines: [
-      '> **Rechtlicher Hinweis** — Seit dem 28. Juni 2025 verpflichtet die Richtlinie (EU) 2019/882',
-      '> (European Accessibility Act) zahlreiche digitale Dienste zur Barrierefreiheit. In Frankreich kann',
-      '> die DGCCRF Bußgelder von bis zu 50 000 € je nicht konformem Dienst und 25 000 € bei fehlender',
-      '> Barrierefreiheitserklärung verhängen.',
+      '> **Rechtlicher Rahmen — für jeden Dienst zu prüfen.** Artikel 47 des französischen Gesetzes Nr. 2005-102',
+      '> und seine Durchführungsvorschriften gelten für erfasste öffentliche Online-Dienste; dieser Bericht nutzt RGAA 4.1.2.',
+      '> Richtlinie (EU) 2019/882 gilt seit 28. Juni 2025 für bestimmte Produkte und Dienste in ihrem Anwendungsbereich,',
+      '> nicht automatisch für jede Website. Anwendungsbereich, Ausnahmen und aktuelle Fassung sind zu bestätigen.',
+      '> Diese automatisierte Prüfung ist weder vollständiges manuelles Audit noch Zertifizierung oder Rechtsberatung.',
+      '> Quellen: [Loi n° 2005-102](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/) ·',
+      '> [RGAA](https://accessibilite.numerique.gouv.fr/) ·',
+      '> [Richtlinie (EU) 2019/882](https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=de).',
     ],
 
     criteriaHeading: 'Die 106 Kriterien des RGAA 4.1.2',
@@ -618,9 +647,16 @@ Konforme nach der technischen Methode des RGAA 4.1.2${method}.`,
     mdPagesAnalysed: (n) => `${n} página(s) analizada(s)`,
 
     scorePage: 'Puntuación de la página',
-    scoreRgaaTested: 'Conformidad RGAA (criterios evaluados)',
-    scoreGlobal: 'Conformidad global',
-    scoreCriteriaTested: 'Criterios RGAA evaluados',
+    scoreRgaaTested: 'Puntuación RGAA automatizada',
+    scoreGlobal: 'Puntuación global automatizada',
+    scoreCriteriaTested: 'Tasa RGAA de los criterios evaluados',
+    reportKicker: 'INFORME DE AUDITORÍA DE ACCESIBILIDAD DIGITAL',
+    methodNote: 'Las puntuaciones automáticas son indicadores de detección, no la tasa oficial de conformidad. Solo los criterios totalmente automatizables sin incidencias detectadas pueden marcarse automáticamente como conformes; los criterios parcialmente automatizados y manuales requieren revisión humana.',
+    pagesHeading: 'Páginas incluidas en esta auditoría',
+    pageColumnUrl: 'Página auditada',
+    pageColumnScore: 'Puntuación automática',
+    pageColumnIssues: 'Hallazgos abiertos',
+    pageIssueCount: (n) => `${n} hallazgo${n === 1 ? '' : 's'}`,
 
     severity: { critical: 'Crítico', serious: 'Grave', moderate: 'Moderado', minor: 'Leve' },
     severityCount: (sev, n) => {
@@ -645,17 +681,16 @@ Konforme nach der technischen Methode des RGAA 4.1.2${method}.`,
     },
     noOpenIssues: 'Ninguna no conformidad abierta',
 
-    legalBlock: `  <strong>Recordatorio normativo.</strong> Desde el <strong>28 de junio de 2025</strong>, la Directiva
-  europea (UE) 2019/882 (European Accessibility Act) exige la accesibilidad de los sitios de comercio
-  electrónico y de numerosos servicios digitales. En Francia, la conformidad se demuestra mediante el
-  <strong>RGAA 4.1.2</strong> y la DGCCRF controla activamente: hasta
-  <strong>50 000 € de multa por servicio no conforme</strong> y <strong>25 000 €</strong> en ausencia de
-  declaración de accesibilidad.`,
+    legalBlock: `<strong>Marco legal — verificar para cada servicio.</strong> En Francia, el artículo 47 de la Ley n.º 2005-102 y sus normas de aplicación regulan los servicios públicos de comunicación en línea de las entidades incluidas; este informe utiliza <strong>RGAA 4.1.2</strong>. La Directiva (UE) 2019/882 se aplica desde el 28 de junio de 2025 a determinados productos y servicios incluidos en su ámbito, no automáticamente a todos los sitios web. La entidad responsable debe confirmar el ámbito, las exenciones y la versión vigente. Esta auditoría automatizada cubre únicamente las páginas y comprobaciones indicadas; no es una auditoría manual completa, una certificación ni un dictamen jurídico.<br><strong>Fuentes oficiales:</strong> <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/">Ley francesa de 11 de febrero de 2005</a> · <a href="https://accessibilite.numerique.gouv.fr/">RGAA</a> · <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=es">Directiva (UE) 2019/882</a>.`,
     mdLegalLines: [
-      '> **Recordatorio normativo** — Desde el 28 de junio de 2025, la Directiva (UE) 2019/882 (European',
-      '> Accessibility Act) exige la accesibilidad de numerosos servicios digitales. En Francia, la DGCCRF',
-      '> puede imponer hasta 50 000 € de multa por servicio no conforme y 25 000 € en ausencia de',
-      '> declaración de accesibilidad.',
+      '> **Marco legal — verificar para cada servicio.** El artículo 47 de la Ley francesa n.º 2005-102 y sus normas',
+      '> de aplicación regulan los servicios públicos en línea de las entidades incluidas; este informe utiliza RGAA 4.1.2.',
+      '> La Directiva (UE) 2019/882 se aplica a determinados productos y servicios incluidos en su ámbito, no a todos',
+      '> los sitios automáticamente. Confirme el ámbito, las exenciones y la versión vigente. Esta auditoría automática',
+      '> no es una auditoría manual completa, una certificación ni un dictamen jurídico.',
+      '> Fuentes: [Ley n.º 2005-102](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/) ·',
+      '> [RGAA](https://accessibilite.numerique.gouv.fr/) ·',
+      '> [Directiva (UE) 2019/882](https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=es).',
     ],
 
     criteriaHeading: 'Los 106 criterios del RGAA 4.1.2',
@@ -777,9 +812,16 @@ según el método técnico del RGAA 4.1.2${method}.`,
     mdPagesAnalysed: (n) => (n > 1 ? `${n} pagine analizzate` : `${n} pagina analizzata`),
 
     scorePage: 'Punteggio della pagina',
-    scoreRgaaTested: 'Conformità RGAA (criteri testati)',
-    scoreGlobal: 'Conformità globale',
-    scoreCriteriaTested: 'Criteri RGAA testati',
+    scoreRgaaTested: 'Punteggio RGAA automatizzato',
+    scoreGlobal: 'Punteggio globale automatizzato',
+    scoreCriteriaTested: 'Tasso RGAA dei criteri valutati',
+    reportKicker: 'RAPPORTO DI AUDIT SULL’ACCESSIBILITÀ DIGITALE',
+    methodNote: 'I punteggi automatici sono indicatori di screening, non il tasso ufficiale di conformità. Solo i criteri completamente automatizzabili senza problemi rilevati possono essere indicati automaticamente come conformi; i criteri parzialmente automatizzati e manuali richiedono una verifica umana.',
+    pagesHeading: 'Pagine incluse in questo audit',
+    pageColumnUrl: 'Pagina verificata',
+    pageColumnScore: 'Punteggio automatico',
+    pageColumnIssues: 'Rilievi aperti',
+    pageIssueCount: (n) => `${n} rilievo${n === 1 ? '' : 'i'}`,
 
     severity: { critical: 'Critico', serious: 'Grave', moderate: 'Moderato', minor: 'Lieve' },
     severityCount: (sev, n) => {
@@ -804,16 +846,16 @@ según el método técnico del RGAA 4.1.2${method}.`,
     },
     noOpenIssues: 'Nessuna non conformità aperta',
 
-    legalBlock: `  <strong>Promemoria normativo.</strong> Dal <strong>28 giugno 2025</strong> la direttiva europea
-  (UE) 2019/882 (European Accessibility Act) impone l'accessibilità dei siti di e-commerce e di numerosi
-  servizi digitali. In Francia la conformità si dimostra tramite il <strong>RGAA 4.1.2</strong> e la DGCCRF
-  effettua controlli attivi: fino a <strong>50 000 € di sanzione per servizio non conforme</strong> e
-  <strong>25 000 €</strong> in assenza di dichiarazione di accessibilità.`,
+    legalBlock: `<strong>Quadro normativo — da verificare per ogni servizio.</strong> In Francia, l’articolo 47 della legge n. 2005-102 e le relative norme di attuazione disciplinano i servizi di comunicazione al pubblico online degli enti interessati; questo rapporto utilizza il <strong>RGAA 4.1.2</strong>. La direttiva (UE) 2019/882 si applica dal 28 giugno 2025 a determinati prodotti e servizi che rientrano nel suo ambito, non automaticamente a tutti i siti web. L’ente responsabile deve verificare ambito, esenzioni e versione vigente. Questo audit automatizzato copre solo le pagine e i controlli indicati; non è un audit manuale completo, una certificazione o un parere legale.<br><strong>Fonti ufficiali:</strong> <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/">legge francese dell’11 febbraio 2005</a> · <a href="https://accessibilite.numerique.gouv.fr/">RGAA</a> · <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=it">direttiva (UE) 2019/882</a>.`,
     mdLegalLines: [
-      '> **Promemoria normativo** — Dal 28 giugno 2025 la direttiva (UE) 2019/882 (European',
-      "> Accessibility Act) impone l'accessibilità di numerosi servizi digitali. In Francia la DGCCRF può",
-      '> irrogare fino a 50 000 € di sanzione per servizio non conforme e 25 000 € in assenza di',
-      '> dichiarazione di accessibilità.',
+      '> **Quadro normativo — da verificare per ogni servizio.** L’articolo 47 della legge francese n. 2005-102',
+      '> e le norme di attuazione riguardano i servizi online degli enti interessati; questo rapporto utilizza RGAA 4.1.2.',
+      '> La direttiva (UE) 2019/882 si applica a determinati prodotti e servizi nel suo ambito, non automaticamente',
+      '> a tutti i siti. Verificare ambito, esenzioni e versione vigente. Questo audit automatizzato non è un audit',
+      '> manuale completo, una certificazione o un parere legale.',
+      '> Fonti: [legge n. 2005-102](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000809647/) ·',
+      '> [RGAA](https://accessibilite.numerique.gouv.fr/) ·',
+      '> [direttiva (UE) 2019/882](https://eur-lex.europa.eu/eli/dir/2019/882/oj?locale=it).',
     ],
 
     criteriaHeading: 'I 106 criteri del RGAA 4.1.2',
@@ -1054,6 +1096,22 @@ export function buildAuditReportHtml(
       scoreCell('RGAA 4.1.2', scan.rgaa_score) +
       scoreCell('WCAG 2.2 AA', scan.wcag_score) +
       (summary.rate !== null ? scoreCell(T.scoreCriteriaTested, summary.rate) : '')
+  const pageOverview = !scope?.pageUrl && scan.page_scores?.length
+    ? `
+<section class="page-overview">
+  <h2>${T.pagesHeading}</h2>
+  <table class="pages">
+    <thead><tr><th scope="col">${T.pageColumnUrl}</th><th scope="col">${T.pageColumnScore}</th><th scope="col">${T.pageColumnIssues}</th></tr></thead>
+    <tbody>${scan.page_scores.map((page) => `
+      <tr>
+        <td><a href="${escapeHtml(page.url)}">${escapeHtml(page.url)}</a></td>
+        <td>${page.score !== null ? T.pct(Math.round(page.score)) : '—'}</td>
+        <td>${T.pageIssueCount(page.issues)}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>
+</section>`
+    : ''
 
   const sections = SEVERITY_ORDER.map((sev) => {
     const list = scoped.filter((i) => i.severity === sev)
@@ -1084,30 +1142,40 @@ export function buildAuditReportHtml(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${T.docTitle} — ${escapeHtml(siteName)}${escapeHtml(reportTitleSuffix(scope, lang))}</title>
 <style>
-  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; max-width: 56rem; margin: 2rem auto; padding: 0 1.25rem; line-height: 1.55; color: #1a1a2e; }
-  h1 { font-size: 1.5rem; margin-bottom: .25rem; }
-  h2 { font-size: 1.2rem; margin: 2.2rem 0 .75rem; border-bottom: 2px solid #1a1a2e; padding-bottom: .25rem; }
-  h3 { font-size: 1.05rem; margin: 1.6rem 0 .6rem; }
-  .subtitle { color: #555; margin-top: 0; }
-  .dim { color: #666; font-size: .78rem; }
-  .scores { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.5rem 0; }
-  .score { border: 1px solid #ddd; border-radius: 10px; padding: .9rem 1.4rem; text-align: center; min-width: 9rem; }
-  .score-value { font-size: 1.8rem; font-weight: 700; }
-  .score-value small { font-size: 1rem; font-weight: 500; }
-  .score-label { font-size: .8rem; color: #555; margin-top: .2rem; }
+  :root { color-scheme: light; }
+  body { font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 68rem; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #17233b; background: #f5f7fb; }
+  main { background: #fff; padding: 2.5rem 3rem; border: 1px solid #e4e9f2; border-radius: 18px; box-shadow: 0 12px 40px #17233b12; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: .25rem 0 .75rem; letter-spacing: -.035em; }
+  h2 { font-size: 1.25rem; margin: 2.4rem 0 .8rem; border-bottom: 2px solid #dfe7f3; padding-bottom: .45rem; color: #152b4c; break-after: avoid-page; }
+  h3 { font-size: 1.05rem; margin: 1.6rem 0 .6rem; break-after: avoid-page; }
+  .report-cover { border-bottom: 1px solid #e4e9f2; padding-bottom: 1.5rem; }
+  .kicker { color: #2864a5; font-size: .72rem; font-weight: 800; letter-spacing: .12em; margin: 0 0 .6rem; }
+  .subtitle { color: #506078; margin-top: 0; }
+  .dim { color: #5b687c; font-size: .78rem; }
+  .scores { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .75rem; margin: 1.5rem 0; }
+  .score { background: #f7f9fc; border: 1px solid #dfe7f3; border-radius: 12px; padding: .85rem 1rem; text-align: center; }
+  .score-value { font-size: 1.8rem; font-weight: 800; color: #183d68; }
+  .score-value small { font-size: 1rem; font-weight: 600; }
+  .score-label { font-size: .78rem; color: #506078; margin-top: .2rem; }
   .summary { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
   .summary span, .pill { border-radius: 999px; padding: .25rem .8rem; font-size: .78rem; font-weight: 600; color: #fff; white-space: nowrap; }
-  .legal { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: .9rem 1.1rem; font-size: .85rem; }
-  .legal strong { color: #92400e; }
+  .legal, .method-note { border-radius: 12px; padding: 1rem 1.2rem; font-size: .85rem; }
+  .legal { background: #f1f7ff; border: 1px solid #c9ddf5; }
+  .method-note { background: #fff8e8; border: 1px solid #f1d89b; margin: 1rem 0 1.5rem; }
+  .legal strong, .method-note strong { color: #203d62; }
+  .legal a { color: #155da8; }
   .topic { margin-bottom: .1rem; }
   .topic-stats { font-weight: 400; font-size: .78rem; color: #666; margin-left: .5rem; }
-  table.criteria { width: 100%; border-collapse: collapse; margin: .4rem 0 1.4rem; font-size: .85rem; }
-  table.criteria th, table.criteria td { border: 1px solid #e3e3ee; padding: .5rem .65rem; text-align: left; vertical-align: top; }
-  table.criteria th { background: #f6f7fb; font-size: .78rem; }
+  table { width: 100%; border-collapse: collapse; margin: .5rem 0 1.5rem; font-size: .82rem; }
+  table th, table td { border: 1px solid #dfe5ef; padding: .55rem .65rem; text-align: left; vertical-align: top; }
+  table th { background: #eef3f9; color: #263d5a; font-size: .76rem; letter-spacing: .025em; }
+  table thead { display: table-header-group; }
+  table tr { break-inside: avoid; }
+  table.criteria { font-size: .82rem; }
   .crit-id { font-weight: 700; white-space: nowrap; }
   .crit-plain { color: #444; font-size: .8rem; margin: .2rem 0; }
   .crit-issues { margin-top: .35rem; font-size: .8rem; color: #b91c1c; }
-  .issue { border: 1px solid #e3e3ee; border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: .8rem; page-break-inside: avoid; }
+  .issue { border: 1px solid #dfe5ef; border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: .8rem; break-inside: avoid-page; }
   .issue h4 { margin: 0 0 .15rem; font-size: 1rem; }
   .issue .meta { margin: 0 0 .5rem; font-size: .8rem; color: #666; }
   .issue pre { background: #f6f7fb; border: 1px solid #e3e3ee; border-radius: 8px; padding: .6rem .8rem; font-size: .78rem; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
@@ -1115,17 +1183,34 @@ export function buildAuditReportHtml(
   .fix { background: #ecfdf3; border: 1px solid #bbe7cd; border-radius: 8px; padding: .5rem .8rem; }
   .tag-fixed { font-size: .7rem; font-weight: 600; color: #067647; background: #ecfdf3; border-radius: 999px; padding: .1rem .55rem; vertical-align: middle; }
   footer { margin-top: 3rem; font-size: .8rem; color: #555; border-top: 1px solid #ddd; padding-top: 1rem; }
-  @media print { body { margin: 0; } .score { border-color: #bbb; } }
+  @page { size: A4; margin: 16mm 15mm 18mm; @bottom-right { content: counter(page) " / " counter(pages); color: #68758a; font: 9pt system-ui, sans-serif; } }
+  @media (max-width: 700px) { main { padding: 1.2rem; } body { padding: 0 .5rem; } }
+  @media print {
+    body { max-width: none; margin: 0; padding: 0; background: #fff; font-size: 10pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    main { padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+    h1 { font-size: 24pt; }
+    h2 { font-size: 15pt; margin-top: 20mm; }
+    .score { padding: .55rem; }
+    .score-value { font-size: 20pt; }
+    a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+    .report-cover, .legal, .method-note, .score { break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
+<main>
+<header class="report-cover">
+<p class="kicker">${T.reportKicker}</p>
 <h1>${T.h1}${escapeHtml(reportTitleSuffix(scope, lang))}</h1>
 <p class="subtitle"><strong>${escapeHtml(siteName)}</strong>${siteUrl ? ` — <a href="${escapeHtml(siteUrl)}">${escapeHtml(siteUrl)}</a>` : ''}<br>
 ${T.subtitle(date)}${scope?.pageUrl ? `<br>${T.auditedPage}${T.labelSep}<a href="${escapeHtml(scope.pageUrl)}">${escapeHtml(scope.pageUrl)}</a>` : ` · ${T.pagesAnalysed(scan.pages_count)}`}</p>
+</header>
 
 <div class="scores">
   ${scores}
 </div>
+
+<p class="method-note"><strong>${T.scoreGlobal} :</strong> ${T.methodNote}</p>
 
 <div class="summary">
   ${SEVERITY_ORDER.filter((s) => counts[s] > 0)
@@ -1138,6 +1223,8 @@ ${T.subtitle(date)}${scope?.pageUrl ? `<br>${T.auditedPage}${T.labelSep}<a href=
 ${T.legalBlock}
 </div>
 
+${pageOverview}
+
 ${criteriaSectionHtml(summary, lang)}
 
 <section>
@@ -1148,6 +1235,7 @@ ${criteriaSectionHtml(summary, lang)}
 <footer>
 ${T.footerBlock}
 </footer>
+</main>
 ${opts?.autoPrint ? '<script>window.addEventListener("load",function(){setTimeout(function(){window.print()},250)})</script>' : ''}
 </body>
 </html>`

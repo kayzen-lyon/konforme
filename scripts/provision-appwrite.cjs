@@ -17,6 +17,11 @@ const { InputFile } = require('node-appwrite/file')
 const DB_ID = 'konforme'
 const FUNCTION_ID = 'scan-site'
 
+function isUnsupportedScheduleError(error) {
+  const message = String(error && error.message || error)
+  return /schedule|cron/i.test(message) && /plan|free|support|available|allow|upgrade/i.test(message)
+}
+
 function loadEnv() {
   const envPath = path.join(__dirname, '..', '.env.local')
   if (!fs.existsSync(envPath)) throw new Error('.env.local introuvable')
@@ -91,6 +96,8 @@ const TABLES = [
     indexes: [
       { key: 'idx_scan', columns: ['scan_id'] },
       { key: 'idx_scan_position', columns: ['scan_id', 'position'] },
+      { key: 'idx_scan_status', columns: ['scan_id', 'status'] },
+      { key: 'idx_scan_status_position', columns: ['scan_id', 'status', 'position'] },
     ],
   },
   {
@@ -286,12 +293,24 @@ async function main() {
         created = true
         console.log(`✓ function "${fn.id}"`)
       } catch (e) {
+        if (fn.schedule && isUnsupportedScheduleError(e)) {
+          console.warn(`! function "${fn.id}" ignorée : le forfait Appwrite ne prend pas en charge les horaires cron (${e.message || e})`)
+          continue
+        }
         throw new Error(`function ${fn.id} : ${e.message || e}`)
       }
     }
     if (!created) {
       // Synchronise la config (rôles d'exécution, scopes, cron) d'une fonction existante
-      await functions.update({ functionId: fn.id, ...config })
+      try {
+        await functions.update({ functionId: fn.id, ...config })
+      } catch (e) {
+        if (fn.schedule && isUnsupportedScheduleError(e)) {
+          console.warn(`! function "${fn.id}" non synchronisée : le forfait Appwrite ne prend pas en charge les horaires cron (${e.message || e})`)
+          continue
+        }
+        throw new Error(`function ${fn.id} : ${e.message || e}`)
+      }
       console.log(`✓ function "${fn.id}" mise à jour (execute/scopes/cron)`)
     }
 
