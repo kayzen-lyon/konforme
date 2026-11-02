@@ -267,7 +267,13 @@ export function Scans() {
                       {scan.score !== null ? `${Math.round(scan.score)}%` : '—'}
                     </td>
                     <td className="px-5 py-3.5">{scan.status === 'done' ? scan.issues_count : '—'}</td>
-                    <td className="px-5 py-3.5">{scan.status === 'done' ? scan.pages_count : '—'}</td>
+                    <td className="px-5 py-3.5">
+                      {scan.status === 'done'
+                        ? scan.pages_count
+                        : scan.status === 'running'
+                          ? `${scan.pages_processed} / ${scan.pages_total}`
+                          : '—'}
+                    </td>
                     <td className="px-5 py-3.5 text-text-muted">{formatDuration(scan.duration_ms)}</td>
                     <td className="px-5 py-3.5">
                       {scan.status === 'done' ? (

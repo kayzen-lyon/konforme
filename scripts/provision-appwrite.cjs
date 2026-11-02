@@ -64,9 +64,10 @@ const TABLES = [
     columns: [
       S('team_id', 64, true), S('site_id', 64, true), S('status', 16, true),
       S('trigger', 16, false, 'manual'), S('site_name', 256), S('site_url', 1024),
-      D('started_at'), D('finished_at'), I('duration_ms'), I('pages_count', 0), I('issues_count', 0),
+      D('started_at'), D('finished_at'), I('duration_ms'), I('pages_count', 0), I('pages_total', 0), I('pages_processed', 0), I('issues_count', 0),
       F('score'), F('rgaa_score'), F('wcag_score'), S('error', 2000),
       I('max_pages', 5), S('page_scores', 8000),
+      S('worker_token_hash', 64),
       // Jeton de partage public du rapport (null = non partagé)
       S('share_token', 64),
     ],
@@ -74,6 +75,18 @@ const TABLES = [
       { key: 'idx_team', columns: ['team_id'] },
       { key: 'idx_site', columns: ['site_id'] },
       { key: 'idx_share', columns: ['share_token'] },
+    ],
+  },
+  {
+    id: 'scan_pages',
+    columns: [
+      S('scan_id', 64, true), S('team_id', 64, true), I('position', 0),
+      S('page_url', 1024, true), S('status', 16, true), F('score'), I('issues_count', 0),
+      S('applicable', 8192), S('failed', 4096), S('error', 512),
+    ],
+    indexes: [
+      { key: 'idx_scan', columns: ['scan_id'] },
+      { key: 'idx_scan_position', columns: ['scan_id', 'position'] },
     ],
   },
   {
@@ -221,7 +234,7 @@ async function main() {
       // Role.any() : le mode public { url } est ouvert aux visiteurs (mini-audit
       // de la landing). Les scans complets restent contrôlés dans la fonction.
       execute: [Role.any()],
-      scopes: ['rows.read', 'rows.write', 'tables.read', 'teams.read'],
+      scopes: ['rows.read', 'rows.write', 'tables.read', 'teams.read', 'executions.write'],
       timeout: 300,
     },
     {

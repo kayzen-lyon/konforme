@@ -4,7 +4,8 @@
 //    RGAA maison + axe-core (~60 règles WCAG suppl.) et complète scan+issues ;
 //  - { url } (mode public, sans compte) : analyse la page d'accueil seule et
 //    renvoie un mini-rapport directement, sans écrire en base.
-const { Client, TablesDB, Teams, Query, Permission, Role } = require('node-appwrite')
+const { Client, TablesDB, Teams, Functions, Query, Permission, Role } = require('node-appwrite')
+const { createHash, randomBytes, timingSafeEqual } = require('node:crypto')
 const { parse } = require('node-html-parser')
 const { JSDOM, VirtualConsole } = require('jsdom')
 const axe = require('axe-core')
@@ -14,12 +15,13 @@ const DB_ID = 'konforme'
 const T = {
   sites: 'sites',
   scans: 'scans',
+  scan_pages: 'scan_pages',
   scan_issues: 'scan_issues',
   criteria_reviews: 'criteria_reviews',
   alerts: 'alerts',
 }
 
-const DEFAULT_MAX_PAGES = 5
+const DEFAULT_MAX_PAGES = 30
 const MAX_PAGES_HARD_CAP = 30
 const FETCH_TIMEOUT_MS = 10_000
 const MAX_HTML_BYTES = 1_500_000
@@ -1186,6 +1188,7 @@ module.exports = async ({ req, res, log, error }) => {
   const client = new Client().setEndpoint(endpoint).setProject(projectId).setKey(apiKey)
   const tables = new TablesDB(client)
   const teams = new Teams(client)
+  const functions = new Functions(client)
 
   let body = {}
   try {
@@ -1314,10 +1317,28 @@ Pas de préambule, pas de conclusion générique.`
     }
     let pageScores = null
     try {
-      const parsed = JSON.parse(s.page_scores || 'null')
-      if (Array.isArray(parsed)) pageScores = parsed
+      const pageRows = await tables.listRows({
+        databaseId: DB_ID,
+        tableId: T.scan_pages,
+        queries: [
+          Query.equal('scan_id', s.$id),
+          Query.equal('status', 'done'),
+          Query.orderAsc('position'),
+          Query.limit(MAX_PAGES_HARD_CAP),
+        ],
+      })
+      pageScores = pageRows.rows.map((page) => ({
+        url: page.page_url,
+        score: page.score ?? null,
+        issues: page.issues_count ?? 0,
+      }))
     } catch {
-      /* JSON tronqué */
+      try {
+        const parsed = JSON.parse(s.page_scores || 'null')
+        if (Array.isArray(parsed)) pageScores = parsed
+      } catch {
+        /* JSON invalide sur un rapport antérieur */
+      }
     }
     log(`Rapport partagé servi : scan ${s.$id}`)
     return res.json({
@@ -1387,13 +1408,24 @@ Pas de préambule, pas de conclusion générique.`
   } catch {
     return res.json({ error: 'Scan introuvable' }, 404)
   }
-  // Un scan complet est déclenché soit par un utilisateur authentifié (vérifié
-  // plus bas), soit par le planificateur serveur (trigger 'scheduled').
-  if (!userId && scan.trigger !== 'scheduled') {
-    return res.json({ error: 'Authentification requise pour un audit complet.' }, 401)
-  }
-  if (scan.status !== 'pending') {
+  const workerToken = typeof body.worker_token === 'string' ? body.worker_token : ''
+  const expectedTokenHash = scan.worker_token_hash
+  const suppliedTokenHash = workerToken
+    ? createHash('sha256').update(workerToken).digest()
+    : null
+  const storedTokenHash = typeof expectedTokenHash === 'string' && /^[a-f0-9]{64}$/i.test(expectedTokenHash)
+    ? Buffer.from(expectedTokenHash, 'hex')
+    : null
+  const isWorker = scan.status === 'running' &&
+    suppliedTokenHash !== null &&
+    storedTokenHash !== null &&
+    timingSafeEqual(suppliedTokenHash, storedTokenHash)
+
+  if (!isWorker && scan.status !== 'pending') {
     return res.json({ error: `Scan déjà traité (statut ${scan.status})` }, 409)
+  }
+  if (!userId && !isWorker && scan.trigger !== 'scheduled') {
+    return res.json({ error: 'Authentification requise pour un audit complet.' }, 401)
   }
 
   const fail = async (message, code = 502) => {
@@ -1406,8 +1438,8 @@ Pas de préambule, pas de conclusion générique.`
     return res.json({ error: message, scan_id: scanId }, code)
   }
 
-  // Vérifie que l'appelant est bien membre de l'équipe du scan
-  if (userId) {
+  // Vérifie le membre uniquement au démarrage ; les pages suivantes utilisent un jeton interne.
+  if (userId && !isWorker) {
     try {
       const memberships = await teams.listMemberships({
         teamId: scan.team_id,
@@ -1431,100 +1463,217 @@ Pas de préambule, pas de conclusion générique.`
   const maxPages = Math.min(Math.max(Number(scan.max_pages) || DEFAULT_MAX_PAGES, 1), MAX_PAGES_HARD_CAP)
 
   const startedAt = Date.now()
-  await tables.updateRow({
-    databaseId: DB_ID,
-    tableId: T.scans,
-    rowId: scanId,
-    data: { status: 'running', started_at: new Date().toISOString() },
-  })
-
   try {
-    const homeHtml = await fetchPage(baseUrl.toString())
-    if (!homeHtml) {
-      return fail(`La page ${baseUrl} est injoignable (délai dépassé, erreur HTTP ou contenu non HTML).`)
-    }
-
-    const homeDoc = parse(homeHtml)
-    let extraUrls = discoverLinks(homeDoc, baseUrl, maxPages)
-    if (extraUrls.length === 0 && maxPages > 1) {
-      // SPA sans liens dans le HTML brut : on tente le sitemap
-      extraUrls = await discoverFromSitemap(baseUrl, maxPages)
-      if (extraUrls.length > 0) log(`Aucun lien dans le HTML brut : ${extraUrls.length} page(s) découvertes via sitemap.xml`)
-    }
-    // Budget global : axe est coupé quand on approche du timeout de la fonction
-    const AXE_GLOBAL_BUDGET_MS = 200_000
-    const pages = [await analyzePage(baseUrl.toString(), homeHtml, { axeTimeoutMs: 12_000 })]
-    const extraHtml = await Promise.all(extraUrls.map((u) => fetchPage(u)))
-    // Analyse séquentielle : jsdom+axe est gourmand en mémoire et en CPU.
-    // Budget DUR : mieux vaut finaliser avec moins de pages que d'être tué
-    // par le timeout de la fonction (ce qui laisserait un scan « running »).
-    const HARD_BUDGET_MS = 240_000
-    for (let i = 0; i < extraHtml.length; i++) {
-      if (!extraHtml[i]) continue
-      if (Date.now() - startedAt > HARD_BUDGET_MS) {
-        log(`Budget temps global atteint : crawl arrêté à ${pages.length} page(s)`)
-        break
-      }
-      const withAxe = Date.now() - startedAt < AXE_GLOBAL_BUDGET_MS
-      pages.push(await analyzePage(extraUrls[i], extraHtml[i], { withAxe, axeTimeoutMs: 12_000 }))
-    }
-    log(`Pages analysées : ${pages.length}`)
-
-    const allIssues = pages
-      .flatMap((p) =>
-        p.issues.map((i) => ({
-          scan_id: scanId,
-          team_id: scan.team_id,
-          rule_id: i.rule.id,
-          severity: i.rule.severity,
-          category: i.rule.category,
-          title: i.rule.title,
-          description: i.detail ? `${i.rule.description}\n\nDétail : ${i.detail}` : i.rule.description,
-          page_url: p.url,
-          selector: i.selector,
-          html_snippet: i.snippet,
-          suggested_fix: i.rule.fix,
-          status: 'open',
-        })),
-      )
-      .slice(0, MAX_TOTAL_ISSUES)
-
     const permissions = [
       Permission.read(Role.team(scan.team_id)),
       Permission.update(Role.team(scan.team_id)),
       Permission.delete(Role.team(scan.team_id)),
     ]
-    // Insertion avec une concurrence limitée
-    const CONCURRENCY = 5
-    for (let i = 0; i < allIssues.length; i += CONCURRENCY) {
-      await Promise.all(
-        allIssues.slice(i, i + CONCURRENCY).map((data) =>
+    let activeWorkerToken = workerToken
+    if (!isWorker) {
+      activeWorkerToken = randomBytes(32).toString('hex')
+      await tables.updateRow({
+        databaseId: DB_ID,
+        tableId: T.scans,
+        rowId: scanId,
+        data: {
+          status: 'running',
+          started_at: new Date().toISOString(),
+          pages_count: 0,
+          pages_processed: 0,
+          pages_total: maxPages,
+          issues_count: 0,
+          worker_token_hash: createHash('sha256').update(activeWorkerToken).digest('hex'),
+        },
+      })
+
+      const homeHtml = await fetchPage(baseUrl.toString())
+      if (!homeHtml) {
+        return fail(`La page ${baseUrl} est injoignable (délai dépassé, erreur HTTP ou contenu non HTML).`)
+      }
+      const homeDoc = parse(homeHtml)
+      let extraUrls = discoverLinks(homeDoc, baseUrl, maxPages)
+      if (extraUrls.length === 0 && maxPages > 1) {
+        extraUrls = await discoverFromSitemap(baseUrl, maxPages)
+        if (extraUrls.length > 0) log(`Aucun lien dans le HTML brut : ${extraUrls.length} page(s) découvertes via sitemap.xml`)
+      }
+      const pageUrls = [baseUrl.toString(), ...extraUrls].slice(0, maxPages)
+      scan.pages_total = pageUrls.length
+      await tables.updateRow({
+        databaseId: DB_ID,
+        tableId: T.scans,
+        rowId: scanId,
+        data: { pages_total: pageUrls.length },
+      })
+      const pageRows = pageUrls.map((pageUrl, position) => ({
+        scan_id: scanId,
+        team_id: scan.team_id,
+        position,
+        page_url: pageUrl.slice(0, 1024),
+        status: 'pending',
+        issues_count: 0,
+      }))
+      for (let i = 0; i < pageRows.length; i += 5) {
+        await Promise.all(pageRows.slice(i, i + 5).map((data) =>
           tables.createRow({
             databaseId: DB_ID,
-            tableId: T.scan_issues,
+            tableId: T.scan_pages,
             rowId: 'unique()',
             data,
             permissions,
           }),
-        ),
-      )
+        ))
+      }
     }
 
+    const pendingPage = await tables.listRows({
+      databaseId: DB_ID,
+      tableId: T.scan_pages,
+      queries: [
+        Query.equal('scan_id', scanId),
+        Query.equal('status', 'pending'),
+        Query.orderAsc('position'),
+        Query.limit(1),
+      ],
+    })
+    if (pendingPage.rows.length > 0) {
+      const pageRow = pendingPage.rows[0]
+      const html = await fetchPage(pageRow.page_url)
+      if (!html) {
+        await tables.updateRow({
+          databaseId: DB_ID,
+          tableId: T.scan_pages,
+          rowId: pageRow.$id,
+          data: { status: 'failed', error: 'Page inaccessible ou contenu non HTML.' },
+        })
+      } else {
+        const page = await analyzePage(pageRow.page_url, html, { axeTimeoutMs: 8_000 })
+        const issueData = page.issues
+          .slice(0, Math.max(0, MAX_TOTAL_ISSUES - (scan.issues_count || 0)))
+          .map((i) => ({
+            scan_id: scanId,
+            team_id: scan.team_id,
+            rule_id: i.rule.id,
+            severity: i.rule.severity,
+            category: i.rule.category,
+            title: i.rule.title,
+            description: i.detail ? `${i.rule.description}\n\nDétail : ${i.detail}` : i.rule.description,
+            page_url: page.url,
+            selector: i.selector,
+            html_snippet: i.snippet,
+            suggested_fix: i.rule.fix,
+            status: 'open',
+          }))
+        for (let i = 0; i < issueData.length; i += 5) {
+          await Promise.all(issueData.slice(i, i + 5).map((data) =>
+            tables.createRow({
+              databaseId: DB_ID,
+              tableId: T.scan_issues,
+              rowId: 'unique()',
+              data,
+              permissions,
+            }),
+          ))
+        }
+        await tables.updateRow({
+          databaseId: DB_ID,
+          tableId: T.scan_pages,
+          rowId: pageRow.$id,
+          data: {
+            status: 'done',
+            score: page.score,
+            issues_count: issueData.length,
+            applicable: JSON.stringify([...page.applicable.entries()].map(([id, meta]) => [
+              id, meta.severity, meta.rgaa, meta.wcag,
+            ])),
+            failed: JSON.stringify([...page.failed]),
+          },
+        })
+        scan.issues_count = (scan.issues_count || 0) + issueData.length
+      }
+
+      const processedPages = await tables.listRows({
+        databaseId: DB_ID,
+        tableId: T.scan_pages,
+        queries: [Query.equal('scan_id', scanId), Query.limit(MAX_PAGES_HARD_CAP)],
+      })
+      const finishedPages = processedPages.rows.filter((row) => row.status === 'done' || row.status === 'failed')
+      const successfulPages = processedPages.rows.filter((row) => row.status === 'done')
+      await tables.updateRow({
+        databaseId: DB_ID,
+        tableId: T.scans,
+        rowId: scanId,
+        data: {
+          pages_count: successfulPages.length,
+          pages_processed: finishedPages.length,
+          issues_count: scan.issues_count || 0,
+        },
+      })
+
+      if (finishedPages.length < Number(scan.pages_total || maxPages)) {
+        await functions.createExecution({
+          functionId: 'scan-site',
+          body: JSON.stringify({ scan_id: scanId, worker_token: activeWorkerToken }),
+          async: true,
+        })
+        return res.json({
+          scan_id: scanId,
+          status: 'running',
+          pages_count: successfulPages.length,
+          pages_total: scan.pages_total,
+        }, 202)
+      }
+    }
+
+    const pageRows = await tables.listRows({
+      databaseId: DB_ID,
+      tableId: T.scan_pages,
+      queries: [
+        Query.equal('scan_id', scanId),
+        Query.orderAsc('position'),
+        Query.limit(MAX_PAGES_HARD_CAP),
+      ],
+    })
+    const pages = pageRows.rows
+      .filter((row) => row.status === 'done')
+      .map((row) => {
+        const applicable = new Map()
+        const failed = new Set()
+        for (const [id, severity, rgaa, wcag] of JSON.parse(row.applicable || '[]')) {
+          applicable.set(id, { severity, rgaa, wcag })
+        }
+        for (const id of JSON.parse(row.failed || '[]')) failed.add(id)
+        return {
+          url: row.page_url,
+          score: row.score ?? null,
+          issues: row.issues_count ?? 0,
+          applicable,
+          failed,
+        }
+      })
+    if (pages.length === 0) {
+      return fail('Aucune page du site n’a pu être analysée.')
+    }
     const scores = computeScores(pages)
     const finishedAt = new Date().toISOString()
-    const pageScores = JSON.stringify(
-      pages.slice(0, MAX_PAGES_HARD_CAP).map((p) => ({
-        url: p.url.length > 300 ? p.url.slice(0, 300) : p.url,
-        score: p.score,
-        issues: p.issues.length,
-      })),
-    ).slice(0, 7900)
+    const pageScoreRows = pages.map((p) => ({
+      url: p.url.length > 300 ? p.url.slice(0, 300) : p.url,
+      score: p.score,
+      issues: p.issues,
+    }))
+    let pageScores = JSON.stringify(pageScoreRows)
+    while (pageScores.length > 7900 && pageScoreRows.length > 1) {
+      pageScoreRows.pop()
+      pageScores = JSON.stringify(pageScoreRows)
+    }
     const doneData = {
       status: 'done',
       finished_at: finishedAt,
-      duration_ms: Date.now() - startedAt,
+      duration_ms: Date.now() - Date.parse(scan.started_at || new Date().toISOString()),
       pages_count: pages.length,
-      issues_count: allIssues.length,
+      pages_total: Number(scan.pages_total || pages.length),
+      pages_processed: Number(scan.pages_total || pages.length),
+      issues_count: scan.issues_count || 0,
       page_scores: pageScores,
       ...scores,
     }
@@ -1592,7 +1741,7 @@ Pas de préambule, pas de conclusion générique.`
     return res.json({
       scan_id: scanId,
       score: scores.score,
-      issues_count: allIssues.length,
+      issues_count: scan.issues_count || 0,
       pages_count: pages.length,
     })
   } catch (e) {

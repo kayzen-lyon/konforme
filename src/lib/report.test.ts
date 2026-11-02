@@ -12,6 +12,8 @@ const scan: Scan = {
   finished_at: '2026-07-14T10:00:30Z',
   duration_ms: 30_000,
   pages_count: 3,
+  pages_total: 3,
+  pages_processed: 3,
   issues_count: 2,
   score: 78.5,
   rgaa_score: 80,

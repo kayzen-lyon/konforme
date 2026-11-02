@@ -45,6 +45,8 @@ export type Scan = {
   finished_at: string | null
   duration_ms: number | null
   pages_count: number
+  pages_total: number
+  pages_processed: number
   issues_count: number
   score: number | null
   rgaa_score: number | null

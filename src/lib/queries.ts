@@ -63,6 +63,8 @@ function rowToScan(r: Row): Scan {
     finished_at: (r.finished_at as string | null) ?? null,
     duration_ms: (r.duration_ms as number | null) ?? null,
     pages_count: (r.pages_count as number) ?? 0,
+    pages_total: (r.pages_total as number) ?? (r.max_pages as number) ?? 0,
+    pages_processed: (r.pages_processed as number) ?? (r.pages_count as number) ?? 0,
     issues_count: (r.issues_count as number) ?? 0,
     score: (r.score as number | null) ?? null,
     rgaa_score: (r.rgaa_score as number | null) ?? null,
@@ -386,7 +388,25 @@ export function useScan(scanId: string | undefined) {
           tableId: TABLES.scans,
           rowId: scanId!,
         })
-        return reapStaleScan(rowToScan(row))
+        const scan = rowToScan(row)
+        if (scan.status === 'done') {
+          const pages = await tables.listRows({
+            databaseId: DB_ID,
+            tableId: TABLES.scan_pages,
+            queries: [
+              Query.equal('scan_id', scan.id),
+              Query.equal('status', 'done'),
+              Query.orderAsc('position'),
+              Query.limit(30),
+            ],
+          })
+          scan.page_scores = pages.rows.map((page) => ({
+            url: page.page_url as string,
+            score: (page.score as number | null) ?? null,
+            issues: (page.issues_count as number) ?? 0,
+          }))
+        }
+        return reapStaleScan(scan)
       } catch {
         return null
       }
@@ -684,6 +704,7 @@ export function useLaunchScan(plan: PlanId = 'free') {
           site_url: site.url,
           started_at: new Date().toISOString(),
           max_pages: Number.isFinite(limits.pagesPerScan) ? limits.pagesPerScan : 25,
+          pages_total: Number.isFinite(limits.pagesPerScan) ? limits.pagesPerScan : 25,
         },
         permissions: teamPermissions(site.organization_id),
       })

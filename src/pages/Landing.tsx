@@ -65,7 +65,7 @@ const L = defineMessages({
       },
       {
         title: 'Rapport multi-pages',
-        desc: "Jusqu'à 25 pages analysées par audit (plan Pro), avec le score de chaque page et le détail par sévérité.",
+        desc: "Jusqu'à 30 pages analysées par audit, avec le score de chaque page et le détail par sévérité.",
       },
     ],
     howTitle: 'Comment ça marche ?',
@@ -90,7 +90,7 @@ const L = defineMessages({
       },
       {
         q: 'Combien de temps prend un audit Konforme ?',
-        a: "Environ une minute pour un site classique : la plateforme analyse jusqu'à 25 pages (selon votre plan) avec une centaine de règles, et vous rend un rapport détaillé avec un score de conformité RGAA et WCAG pondéré par sévérité.",
+        a: "Environ une minute pour un site classique : la plateforme analyse jusqu'à 30 pages par audit avec une centaine de règles, et vous rend un rapport détaillé avec un score de conformité RGAA et WCAG pondéré par sévérité.",
       },
       {
         q: 'Konforme est-il un « overlay » d’accessibilité ?',
@@ -164,7 +164,7 @@ const L = defineMessages({
       },
       {
         title: 'Multi-page report',
-        desc: 'Up to 25 pages analysed per audit (Pro plan), with the score of each page and the breakdown by severity.',
+        desc: 'Up to 30 pages analysed per audit, with the score of each page and the breakdown by severity.',
       },
     ],
     howTitle: 'How does it work?',
@@ -189,7 +189,7 @@ const L = defineMessages({
       },
       {
         q: 'How long does a Konforme audit take?',
-        a: 'About a minute for a typical website: the platform analyses up to 25 pages (depending on your plan) with around a hundred rules, and returns a detailed report with an RGAA and WCAG compliance score weighted by severity.',
+        a: 'About a minute for a typical website: the platform analyses up to 30 pages per audit with around a hundred rules, and returns a detailed report with an RGAA and WCAG compliance score weighted by severity.',
       },
       {
         q: 'Is Konforme an accessibility “overlay”?',
@@ -263,7 +263,7 @@ const L = defineMessages({
       },
       {
         title: 'Bericht über mehrere Seiten',
-        desc: 'Bis zu 25 Seiten pro Audit (Pro-Tarif), mit dem Score jeder Seite und der Aufschlüsselung nach Schweregrad.',
+        desc: 'Bis zu 30 Seiten pro Audit, mit dem Score jeder Seite und der Aufschlüsselung nach Schweregrad.',
       },
     ],
     howTitle: 'Wie funktioniert es?',
@@ -288,7 +288,7 @@ const L = defineMessages({
       },
       {
         q: 'Wie lange dauert ein Konforme-Audit?',
-        a: 'Etwa eine Minute für eine übliche Website: Die Plattform analysiert bis zu 25 Seiten (je nach Tarif) mit rund hundert Regeln und liefert Ihnen einen detaillierten Bericht mit einem nach Schweregrad gewichteten RGAA- und WCAG-Konformitätsscore.',
+        a: 'Die Plattform analysiert bis zu 30 Seiten pro Audit mit rund hundert Regeln und liefert Ihnen einen detaillierten Bericht mit einem nach Schweregrad gewichteten RGAA- und WCAG-Konformitätsscore.',
       },
       {
         q: 'Ist Konforme ein Barrierefreiheits-„Overlay“?',
@@ -362,7 +362,7 @@ const L = defineMessages({
       },
       {
         title: 'Informe de varias páginas',
-        desc: 'Hasta 25 páginas analizadas por auditoría (plan Pro), con la puntuación de cada página y el detalle por gravedad.',
+        desc: 'Hasta 30 páginas analizadas por auditoría, con la puntuación de cada página y el detalle por gravedad.',
       },
     ],
     howTitle: '¿Cómo funciona?',
@@ -387,7 +387,7 @@ const L = defineMessages({
       },
       {
         q: '¿Cuánto tiempo lleva una auditoría Konforme?',
-        a: 'Alrededor de un minuto para un sitio habitual: la plataforma analiza hasta 25 páginas (según su plan) con un centenar de reglas y le entrega un informe detallado con una puntuación de conformidad RGAA y WCAG ponderada por gravedad.',
+        a: 'La plataforma analiza hasta 30 páginas por auditoría con un centenar de reglas y le entrega un informe detallado con una puntuación de conformidad RGAA y WCAG ponderada por gravedad.',
       },
       {
         q: '¿Konforme es un «overlay» de accesibilidad?',
@@ -461,7 +461,7 @@ const L = defineMessages({
       },
       {
         title: 'Rapporto su più pagine',
-        desc: 'Fino a 25 pagine analizzate per audit (piano Pro), con il punteggio di ogni pagina e il dettaglio per gravità.',
+        desc: 'Fino a 30 pagine analizzate per audit, con il punteggio di ogni pagina e il dettaglio per gravità.',
       },
     ],
     howTitle: 'Come funziona?',
@@ -486,7 +486,7 @@ const L = defineMessages({
       },
       {
         q: 'Quanto tempo richiede un audit Konforme?',
-        a: 'Circa un minuto per un sito classico: la piattaforma analizza fino a 25 pagine (a seconda del piano) con un centinaio di regole e le restituisce un rapporto dettagliato con un punteggio di conformità RGAA e WCAG ponderato per gravità.',
+        a: 'La piattaforma analizza fino a 30 pagine per audit con un centinaio di regole e restituisce un rapporto dettagliato con un punteggio di conformità RGAA e WCAG ponderato per gravità.',
       },
       {
         q: 'Konforme è un «overlay» di accessibilità?',

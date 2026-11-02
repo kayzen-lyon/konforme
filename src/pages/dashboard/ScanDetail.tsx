@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { buttonVariants } from '@/components/ui/button-variants'
 import { ScoreRing } from '@/components/ScoreRing'
+import { CircleProgress } from '@/components/CircleProgress'
 import { Seo } from '@/components/Seo'
 import { Skeleton } from '@/components/ui/skeleton'
 import { BadgeGenerator } from '@/components/report/BadgeGenerator'
@@ -59,6 +60,8 @@ const L = defineMessages({
     runningTitle: 'Analyse en cours…',
     runningDesc:
       'Le moteur crawle et audite les pages du site. Cette page se met à jour automatiquement.',
+    runningProgress: (n: number) => `Pages scannées : ${n}`,
+    runningRemaining: (n: number) => `${n} restante${n > 1 ? 's' : ''}`,
     failedTitle: "L'audit a échoué",
     unknownError: 'Erreur inconnue.',
     ringGlobal: 'Taux de conformité global',
@@ -160,6 +163,8 @@ const L = defineMessages({
     runningTitle: 'Analysis in progress…',
     runningDesc:
       'The engine is crawling and auditing the pages of the website. This page updates automatically.',
+    runningProgress: (n: number) => `Pages scanned: ${n}`,
+    runningRemaining: (n: number) => `${n} remaining`,
     failedTitle: 'The audit failed',
     unknownError: 'Unknown error.',
     ringGlobal: 'Overall compliance rate',
@@ -261,6 +266,8 @@ const L = defineMessages({
     runningTitle: 'Analyse läuft…',
     runningDesc:
       'Die Engine crawlt und prüft die Seiten der Website. Diese Seite aktualisiert sich automatisch.',
+    runningProgress: (n: number) => `Gescannte Seiten: ${n}`,
+    runningRemaining: (n: number) => `${n} verbleibend`,
     failedTitle: 'Das Audit ist fehlgeschlagen',
     unknownError: 'Unbekannter Fehler.',
     ringGlobal: 'Gesamtkonformitätsgrad',
@@ -364,6 +371,8 @@ const L = defineMessages({
     runningTitle: 'Análisis en curso…',
     runningDesc:
       'El motor rastrea y audita las páginas del sitio. Esta página se actualiza automáticamente.',
+    runningProgress: (n: number) => `Páginas analizadas: ${n}`,
+    runningRemaining: (n: number) => `${n} restantes`,
     failedTitle: 'La auditoría ha fallado',
     unknownError: 'Error desconocido.',
     ringGlobal: 'Tasa de conformidad global',
@@ -467,6 +476,8 @@ const L = defineMessages({
     runningTitle: 'Analisi in corso…',
     runningDesc:
       'Il motore esegue la scansione e verifica le pagine del sito. Questa pagina si aggiorna automaticamente.',
+    runningProgress: (n: number) => `Pagine analizzate: ${n}`,
+    runningRemaining: (n: number) => `${n} rimanenti`,
     failedTitle: "L'audit non è riuscito",
     unknownError: 'Errore sconosciuto.',
     ringGlobal: 'Tasso di conformità complessivo',
@@ -693,15 +704,23 @@ export function ScanDetail() {
       </header>
 
       {(scan.status === 'pending' || scan.status === 'running') && (
-        <Card role="status" className="flex items-center gap-4 border-info/40">
+        <Card role="status" className="flex items-center gap-5 border-info/40">
           <span
             aria-hidden="true"
             className="size-5 shrink-0 animate-spin rounded-full border-2 border-info border-t-transparent"
+          />
+          <CircleProgress
+            value={scan.pages_processed}
+            max={scan.pages_total}
+            label={t.runningProgress(scan.pages_processed)}
           />
           <div>
             <p className="font-semibold text-sm">{t.runningTitle}</p>
             <p className="text-xs text-text-dim">
               {t.runningDesc}
+            </p>
+            <p className="text-xs font-semibold text-text mt-1">
+              {t.runningProgress(scan.pages_processed)} · {t.runningRemaining(Math.max(0, scan.pages_total - scan.pages_processed))}
             </p>
           </div>
         </Card>

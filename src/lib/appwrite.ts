@@ -31,6 +31,7 @@ export const DB_ID = 'konforme'
 export const TABLES = {
   sites: 'sites',
   scans: 'scans',
+  scan_pages: 'scan_pages',
   scan_issues: 'scan_issues',
   criteria_reviews: 'criteria_reviews',
   alerts: 'alerts',

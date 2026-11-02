@@ -105,7 +105,7 @@ scripts/
 
 Le client crée le scan (`status: pending`) puis déclenche la fonction avec `{ scan_id }`.
 La fonction (clé API dynamique, scopes rows/tables/teams) vérifie l'appartenance à la team,
-crawle la page d'accueil + pages internes (`max_pages` selon le plan, 25 en Pro), exécute
+crawle jusqu'à 30 pages par audit, une page par exécution pour réduire l'usage mémoire, exécute
 ~40 règles statiques RGAA 4.1 maison **+ axe-core dans jsdom** (locale FR, dédoublonné,
 garde-fous CPU : skip > 250 Ko, timeout 15 s/page), calcule des scores **pondérés par
 sévérité** (`score` / `rgaa_score` / `wcag_score` + `page_scores` par page) et enregistre

@@ -10,6 +10,7 @@ describe('PLANS', () => {
   it('a un plan gratuit utilisable', () => {
     expect(PLANS.free.maxSites).toBeGreaterThanOrEqual(1)
     expect(PLANS.free.scansPerMonth).toBeGreaterThanOrEqual(1)
+    expect(PLANS.free.pagesPerScan).toBe(30)
   })
 })
 
