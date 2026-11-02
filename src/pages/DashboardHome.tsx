@@ -11,6 +11,7 @@ import { scoreColor } from '@/lib/format'
 import { defineMessages, useLang, useMessages } from '@/i18n'
 import type { ScorePoint } from '@/components/ScoreChart'
 import { SitesOverview } from '@/components/SitesOverview'
+import { TopIssues } from '@/components/TopIssues'
 import { buildSiteHealth } from '@/lib/dashboard'
 
 const ScoreChart = lazy(() => import('@/components/ScoreChart'))
@@ -334,6 +335,7 @@ export function DashboardHome() {
       </div>
 
       <SitesOverview health={health} alerts={alerts ?? []} />
+      <TopIssues health={health} />
 
       {chartData.length >= 2 && (
         <Card>

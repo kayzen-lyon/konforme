@@ -17,6 +17,7 @@ import type {
   ReviewStatus,
   Scan,
   ScanIssue,
+  Severity,
   Site,
 } from '@/lib/database.types'
 import { monthStartIso, PLANS, type PlanId } from '@/lib/plans'
@@ -630,6 +631,26 @@ export async function countCriticalIssues(scanIds: string[]): Promise<number> {
     total: true,
   })
   return res.total ?? 0
+}
+
+/** Issues ouvertes (hors critiques exclus ou non) d'un ensemble de scans, plafonnées. */
+export async function fetchOpenIssues(
+  scanIds: string[],
+): Promise<{ rule_id: string; title: string; severity: Severity }[]> {
+  if (scanIds.length === 0) return []
+  const res = await tables.listRows({
+    databaseId: DB_ID,
+    tableId: TABLES.scan_issues,
+    queries: [
+      Query.equal('scan_id', scanIds),
+      Query.equal('status', ['open', 'in_progress']),
+      Query.limit(500),
+    ],
+  })
+  return res.rows.map((r) => {
+    const i = rowToIssue(r)
+    return { rule_id: i.rule_id, title: i.title, severity: i.severity }
+  })
 }
 
 /**
